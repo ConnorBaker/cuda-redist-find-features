@@ -37,8 +37,8 @@ def nix_store_prefetch_file(release: manifest.Release) -> NixStoreEntry:
             url,
         ],
         capture_output=True,
+        check=True,
     )
-    result.check_returncode()
     end_time = time.time()
     logging.debug(f"Added {package_name} to the Nix store in {end_time - start_time} seconds.")
     return NixStoreEntry.parse_raw(result.stdout)
@@ -57,8 +57,8 @@ def nix_store_unpack_archive(store_path: Path) -> NixStoreEntry:
     result = subprocess.run(
         ["nix", "flake", "prefetch", "--json", url],
         capture_output=True,
+        check=True,
     )
-    result.check_returncode()
     end_time = time.time()
     logging.debug(f"Unpacked {store_path} in {end_time - start_time} seconds.")
     return NixStoreEntry.parse_raw(result.stdout)
