@@ -1,0 +1,33 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "cuda_redist_find_features"
+version = "0.1.0"
+authors = [{ name = "Connor Baker", email = "connorbaker@tweag.io" }]
+requires-python = ">=3.10"
+license = { text = "BSD-3-Clause" }
+description = "Find the features of a CUDA redistributable package"
+dependencies = ["pydantic>=1.10.8", "typing-extensions>=4.5.0"]
+
+[project.optional-dependencies]
+dev = ["black>=21.9b0", "mypy>=0.910", "ruff>=0.3.0"]
+
+[project.scripts]
+cuda-redist-find-features = "cuda_redist_find_features.__main__:main"
+
+[tool.black]
+line-length = 120
+
+[tool.ruff]
+select = [
+    # Pyflakes
+    "F",
+    # Pycodestyle
+    "E",
+    "W",
+    # isort
+    "I",
+]
+line-length = 120
