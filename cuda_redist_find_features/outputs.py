@@ -145,9 +145,7 @@ def get_release_features(store_path: Path) -> ReleaseFeatures:
 
     # Check for bin output.
     # - bin
-    if (store_path / "bin").exists():
-        logging.debug("Found bin directory")
-        features.has_bin = True
+    features.has_bin |= (store_path / "bin").exists()
 
     # Check for dev output.
     # - include
@@ -155,16 +153,16 @@ def get_release_features(store_path: Path) -> ReleaseFeatures:
     # - share/pkgconfig
     # - lib/cmake
     # - share/aclocal
-    for dir in [
-        store_path / "include",
-        store_path / "lib" / "pkgconfig",
-        store_path / "share" / "pkgconfig",
-        store_path / "lib" / "cmake",
-        store_path / "share" / "aclocal",
-    ]:
-        if dir.exists():
-            logging.debug(f"Found dev directory: {dir}")
-            features.has_dev = True
+    features.has_dev |= any(
+        dir.exists()
+        for dir in (
+            store_path / "include",
+            store_path / "lib" / "pkgconfig",
+            store_path / "share" / "pkgconfig",
+            store_path / "lib" / "cmake",
+            store_path / "share" / "aclocal",
+        )
+    )
 
     # Check for doc output.
     # - share/info
@@ -172,33 +170,27 @@ def get_release_features(store_path: Path) -> ReleaseFeatures:
     # - share/gtk-doc
     # - share/devhelp/books
     # - share/man
-    for dir in [
-        store_path / "share" / "info",
-        store_path / "share" / "doc",
-        store_path / "share" / "gtk-doc",
-        store_path / "share" / "devhelp" / "books",
-        store_path / "share" / "man",
-    ]:
-        if dir.exists():
-            logging.debug(f"Found doc directory: {dir}")
-            features.has_doc = True
+    features.has_doc |= any(
+        dir.exists()
+        for dir in (
+            store_path / "share" / "info",
+            store_path / "share" / "doc",
+            store_path / "share" / "gtk-doc",
+            store_path / "share" / "devhelp" / "books",
+            store_path / "share" / "man",
+        )
+    )
 
     # Check for lib output.
     # - lib
     if (_lib_dir := store_path / "lib").exists():
         logging.debug("Found lib directory, checking for libraries.")
-        _has_dynamic_libraries = has_dynamic_libraries(_lib_dir)
-        logging.debug(f"Found dynamic libraries: {_has_dynamic_libraries}")
-        features.has_lib |= _has_dynamic_libraries
-        _has_static_libraries = has_static_libraries(_lib_dir)
-        logging.debug(f"Found static libraries: {_has_static_libraries}")
-        features.has_static |= _has_static_libraries
+        features.has_lib |= has_dynamic_libraries(_lib_dir)
+        features.has_static |= has_static_libraries(_lib_dir)
 
     # Check for sample output.
     # - samples
-    if (store_path / "samples").exists():
-        logging.debug("Found samples directory.")
-        features.has_sample = True
+    features.has_sample |= (store_path / "samples").exists()
 
     _headers = list(get_headers(store_path))
     logging.debug(f"Found {len(_headers)} headers.")
