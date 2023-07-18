@@ -1,10 +1,7 @@
 import json
 import logging
 from pathlib import Path
-from typing import (
-    Any,
-    TypeAlias,
-)
+from typing import Any, TypeAlias
 
 from pydantic import BaseModel
 from pydantic.tools import parse_obj_as

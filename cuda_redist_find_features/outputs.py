@@ -1,13 +1,7 @@
 import logging
 import multiprocessing
 from pathlib import Path
-from typing import (
-    Iterator,
-    Literal,
-    Sequence,
-    TypeAlias,
-    get_args,
-)
+from typing import Iterator, Literal, Sequence, TypeAlias, get_args
 
 from pydantic import BaseModel, Field
 
