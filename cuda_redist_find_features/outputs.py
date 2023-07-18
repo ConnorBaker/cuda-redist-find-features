@@ -1,6 +1,5 @@
 import logging
 import multiprocessing
-from itertools import chain
 from pathlib import Path
 from typing import (
     Iterator,
@@ -15,6 +14,7 @@ from pydantic import BaseModel, Field
 from cuda_redist_find_features import generic, manifest
 from cuda_redist_find_features.utilities import (
     NixStoreEntry,
+    file_paths_matching,
     is_nonempty,
     nix_store_prefetch_file,
     nix_store_unpack_archive,
@@ -50,50 +50,42 @@ def get_dynamic_libraries(path: Path) -> Iterator[Path]:
     """
     Returns a list of dynamic libraries in the directory tree of the given path.
     """
-    return (
-        entry
-        for entry in chain(*(path.rglob("*" + suffix) for suffix in {".so", ".so.*", ".dylib", ".dll"}))
-        if entry.is_file()
-    )
+    return file_paths_matching(path, {"*.so", "*.so.*", "*.dylib", "*.dll"})
 
 
 def get_static_libraries(path: Path) -> Iterator[Path]:
     """
     Returns a list of static libraries in the directory tree of the given path.
     """
-    return (entry for entry in chain(*(path.rglob("*" + suffix) for suffix in {".a", ".lib"})) if entry.is_file())
+    return file_paths_matching(path, {"*.a", "*.lib"})
 
 
 def get_executables(path: Path) -> Iterator[Path]:
     """
     Returns a list of executable files in the directory tree of the given path.
     """
-    return (entry for entry in path.rglob("*") if entry.is_file() and entry.stat().st_mode & 0o111)
+    return (entry for entry in file_paths_matching(path, {"*"}) if entry.stat().st_mode & 0o111)
 
 
 def get_cmake_modules(path: Path) -> Iterator[Path]:
     """
     Returns a list of cmake modules in the directory tree of the given path.
     """
-    return (entry for entry in path.rglob("*.cmake") if entry.is_file())
+    return file_paths_matching(path, {"*.cmake"})
 
 
 def get_headers(path: Path) -> Iterator[Path]:
     """
     Returns a list of header files in the directory tree of the given path.
     """
-    return (
-        entry
-        for entry in chain(*(path.rglob("*" + suffix) for suffix in {".h", ".hh", ".hpp", ".hxx"}))
-        if entry.is_file()
-    )
+    return file_paths_matching(path, {"*.h", "*.hh", "*.hpp", "*.hxx"})
 
 
 def get_python_modules(path: Path) -> Iterator[Path]:
     """
     Returns a list of python modules in the directory tree of the given path.
     """
-    return (entry for entry in path.rglob("*.py") if entry.is_file())
+    return file_paths_matching(path, {"*.py"})
 
 
 def has_dynamic_libraries(path: Path) -> bool:
@@ -277,5 +269,5 @@ def process_manifest(
     """
     Processes a manifest to predict the outputs of each package.
     """
-    with multiprocessing.Pool() as pool:
+    with multiprocessing.Pool(1) as pool:
         return dict(pool.starmap(process_package, manifest.items(), chunksize=1))
