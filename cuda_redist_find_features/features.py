@@ -33,6 +33,10 @@ class ReleaseFeatures(BaseModel):
     has_static: bool = Field(False, alias="hasStatic")
     has_sample: bool = Field(False, alias="hasSample")
 
+    # TODO(@connorbaker): Include the following attributes:
+    # - architectures: architectures supported by the package. May be empty.
+    # - has_device_code: true if the package contains device code / is not a host-only package.
+
     def get_outputs(self) -> list[Output]:
         return [output for output in get_args(Output) if getattr(self, f"has_{output}", False)]
 

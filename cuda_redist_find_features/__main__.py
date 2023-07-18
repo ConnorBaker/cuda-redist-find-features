@@ -3,7 +3,7 @@ import json
 import logging
 from pathlib import Path
 
-from cuda_redist_find_features import manifest, outputs
+from cuda_redist_find_features import features, manifest
 
 
 def main() -> None:
@@ -22,13 +22,13 @@ def main() -> None:
     manifest_path: Path = args.manifest
 
     manifest_redist: dict[str, manifest.Package] = manifest.parse_manifest(manifest_path)
-    manifest_outputs: dict[str, outputs.Package] = outputs.process_manifest(manifest_redist)
+    manifest_features: dict[str, features.Package] = features.process_manifest(manifest_redist)
     # Write to a JSON file in the same directory as manifest_path
-    filename = manifest_path.name.replace("redistrib", "redistrib_outputs")
+    filename = manifest_path.name.replace("redistrib", "redistrib_features")
 
     # Print summary information
-    logging.info(f"Processed {len(manifest_outputs)} packages.")
-    for package_name, package in manifest_outputs.items():
+    logging.info(f"Processed {len(manifest_features)} packages.")
+    for package_name, package in manifest_features.items():
         logging.info(f"Package: {package_name}")
         logging.info(f"Description: {package.name}")
         for arch, release_features in package.get_architectures().items():
@@ -47,7 +47,7 @@ def main() -> None:
                     exclude_none=True,
                     exclude={"name", "version", "license"},
                 )
-                for package_name, package in manifest_outputs.items()
+                for package_name, package in manifest_features.items()
             },
             f,
             indent=2,
