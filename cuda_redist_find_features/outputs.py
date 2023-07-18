@@ -255,5 +255,5 @@ def process_manifest(
     """
     Processes a manifest to predict the outputs of each package.
     """
-    with multiprocessing.Pool(1) as pool:
+    with multiprocessing.Pool() as pool:
         return dict(pool.starmap(process_package, manifest.items(), chunksize=1))

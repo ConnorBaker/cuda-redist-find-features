@@ -18,8 +18,6 @@ class Release(BaseModel):
 
 Package: TypeAlias = generic.Package[Release]
 
-URL_PREFIX = "https://developer.download.nvidia.com/compute/cuda/redist"
-
 
 def parse_manifest(manifest_path: Path) -> dict[str, Package]:
     with manifest_path.open("rb") as manifest_file:

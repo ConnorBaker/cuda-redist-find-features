@@ -8,6 +8,8 @@ from pydantic import BaseModel, Field
 
 from cuda_redist_find_features import manifest
 
+URL_PREFIX = "https://developer.download.nvidia.com/compute/cuda/redist"
+
 
 class NixStoreEntry(BaseModel):
     hash: str
@@ -20,7 +22,7 @@ def nix_store_prefetch_file(release: manifest.Release) -> NixStoreEntry:
 
     NOTE: By specifying the hash type and expected hash, we avoid redownloading.
     """
-    url: str = f"{manifest.URL_PREFIX}/{release.relative_path}"
+    url: str = f"{URL_PREFIX}/{release.relative_path}"
     package_name: str = release.relative_path.split("/")[-1]
     logging.debug(f"Adding {package_name} to the Nix store...")
     start_time = time.time()
