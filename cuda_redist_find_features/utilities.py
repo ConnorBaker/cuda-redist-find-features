@@ -2,7 +2,7 @@ import logging
 import subprocess
 import time
 from pathlib import Path
-from typing import Any, Iterable, Iterator
+from typing import Any, Iterable, Iterator, Sequence
 
 from pydantic import BaseModel, Field
 
@@ -64,6 +64,23 @@ def nix_store_unpack_archive(store_path: Path) -> NixStoreEntry:
     end_time = time.time()
     logging.debug(f"Unpacked {store_path} in {end_time - start_time} seconds.")
     return NixStoreEntry.parse_raw(result.stdout)
+
+
+def nix_store_delete(store_paths: Sequence[Path]) -> None:
+    """
+    Delete paths from the Nix store.
+    """
+    posix_paths = [path.as_posix() for path in store_paths]
+    formatted_paths = ", ".join(posix_paths)
+    logging.debug(f"Deleting {formatted_paths} from the Nix store...")
+    start_time = time.time()
+    subprocess.run(
+        ["nix", "store", "delete", *posix_paths],
+        capture_output=True,
+        check=True,
+    )
+    end_time = time.time()
+    logging.debug(f"Deleted {formatted_paths} from the Nix store in {end_time - start_time} seconds.")
 
 
 def is_nonempty(it: Iterable[Any]) -> bool:

@@ -1,5 +1,6 @@
 import logging
 import multiprocessing
+from functools import partial
 from pathlib import Path
 from typing import Iterator, Literal, Sequence, TypeAlias, get_args
 
@@ -10,6 +11,7 @@ from cuda_redist_find_features.utilities import (
     NixStoreEntry,
     file_paths_matching,
     is_nonempty,
+    nix_store_delete,
     nix_store_prefetch_file,
     nix_store_unpack_archive,
 )
@@ -221,7 +223,7 @@ def get_release_features(store_path: Path) -> ReleaseFeatures:
     return features
 
 
-def process_package(package_name: str, package: manifest.Package) -> tuple[str, Package]:
+def process_package(package_name: str, package: manifest.Package, cleanup: bool = False) -> tuple[str, Package]:
     package_info_kwargs: dict[str, str] = {
         "name": package.name,
         "license": package.license,
@@ -248,6 +250,9 @@ def process_package(package_name: str, package: manifest.Package) -> tuple[str, 
         unpacked: NixStoreEntry = nix_store_unpack_archive(archive.store_path)
         unpacked_root = unpacked.store_path
         features = get_release_features(unpacked_root)
+        if cleanup:
+            logging.info(f"Cleaning up {archive.store_path} and {unpacked.store_path}...")
+            nix_store_delete([archive.store_path, unpacked.store_path])
         package_arch_kwargs[arch] = features
 
     return package_name, Package.parse_obj(package_info_kwargs | package_arch_kwargs)
@@ -255,9 +260,16 @@ def process_package(package_name: str, package: manifest.Package) -> tuple[str, 
 
 def process_manifest(
     manifest: dict[str, manifest.Package],
+    cleanup: bool = False,
+    no_parallel: bool = False,
 ) -> dict[str, Package]:
     """
     Processes a manifest to predict the outputs of each package.
     """
+    func = partial(process_package, cleanup=cleanup)
+
+    if no_parallel:
+        return dict([func(*item) for item in manifest.items()])
+
     with multiprocessing.Pool() as pool:
-        return dict(pool.starmap(process_package, manifest.items(), chunksize=1))
+        return dict(pool.starmap(func, manifest.items(), chunksize=1))
