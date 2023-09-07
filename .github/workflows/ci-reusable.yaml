@@ -1,0 +1,77 @@
+name: Reusable workflow
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        description: "Operating system to run on"
+        required: true
+        type: string
+      nixpkgs-commit:
+        description: "Nixpkgs commit to use"
+        default: ""
+        required: false
+        type: string
+
+jobs:
+  check:
+    name: Check with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }} on ${{ inputs.os }}
+    runs-on: ${{ inputs.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: |
+          NIX_ARGS=("flake" "check" "--print-build-logs")
+          if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
+            NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
+          fi
+          NIX_ARGS+=(".#")
+          nix "${NIX_ARGS[@]}"
+
+  build:
+    name: Build with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }} on ${{ inputs.os }}
+    needs: check
+    runs-on: ${{ inputs.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: |
+          NIX_ARGS=("build" "--print-build-logs")
+          if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
+            NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
+          fi
+          NIX_ARGS+=(".#")
+          nix "${NIX_ARGS[@]}"
+
+  run:
+    name: Run with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }} on ${{ inputs.os }}
+    needs: build
+    runs-on: ${{ inputs.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        cuda-redistrib-version:
+          - "12.2.2"
+    env:
+      CUDA_REDIST_MANIFEST: redistrib_${{ matrix.cuda-redistrib-version }}.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: |
+          curl \
+            --location "https://developer.download.nvidia.com/compute/cuda/redist/${{ env.CUDA_REDIST_MANIFEST }}" \
+            --output "${{ env.CUDA_REDIST_MANIFEST }}"
+      - run: |
+          NIX_ARGS=("run" "--print-build-logs")
+          if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
+            NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
+          fi
+          NIX_ARGS+=(".#" "--" "${{ env.CUDA_REDIST_MANIFEST }}")
+          nix "${NIX_ARGS[@]}"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: redistrib_features_${{ matrix.cuda-redistrib-version }}_${{ inputs.nixpkgs-commit || 'lock' }}.json
+          path: redistrib_features_${{ matrix.cuda-redistrib-version }}.json

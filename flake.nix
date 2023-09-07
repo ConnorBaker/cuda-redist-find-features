@@ -17,21 +17,6 @@
     };
   };
 
-  nixConfig = {
-    extra-substituters = [
-      "https://cantcache.me"
-      "https://pre-commit-hooks.cachix.org"
-    ];
-    extra-trusted-substituters = [
-      "https://cantcache.me"
-      "https://pre-commit-hooks.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "cantcache.me:Y+FHAKfx7S0pBkBMKpNMQtGKpILAfhmqUSnr5oNwNMs="
-      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
-    ];
-  };
-
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
