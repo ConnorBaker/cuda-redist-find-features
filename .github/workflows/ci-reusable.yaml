@@ -5,7 +5,8 @@ on:
     inputs:
       os:
         description: "Operating system to run on"
-        required: true
+        default: "ubuntu-latest"
+        required: false
         type: string
       nixpkgs-commit:
         description: "Nixpkgs commit to use"
@@ -15,7 +16,7 @@ on:
 
 jobs:
   check:
-    name: Check with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }} on ${{ inputs.os }}
+    name: Check with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }}
     runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +31,7 @@ jobs:
           nix "${NIX_ARGS[@]}"
 
   build:
-    name: Build with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }} on ${{ inputs.os }}
+    name: Build with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }}
     runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v4
@@ -45,7 +46,7 @@ jobs:
           nix "${NIX_ARGS[@]}"
 
   run:
-    name: Run with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }} on ${{ inputs.os }}
+    name: Run with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }}
     needs: build
     runs-on: ${{ inputs.os }}
     strategy:

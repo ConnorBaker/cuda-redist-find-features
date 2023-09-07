@@ -21,28 +21,12 @@ jobs:
             | tee -a "$GITHUB_OUTPUT"
 
   ci-lock:
-    name: CI with lock on ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
+    name: CI with lock
     uses: ./.github/workflows/ci-reusable.yaml
-    with:
-      os: ${{ matrix.os }}
-      nixpkgs-commit: ""
 
   ci-head:
-    name: CI with head on ${{ matrix.os }}
+    name: CI with head
     needs: latest-nixpkgs-commit
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
     uses: ./.github/workflows/ci-reusable.yaml
     with:
-      os: ${{ matrix.os }}
       nixpkgs-commit: ${{ needs.latest-nixpkgs-commit.outputs.commit }}
