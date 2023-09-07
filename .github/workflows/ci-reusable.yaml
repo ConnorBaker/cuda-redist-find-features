@@ -16,7 +16,7 @@ on:
 
 jobs:
   check:
-    name: Check with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }}
+    name: Check
     runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
           nix "${NIX_ARGS[@]}"
 
   build:
-    name: Build with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }}
+    name: Build
     runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v4
@@ -46,16 +46,16 @@ jobs:
           nix "${NIX_ARGS[@]}"
 
   run:
-    name: Run with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }}
+    name: Run for CUDA ${{ matrix.cuda-version }}
     needs: build
     runs-on: ${{ inputs.os }}
     strategy:
       fail-fast: false
       matrix:
-        cuda-redistrib-version:
+        cuda-version:
           - "12.2.2"
     env:
-      CUDA_REDIST_MANIFEST: redistrib_${{ matrix.cuda-redistrib-version }}.json
+      CUDA_REDIST_MANIFEST: redistrib_${{ matrix.cuda-version }}.json
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
@@ -73,5 +73,5 @@ jobs:
           nix "${NIX_ARGS[@]}"
       - uses: actions/upload-artifact@v3
         with:
-          name: redistrib_features_${{ matrix.cuda-redistrib-version }}_${{ inputs.nixpkgs-commit || 'lock' }}.json
-          path: redistrib_features_${{ matrix.cuda-redistrib-version }}.json
+          name: redistrib_features_${{ matrix.cuda-version }}_${{ inputs.nixpkgs-commit || 'lock' }}.json
+          path: redistrib_features_${{ matrix.cuda-version }}.json
