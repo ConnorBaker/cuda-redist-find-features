@@ -69,7 +69,7 @@ jobs:
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "${{ env.CUDA_REDIST_MANIFEST }}")
+          NIX_ARGS+=(".#" "--" "--cleanup" "--no-parallel" "${{ env.CUDA_REDIST_MANIFEST }}")
           nix "${NIX_ARGS[@]}"
       - uses: actions/upload-artifact@v3
         with:
