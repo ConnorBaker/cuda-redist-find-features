@@ -31,7 +31,6 @@ jobs:
 
   build:
     name: Build with ${{ inputs.nixpkgs-commit && 'head' || 'lock' }} on ${{ inputs.os }}
-    needs: check
     runs-on: ${{ inputs.os }}
     steps:
       - uses: actions/checkout@v4
