@@ -53,6 +53,13 @@ jobs:
       fail-fast: false
       matrix:
         cuda-version:
+          - "11.4.4"
+          - "11.5.2"
+          - "11.6.2"
+          - "11.7.1"
+          - "11.8.0"
+          - "12.0.1"
+          - "12.1.1"
           - "12.2.2"
     env:
       CUDA_REDIST_MANIFEST: redistrib_${{ matrix.cuda-version }}.json
@@ -60,18 +67,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: mkdir -p ./manifests
       - run: |
           curl \
             --location "https://developer.download.nvidia.com/compute/cuda/redist/${{ env.CUDA_REDIST_MANIFEST }}" \
-            --output "${{ env.CUDA_REDIST_MANIFEST }}"
+            --output "./manifests/${{ env.CUDA_REDIST_MANIFEST }}"
       - run: |
           NIX_ARGS=("run" "--print-build-logs")
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "--cleanup" "--no-parallel" "${{ env.CUDA_REDIST_MANIFEST }}")
+          NIX_ARGS+=(".#" "--" "--cleanup" "--no-parallel" "./manifests/${{ env.CUDA_REDIST_MANIFEST }}")
           nix "${NIX_ARGS[@]}"
       - uses: actions/upload-artifact@v3
         with:
-          name: redistrib_features_${{ matrix.cuda-version }}_${{ inputs.nixpkgs-commit || 'lock' }}.json
-          path: redistrib_features_${{ matrix.cuda-version }}.json
+          name: manifests_${{ inputs.nixpkgs-commit != '' && inputs.nixpkgs-commit || 'lock' }}
+          path: ./manifests/
