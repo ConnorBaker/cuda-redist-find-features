@@ -20,8 +20,21 @@ jobs:
             | xargs printf "nixpkgs=%s" \
             | tee -a "$GITHUB_OUTPUT"
 
-  ci:
-    name: CI with ${{ matrix.nixpkgs-commit && 'head' || 'lock' }} on ${{ matrix.os }}
+  ci-lock:
+    name: CI with lock on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+    uses: ./.github/workflows/ci-reusable.yaml
+    with:
+      os: ${{ matrix.os }}
+      nixpkgs-commit: ""
+
+  ci-head:
+    name: CI with head on ${{ matrix.os }}
     needs: latest-nixpkgs-commit
     strategy:
       fail-fast: false
@@ -29,10 +42,7 @@ jobs:
         os:
           - macos-latest
           - ubuntu-latest
-        nixpkgs-commit:
-          - ""
-          - ${{ needs.latest-nixpkgs-commit.outputs.commit }}
     uses: ./.github/workflows/ci-reusable.yaml
     with:
       os: ${{ matrix.os }}
-      nixpkgs-commit: ${{ matrix.nixpkgs-commit }}
+      nixpkgs-commit: ${{ needs.latest-nixpkgs-commit.outputs.commit }}
