@@ -45,41 +45,102 @@ jobs:
           NIX_ARGS+=(".#")
           nix "${NIX_ARGS[@]}"
 
-  run:
-    name: Run for CUDA ${{ matrix.cuda-version }}
+  run-cuda-download-manifests:
+    name: Run for CUDA download-manifests
+    needs: build
+    runs-on: ${{ inputs.os }}
+    env:
+      URL: https://developer.download.nvidia.com/compute/cuda/redist
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: |
+          NIX_ARGS=("run" "--print-build-logs")
+          if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
+            NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
+          fi
+          NIX_ARGS+=(".#" "--" "--debug" "download-manifests" "${{ env.URL }}" "./manifests")
+          nix "${NIX_ARGS[@]}"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cuda_manifests_${{ inputs.nixpkgs-commit != '' && inputs.nixpkgs-commit || 'lock' }}
+          path: ./manifests/
+
+  run-cuda-process-manifests:
+    name: Run for CUDA ${{ matrix.cuda-version }} process-manifests
     needs: build
     runs-on: ${{ inputs.os }}
     strategy:
       fail-fast: false
       matrix:
         cuda-version:
-          - "11.4.4"
-          - "11.5.2"
-          - "11.6.2"
-          - "11.7.1"
           - "11.8.0"
-          - "12.0.1"
-          - "12.1.1"
           - "12.2.2"
     env:
-      CUDA_REDIST_MANIFEST: redistrib_${{ matrix.cuda-version }}.json
+      URL_PREFIX: https://developer.download.nvidia.com/compute/cuda/redist
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - run: mkdir -p ./manifests
-      - run: |
-          curl \
-            --location "https://developer.download.nvidia.com/compute/cuda/redist/${{ env.CUDA_REDIST_MANIFEST }}" \
-            --output "./manifests/${{ env.CUDA_REDIST_MANIFEST }}"
       - run: |
           NIX_ARGS=("run" "--print-build-logs")
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "--cleanup" "--no-parallel" "./manifests/${{ env.CUDA_REDIST_MANIFEST }}")
+          NIX_ARGS+=(".#" "--" "--debug" "--version" "${{ matrix.cuda-version }}" "download-manifests" "${{ env.URL_PREFIX }}" "./manifests")
+          nix "${NIX_ARGS[@]}"
+      - run: |
+          NIX_ARGS=("run" "--print-build-logs")
+          if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
+            NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
+          fi
+          NIX_ARGS+=(".#" "--" "--debug" "process-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--cleanup")
+          nix "${NIX_ARGS[@]}"
+
+  run-cutensor-download-manifests:
+    name: Run for cuTensor download-manifests
+    needs: build
+    runs-on: ${{ inputs.os }}
+    env:
+      URL: https://developer.download.nvidia.com/compute/cutensor/redist
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: |
+          NIX_ARGS=("run" "--print-build-logs")
+          if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
+            NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
+          fi
+          NIX_ARGS+=(".#" "--" "--debug" "download-manifests" "${{ env.URL }}" "./manifests")
           nix "${NIX_ARGS[@]}"
       - uses: actions/upload-artifact@v3
         with:
-          name: manifests_${{ inputs.nixpkgs-commit != '' && inputs.nixpkgs-commit || 'lock' }}
+          name: cutensor_manifests_${{ inputs.nixpkgs-commit != '' && inputs.nixpkgs-commit || 'lock' }}
           path: ./manifests/
+
+  run-cutensor-process-manifests:
+    name: Run for cuTensor process-manifests
+    needs: build
+    runs-on: ${{ inputs.os }}
+    env:
+      URL_PREFIX: https://developer.download.nvidia.com/compute/cutensor/redist
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: |
+          NIX_ARGS=("run" "--print-build-logs")
+          if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
+            NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
+          fi
+          NIX_ARGS+=(".#" "--" "--debug" "download-manifests" "${{ env.URL_PREFIX }}" "./manifests")
+          nix "${NIX_ARGS[@]}"
+      - run: |
+          NIX_ARGS=("run" "--print-build-logs")
+          if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
+            NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
+          fi
+          NIX_ARGS+=(".#" "--" "--debug" "process-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--cleanup")
+          nix "${NIX_ARGS[@]}"

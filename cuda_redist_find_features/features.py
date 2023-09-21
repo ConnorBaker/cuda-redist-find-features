@@ -1,20 +1,17 @@
 import logging
-import multiprocessing
-from functools import partial
 from pathlib import Path
 from typing import Iterator, Literal, Sequence, TypeAlias, get_args
 
 from pydantic import BaseModel, Field
 
 from cuda_redist_find_features import generic, manifest
-from cuda_redist_find_features.utilities import (
+from cuda_redist_find_features.nix import (
     NixStoreEntry,
-    file_paths_matching,
-    is_nonempty,
     nix_store_delete,
     nix_store_prefetch_file,
     nix_store_unpack_archive,
 )
+from cuda_redist_find_features.utilities import file_paths_matching, is_nonempty
 
 Output: TypeAlias = Literal[
     "bin",
@@ -223,13 +220,17 @@ def get_release_features(store_path: Path) -> ReleaseFeatures:
     return features
 
 
-def process_package(package_name: str, package: manifest.Package, cleanup: bool = False) -> tuple[str, Package]:
+def process_package(
+    package: manifest.Package,
+    url_prefix: str,
+    cleanup: bool = False,
+) -> Package:
     package_info_kwargs: dict[str, str] = {
         "name": package.name,
         "license": package.license,
         "version": package.version,
     }
-    logging.info(f"Package: {package_name} ({package.name})")
+    logging.info(f"Package: {package.name}")
     logging.debug(f"License: {package.license}")
     logging.info(f"Version: {package.version}")
 
@@ -246,7 +247,7 @@ def process_package(package_name: str, package: manifest.Package, cleanup: bool 
         logging.debug(f"Size: {release.size}")
 
         # Get the store path for the release.
-        archive: NixStoreEntry = nix_store_prefetch_file(release)
+        archive: NixStoreEntry = nix_store_prefetch_file(url_prefix, release)
         unpacked: NixStoreEntry = nix_store_unpack_archive(archive.store_path)
         unpacked_root = unpacked.store_path
         features = get_release_features(unpacked_root)
@@ -255,21 +256,4 @@ def process_package(package_name: str, package: manifest.Package, cleanup: bool 
             nix_store_delete([archive.store_path, unpacked.store_path])
         package_arch_kwargs[arch] = features
 
-    return package_name, Package.parse_obj(package_info_kwargs | package_arch_kwargs)
-
-
-def process_manifest(
-    manifest: dict[str, manifest.Package],
-    cleanup: bool = False,
-    no_parallel: bool = False,
-) -> dict[str, Package]:
-    """
-    Processes a manifest to predict the outputs of each package.
-    """
-    func = partial(process_package, cleanup=cleanup)
-
-    if no_parallel:
-        return dict([func(*item) for item in manifest.items()])
-
-    with multiprocessing.Pool() as pool:
-        return dict(pool.starmap(func, manifest.items(), chunksize=1))
+    return Package.parse_obj(package_info_kwargs | package_arch_kwargs)
