@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  latest-nixpkgs-commit:
+    name: Get latest Nixpkgs commit
+    runs-on: ubuntu-latest
+    outputs:
+      commit: ${{ steps.commit.outputs.commit }}
+    steps:
+      - id: commit
+        run: |
+          git ls-remote "https://github.com/NixOS/nixpkgs" refs/heads/master \
+            | cut -f1 \
+            | xargs printf "nixpkgs=%s" \
+            | tee -a "$GITHUB_OUTPUT"
+
+  ci-lock:
+    name: CI with lock
+    uses: ./.github/workflows/ci-reusable.yaml
+
+  ci-head:
+    name: CI with head
+    needs: latest-nixpkgs-commit
+    uses: ./.github/workflows/ci-reusable.yaml
+    with:
+      nixpkgs-commit: ${{ needs.latest-nixpkgs-commit.outputs.commit }}

@@ -2,11 +2,11 @@
 
 ## Roadmap
 
-- [ ] Further documentation.
-- [ ] Support extracting information about supported capabilities from libraries.
+- \[ \] Further documentation.
+- \[ \] Support extracting information about supported capabilities from libraries.
   - This can be used to determine whether a library contains device code.
   - In particular, such information enables determining whether a `linux-sbsa` (Linux ARM server) package can be used as a fallback for `linux-aarch64` (NVIDIA Jetson device) in the case there is no `linux-aarch64` package available.
-- [ ] Test cases.
+- \[ \] Test cases.
 
 ## Overview
 
@@ -17,16 +17,16 @@ This package provides a script which finds the outputs of the redistributable pa
    - The manifest provides SHA256 hashes for each package, so we can verify the download.
    - Additionally, providing the expected hash allows us to avoid re-downloading archives.
 
-2. Use `nix flake prefetch` on the store path of the archive to unpack it.
+1. Use `nix flake prefetch` on the store path of the archive to unpack it.
 
    - Though an abuse of the command, it does effectively serve as a way to unpack archives into the nix store.
    - It also allows us to avoid unpacking archives multiple times by short-circuiting to the store path if it already exists.
 
-3. Evaluate the contents of the unpacked archive to decide what outputs it provides.
+1. Evaluate the contents of the unpacked archive to decide what outputs it provides.
 
    - Implemented with heuristics. For example, if a directory contains a `lib` directory with a `libfoo.a` file, we assume that the package should have an output named `static` containing all its static libraries.
 
-4. Write a complementary JSON file containing the outputs each package should have next to the manifest passed as argument to the script.
+1. Write a complementary JSON file containing the outputs each package should have next to the manifest passed as argument to the script.
 
 ## Usage
 

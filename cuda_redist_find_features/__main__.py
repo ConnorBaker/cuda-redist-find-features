@@ -9,6 +9,8 @@ from cuda_redist_find_features import features, manifest
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("manifest", type=Path)
+    parser.add_argument("--cleanup", action="store_true", help="Delete created Nix store entries after processing")
+    parser.add_argument("--no-parallel", action="store_true", help="Disable parallel processing")
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
 
@@ -22,7 +24,9 @@ def main() -> None:
     manifest_path: Path = args.manifest
 
     manifest_redist: dict[str, manifest.Package] = manifest.parse_manifest(manifest_path)
-    manifest_features: dict[str, features.Package] = features.process_manifest(manifest_redist)
+    manifest_features: dict[str, features.Package] = features.process_manifest(
+        manifest_redist, args.cleanup, args.no_parallel
+    )
     # Write to a JSON file in the same directory as manifest_path
     filename = manifest_path.name.replace("redistrib", "redistrib_features")
 

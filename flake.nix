@@ -15,21 +15,10 @@
       };
       url = "github:cachix/pre-commit-hooks.nix";
     };
-  };
-
-  nixConfig = {
-    extra-substituters = [
-      "https://cantcache.me"
-      "https://pre-commit-hooks.cachix.org"
-    ];
-    extra-trusted-substituters = [
-      "https://cantcache.me"
-      "https://pre-commit-hooks.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "cantcache.me:Y+FHAKfx7S0pBkBMKpNMQtGKpILAfhmqUSnr5oNwNMs="
-      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
-    ];
+    treefmt-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:numtide/treefmt-nix";
+    };
   };
 
   outputs = inputs:
@@ -41,6 +30,7 @@
         "x86_64-linux"
       ];
       imports = [
+        inputs.treefmt-nix.flakeModule
         inputs.pre-commit-hooks-nix.flakeModule
         ./nix
       ];
@@ -49,30 +39,57 @@
         pkgs,
         ...
       }: {
-        formatter = pkgs.alejandra;
         pre-commit.settings = {
           hooks = {
+            # Formatter checks
+            treefmt.enable = true;
+
             # Nix checks
-            alejandra.enable = true;
             deadnix.enable = true;
             nil.enable = true;
             statix.enable = true;
+
             # Python checks
-            black.enable = true;
             mypy.enable = true;
             pyright.enable = true;
-            ruff.enable = true;
+            ruff.enable = true; # Ruff both lints and checks sorted imports
           };
           settings = let
             # We need to provide wrapped version of mypy and pyright which can find our imports.
+            # TODO: The script we're sourcing is an implementation detail of `mkShell` and we should
+            # not depend on it exisitng. In fact, the first few lines of the file state as much
+            # (that's why we need to strip them, sourcing only the content of the script).
             wrapper = name:
               pkgs.writeShellScript name ''
-                source ${config.devShells.default}
+                source <(sed -n '/^declare/,$p' ${config.devShells.cuda-redist-find-features})
                 ${name} "$@"
               '';
           in {
+            # Formatter
+            treefmt.package = config.treefmt.build.wrapper;
+
+            # Python
             mypy.binPath = "${wrapper "mypy"}";
             pyright.binPath = "${wrapper "pyright"}";
+          };
+        };
+
+        treefmt = {
+          projectRootFile = "flake.nix";
+          programs = {
+            # Markdown
+            mdformat.enable = true;
+
+            # Nix
+            alejandra.enable = true;
+
+            # Python
+            black.enable = true;
+            ruff.enable = true; # Ruff both lints and checks sorted imports
+
+            # Shell
+            shellcheck.enable = true;
+            shfmt.enable = true;
           };
         };
         packages.default = config.packages.cuda-redist-find-features;
