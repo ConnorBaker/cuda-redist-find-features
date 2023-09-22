@@ -9,7 +9,7 @@ authors = [{ name = "Connor Baker", email = "connorbaker@tweag.io" }]
 requires-python = ">=3.10"
 license = { text = "BSD-3-Clause" }
 description = "Find the features of a CUDA redistributable package"
-dependencies = ["pydantic>=1.10.8", "typing-extensions>=4.5.0"]
+dependencies = ["click>=8.1.0", "pydantic>=1.10.8", "typing-extensions>=4.5.0"]
 
 [project.optional-dependencies]
 dev = ["black>=21.9b0", "mypy>=0.910", "ruff>=0.3.0"]
