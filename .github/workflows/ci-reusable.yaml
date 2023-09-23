@@ -46,7 +46,7 @@ jobs:
           nix "${NIX_ARGS[@]}"
 
   run-cuda-download-manifests:
-    name: Run for CUDA download-manifests
+    name: Download manifests for CUDA
     needs: build
     runs-on: ${{ inputs.os }}
     env:
@@ -68,13 +68,13 @@ jobs:
           path: ./manifests/
 
   run-cuda-process-manifests:
-    name: Run for CUDA ${{ matrix.cuda-version }} process-manifests
+    name: Process manifest for CUDA ${{ matrix.version }}
     needs: build
     runs-on: ${{ inputs.os }}
     strategy:
       fail-fast: false
       matrix:
-        cuda-version:
+        version:
           - "11.8.0"
           - "12.2.2"
     env:
@@ -88,7 +88,7 @@ jobs:
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "--debug" "--version" "${{ matrix.cuda-version }}" "download-manifests" "${{ env.URL_PREFIX }}" "./manifests")
+          NIX_ARGS+=(".#" "--" "--debug" "download-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--version" "${{ matrix.version }}")
           nix "${NIX_ARGS[@]}"
       - run: |
           NIX_ARGS=("run" "--print-build-logs")
@@ -97,9 +97,14 @@ jobs:
           fi
           NIX_ARGS+=(".#" "--" "--debug" "process-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--cleanup")
           nix "${NIX_ARGS[@]}"
+      # Collect the processed manifests in the same artifact
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cuda_manifests_processed_${{ inputs.nixpkgs-commit != '' && inputs.nixpkgs-commit || 'lock' }}
+          path: ./manifests/
 
   run-cutensor-download-manifests:
-    name: Run for cuTensor download-manifests
+    name: Download manifests for cuTensor
     needs: build
     runs-on: ${{ inputs.os }}
     env:
@@ -121,9 +126,14 @@ jobs:
           path: ./manifests/
 
   run-cutensor-process-manifests:
-    name: Run for cuTensor process-manifests
+    name: Process manifest for cuTensor ${{ matrix.version }}
     needs: build
     runs-on: ${{ inputs.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - "1.7.0"
     env:
       URL_PREFIX: https://developer.download.nvidia.com/compute/cutensor/redist
     steps:
@@ -135,7 +145,7 @@ jobs:
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "--debug" "download-manifests" "${{ env.URL_PREFIX }}" "./manifests")
+          NIX_ARGS+=(".#" "--" "--debug" "download-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--version" "${{ matrix.version }}")
           nix "${NIX_ARGS[@]}"
       - run: |
           NIX_ARGS=("run" "--print-build-logs")
@@ -144,3 +154,8 @@ jobs:
           fi
           NIX_ARGS+=(".#" "--" "--debug" "process-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--cleanup")
           nix "${NIX_ARGS[@]}"
+      # Collect the processed manifests in the same artifact
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cutensor_manifests_processed_${{ inputs.nixpkgs-commit != '' && inputs.nixpkgs-commit || 'lock' }}
+          path: ./manifests/
