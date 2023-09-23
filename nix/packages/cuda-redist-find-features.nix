@@ -1,5 +1,5 @@
 {
-  buildPythonApplication,
+  buildPythonPackage,
   lib,
   # propagatedBuildInputs
   click,
@@ -43,4 +43,4 @@
     };
   };
 in
-  buildPythonApplication attrs
+  buildPythonPackage attrs
