@@ -104,8 +104,8 @@ class ManifestRef(BaseModel):
             s: str = response.read().decode("utf-8")
 
             regex_str: str
-            if version_constraint.version_exactly is not None:
-                regex_str = f"href=['\"]redistrib_({version_constraint.version_exactly}).json['\"]".replace(".", "\\.")
+            if version_constraint.version is not None:
+                regex_str = f"href=['\"]redistrib_({version_constraint.version}).json['\"]".replace(".", "\\.")
             else:
                 regex_str = r'href=[\'"]redistrib_(\d+\.\d+\.\d+(?:.\d+)?)\.json[\'"]'
 
@@ -135,8 +135,8 @@ class ManifestRef(BaseModel):
             raise ValueError(err_msg)
 
         glob_str: str
-        if version_constraint.version_exactly is not None:
-            glob_str = f"redistrib_{version_constraint.version_exactly}.json"
+        if version_constraint.version is not None:
+            glob_str = f"redistrib_{version_constraint.version}.json"
         else:
             # NOTE: Use the numbers 0-9 to match any version number and avoid matching redistrib_features_*.json
             glob_str = f"redistrib_[{''.join(map(str,range(0,10)))}]*.json"

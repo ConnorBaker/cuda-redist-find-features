@@ -77,8 +77,20 @@
         treefmt = {
           projectRootFile = "flake.nix";
           programs = {
-            # Markdown
-            mdformat.enable = true;
+            # Markdown, YAML, JSON
+            prettier = {
+              enable = true;
+              includes = [
+                "*.json"
+                "*.md"
+                "*.yaml"
+              ];
+              settings = {
+                embeddedLanguageFormatting = "auto";
+                printWidth = 120;
+                tabWidth = 2;
+              };
+            };
 
             # Nix
             alejandra.enable = true;

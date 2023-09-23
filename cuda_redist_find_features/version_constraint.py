@@ -16,7 +16,7 @@ _NoneOrVersion = TypeVar("_NoneOrVersion", None, Version)
 class VersionConstraint:
     version_min: None | Version = None
     version_max: None | Version = None
-    version_exactly: None | Version = None
+    version: None | Version = None
 
     @validator("version_max")
     def min_max_order(
@@ -32,8 +32,8 @@ class VersionConstraint:
         else:
             return version_max
 
-    @validator("version_exactly")
-    def version_exactly_exclusivity(
+    @validator("version")
+    def version_exclusivity(
         cls,
         version: _NoneOrVersion,
         values: dict[str, None | Version],
@@ -41,18 +41,18 @@ class VersionConstraint:
         version_min = values.get("version_min")
         version_max = values.get("version_max")
         if version is not None and (version_min is not None or version_max is not None):
-            err_msg = "Invalid version constraint: Cannot specify both version_exactly and version_min or version_max"
+            err_msg = "Invalid version constraint: Cannot specify both version and version_min or version_max"
             logging.error(err_msg)
             raise ValueError(err_msg)
         else:
             return version
 
     def is_satisfied_by(self, version: Version) -> tuple[bool, str]:
-        if self.version_exactly is not None:
-            sat = version == self.version_exactly
-            return sat, f"version {version} {'is' if sat else 'is not'} exactly {self.version_exactly}"
+        if self.version is not None:
+            sat = version == self.version
+            return sat, f"version {version} {'is' if sat else 'is not'} exactly {self.version}"
 
-        # Recall that version_exactly is exclusive with version_min and version_max -- so we handle it in a separate
+        # Recall that version is exclusive with version_min and version_max -- so we handle it in a separate
         # case.
         if self.version_min is not None and self.version_max is not None:
             sat = self.version_min <= version <= self.version_max

@@ -15,7 +15,7 @@ dependencies = ["click>=8.1.0", "pydantic>=1.10.8", "typing-extensions>=4.5.0"]
 dev = ["black>=21.9b0", "mypy>=0.910", "ruff>=0.3.0"]
 
 [project.scripts]
-cuda-redist-find-features = "cuda_redist_find_features.__main__:main"
+cuda-redist-find-features = "cuda_redist_find_features.cmd:main"
 
 [tool.black]
 line-length = 120
