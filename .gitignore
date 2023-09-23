@@ -9,3 +9,9 @@ __pycache__
 
 # Shell
 .direnv
+
+# Used in generating the readme
+cutensor_manifests
+
+# Nix
+result
