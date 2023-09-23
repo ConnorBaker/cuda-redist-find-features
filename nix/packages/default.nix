@@ -1,7 +1,8 @@
 {
   perSystem = {pkgs, ...}: {
     packages = {
-      cuda-redist-find-features = pkgs.python3Packages.callPackage ./cuda-redist-find-features.nix {};
+      inherit (pkgs) regen-readme;
+      inherit (pkgs.python3Packages) cuda-redist-find-features;
     };
   };
 }
