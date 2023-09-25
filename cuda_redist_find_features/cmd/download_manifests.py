@@ -3,21 +3,22 @@ from pathlib import Path
 
 from pydantic import HttpUrl
 
-from ..manifest import ManifestRef
+from ..manifest.nvidia import NvidiaManifestRef
 from ..version import Version
 from ..version_constraint import VersionConstraint
-from . import arguments, options
 from .__main__ import main
+from .argument import manifest_dir_argument, url_argument
+from .option import debug_option, max_version_option, min_version_option, no_parallel_option, version_option
 
 
 @main.command()
-@arguments.url
-@arguments.manifest_dir(file_okay=False, dir_okay=True)
-@options.debug
-@options.no_parallel
-@options.min_version
-@options.max_version
-@options.version
+@url_argument
+@manifest_dir_argument(file_okay=False, dir_okay=True)
+@debug_option
+@no_parallel_option
+@min_version_option
+@max_version_option
+@version_option
 def download_manifests(
     url: HttpUrl,
     manifest_dir: Path,
@@ -40,7 +41,7 @@ def download_manifests(
     # Create the version constraint
     version_constraint = VersionConstraint(min_version, max_version, version)
     # Parse and filter
-    refs = ManifestRef.from_ref(url, version_constraint)
+    refs = NvidiaManifestRef.from_ref(url, version_constraint)
     # Download them
     if no_parallel:
         for ref in refs:
@@ -49,9 +50,6 @@ def download_manifests(
 
     with ProcessPoolExecutor() as executor:
         futures: list[Future[Path]] = [executor.submit(ref.download, manifest_dir) for ref in refs]
-
-        # Wait for all futures to complete.
-        executor.shutdown(wait=True)
 
         # Check for exceptions
         for future in futures:

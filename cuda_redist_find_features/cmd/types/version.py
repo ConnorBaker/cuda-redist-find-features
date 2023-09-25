@@ -20,4 +20,4 @@ class Version(click.ParamType):
             self.fail(f"{value} is not a valid version string", param, ctx)
 
 
-VERSION_OPTION = Version()
+VERSION_PARAM_TYPE = Version()

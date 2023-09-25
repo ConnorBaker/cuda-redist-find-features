@@ -1,6 +1,3 @@
-from __future__ import annotations
-
-import logging
 from typing import TypeVar
 
 from pydantic import validator
@@ -26,9 +23,7 @@ class VersionConstraint:
     ) -> _NoneOrVersion:
         version_min = values.get("version_min")
         if version_min is not None and version_max is not None and version_min > version_max:
-            err_msg = "Invalid version constraint: version_min must be less than or equal to version_max"
-            logging.error(err_msg)
-            raise ValueError(err_msg)
+            raise ValueError("Invalid version constraint: version_min must be less than or equal to version_max")
         else:
             return version_max
 
@@ -41,9 +36,7 @@ class VersionConstraint:
         version_min = values.get("version_min")
         version_max = values.get("version_max")
         if version is not None and (version_min is not None or version_max is not None):
-            err_msg = "Invalid version constraint: Cannot specify both version and version_min or version_max"
-            logging.error(err_msg)
-            raise ValueError(err_msg)
+            raise ValueError("Invalid version constraint: Cannot specify both version and version_min or version_max")
         else:
             return version
 

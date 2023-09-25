@@ -1,9 +1,9 @@
 import click
 
-from . import options
+from . import option
 
 
 @click.group()
-@options.debug
+@option.debug_option
 def main(debug: bool) -> None:
     return

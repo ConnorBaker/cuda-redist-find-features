@@ -1,93 +1,85 @@
-from __future__ import annotations
-
-import json
 import logging
 import re
 import time
+from functools import singledispatchmethod
 from pathlib import Path
-from typing import Any, TypeAlias
 from urllib import request
 
 import pydantic
 from pydantic import BaseModel, HttpUrl
-from pydantic.tools import parse_obj_as
 from typing_extensions import Self
 
-from cuda_redist_find_features import generic
+from cuda_redist_find_features.types import Ref
 from cuda_redist_find_features.version import Version
 from cuda_redist_find_features.version_constraint import VersionConstraint
 
-
-class Release(BaseModel):
-    relative_path: str
-    sha256: str
-    md5: str
-    size: str
+from .manifest import NvidiaManifest
 
 
-Ref: TypeAlias = HttpUrl | Path
-Package: TypeAlias = generic.Package[Release]
-
-
-class ManifestRef(BaseModel):
+class NvidiaManifestRef(BaseModel):
     ref: Ref
     version: Version
 
-    def read_bytes(self) -> bytes:
-        logging.debug(f"Reading manifest from {self.ref}...")
+    def retrieve(self) -> bytes:
+        """
+        Retrieves the manifest from the specified URL or file path.
+        """
+        logging.debug(f"Retrieving manifest from {self.ref}...")
         start_time = time.time()
-        content_bytes: bytes
-
-        match self.ref:
-            case HttpUrl():
-                with request.urlopen(self.ref) as response:
-                    if response.status != 200:
-                        err_msg = f"Failed to fetch url {self.ref}: {response.status} {response.reason}"
-                        logging.error(err_msg)
-                        raise RuntimeError(err_msg)
-                    content_bytes = response.read()
-            case Path():
-                if not (self.ref.exists() and self.ref.is_file()):
-                    err_msg = f"Failed to fetch file {self.ref}: No such file exists"
-                    logging.error(err_msg)
-                    raise RuntimeError(err_msg)
-                content_bytes = self.ref.read_bytes()
-            case unknown:
-                err_msg = f"Failed to fetch {self.ref}: value of type {type(unknown)} a valid URL or file path"
-                logging.error(err_msg)
-                raise ValueError(err_msg)
-
+        content_bytes: bytes = self._retrieve(self.ref)
         end_time = time.time()
-        logging.debug(f"Read {self.ref} in {end_time - start_time} seconds.")
+        logging.debug(f"Retrieved {self.ref} in {end_time - start_time} seconds.")
         return content_bytes
 
-    def parse_manifest(self) -> dict[str, Package]:
-        content_bytes: bytes = self.read_bytes()
-        manifest_json: dict[str, Any] = json.loads(content_bytes)
-        release_date = manifest_json.pop("release_date", None)
-        manifest_json.pop("release_label", None)
-        manifest_json.pop("release_product", None)
-        manifest = parse_obj_as(dict[str, Package], manifest_json)
-        logging.info(f"Loaded manifest: {self.ref}")
-        logging.info(f"Version: {self.version}")
-        logging.info(f"Release date: {release_date or 'unknown'}")
-        logging.debug(f"Manifest keys: {manifest.keys()}")
+    @singledispatchmethod
+    @staticmethod
+    def _retrieve(ref: Ref) -> bytes:
+        raise NotImplementedError(
+            f"Failed to retrieve {ref}: value of type {type(ref)} is not a valid URL or file path"
+        )
+
+    @_retrieve.register
+    @staticmethod
+    def _(ref: HttpUrl) -> bytes:
+        with request.urlopen(ref) as response:
+            if response.status != 200:
+                raise RuntimeError(f"Failed to fetch url {ref}: {response.status} {response.reason}")
+            return response.read()
+
+    @_retrieve.register
+    @staticmethod
+    def _(ref: Path) -> bytes:
+        if not (ref.exists() and ref.is_file()):
+            raise RuntimeError(f"Failed to fetch file {ref}: No such file exists")
+        return ref.read_bytes()
+
+    def parse(self) -> NvidiaManifest:
+        logging.debug(f"Reading manifest from {self.ref}...")
+        start_time = time.time()
+        content_bytes: bytes = self.retrieve()
+        # manifest_json: dict[str, Any] = json.loads(content_bytes)
+        manifest = NvidiaManifest.parse_raw(content_bytes)
+        end_time = time.time()
+        logging.debug(f"Read {self.ref} in {end_time - start_time} seconds.")
+        logging.info(f"Manifest version: {self.version}")
+        logging.info(f"Manifest date: {manifest.release_date or 'unknown'}")
+        logging.info(f"Manifest label: {manifest.release_label or 'unknown'}")
+        logging.info(f"Manifest product: {manifest.release_product or 'unknown'}")
+        logging.debug(f"Manifest keys: {manifest.releases().keys()}")
 
         return manifest
 
     def download(self, path: Path) -> Path:
         """
-        Downloads the manifest to the specified directory.
+        Downloads or copies the manifest to the specified directory.
         """
         path.mkdir(parents=True, exist_ok=True)
         if path.is_file():
-            err_msg = f"Failed to create directory {path}: A file exists with that name"
-            logging.error(err_msg)
-            raise ValueError(err_msg)
+            raise ValueError(f"Failed to create directory {path}: A file exists with that name")
 
         filename: str = f"redistrib_{self.version}.json"
         dest_path: Path = path / filename
-        content_bytes: bytes = self.read_bytes()
+        content_bytes: bytes = self.retrieve()
         dest_path.write_bytes(content_bytes)
         return dest_path
 
@@ -96,9 +88,7 @@ class ManifestRef(BaseModel):
         refs: list[Self] = []
         with request.urlopen(url) as response:
             if response.status != 200:
-                err_msg = f"Failed to fetch url {url}: {response.status} {response.reason}"
-                logging.error(err_msg)
-                raise RuntimeError(err_msg)
+                raise RuntimeError(f"Failed to fetch url {url}: {response.status} {response.reason}")
             else:
                 logging.debug(f"Fetched {url} successfully.")
             s: str = response.read().decode("utf-8")
@@ -126,13 +116,9 @@ class ManifestRef(BaseModel):
     def _from_dir(cls, dir: Path, version_constraint: VersionConstraint) -> list[Self]:
         refs: list[Self] = []
         if not dir.exists():
-            err_msg = f"Failed to fetch manifests from {dir}: No such directory exists"
-            logging.error(err_msg)
-            raise ValueError(err_msg)
+            raise ValueError(f"Failed to fetch manifests from {dir}: No such directory exists")
         if not dir.is_dir():
-            err_msg = f"Failed to fetch manifests from {dir}: Not a directory"
-            logging.error(err_msg)
-            raise ValueError(err_msg)
+            raise ValueError(f"Failed to fetch manifests from {dir}: Not a directory")
 
         glob_str: str
         if version_constraint.version is not None:
@@ -169,9 +155,9 @@ class ManifestRef(BaseModel):
             case Path():
                 refs = cls._from_dir(ref, version_constraint)
             case unknown:
-                err_msg = f"Failed to fetch {ref}: value of type {type(unknown)} is not a valid URL or file path"
-                logging.error(err_msg)
-                raise ValueError(err_msg)
+                raise ValueError(
+                    f"Failed to fetch {ref}: value of type {type(unknown)} is not a valid URL or file path"
+                )
 
         end_time = time.time()
         logging.debug(f"Found {len(refs)} manifests in {end_time - start_time} seconds.")

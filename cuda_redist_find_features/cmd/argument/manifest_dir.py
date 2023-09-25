@@ -5,13 +5,15 @@ from typing import Callable
 import click
 
 
-def _manifest_dir_callback(ctx: click.Context, param: click.Parameter, manifest_dir: pathlib.Path) -> pathlib.Path:
+def _manifest_dir_argument_callback(
+    ctx: click.Context, param: click.Parameter, manifest_dir: pathlib.Path
+) -> pathlib.Path:
     if manifest_dir:
         logging.info(f"Using dir {manifest_dir}.")
     return manifest_dir
 
 
-def manifest_dir(
+def manifest_dir_argument(
     exists: bool = False,
     file_okay: bool = True,
     dir_okay: bool = True,
@@ -34,5 +36,5 @@ def manifest_dir(
             allow_dash=allow_dash,
             executable=executable,
         ),
-        callback=_manifest_dir_callback,
+        callback=_manifest_dir_argument_callback,
     )

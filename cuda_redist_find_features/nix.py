@@ -4,10 +4,9 @@ import time
 from pathlib import Path
 from typing import Sequence
 
-import pydantic
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl, parse_raw_as
 
-from cuda_redist_find_features import manifest
+from .types import Sha256
 
 
 class NixStoreEntry(BaseModel):
@@ -15,15 +14,13 @@ class NixStoreEntry(BaseModel):
     store_path: Path = Field(alias="storePath")
 
 
-def nix_store_prefetch_file(url_prefix: str, release: manifest.Release) -> NixStoreEntry:
+def nix_store_prefetch_file(url: HttpUrl, sha256: Sha256) -> NixStoreEntry:
     """
     Adds a release to the Nix store.
 
     NOTE: By specifying the hash type and expected hash, we avoid redownloading.
     """
-    url: str = f"{url_prefix}/{release.relative_path}"
-    package_name: str = release.relative_path.split("/")[-1]
-    logging.debug(f"Adding {package_name} to the Nix store...")
+    logging.debug(f"Adding {url} to the Nix store...")
     start_time = time.time()
     result = subprocess.run(
         [
@@ -34,14 +31,14 @@ def nix_store_prefetch_file(url_prefix: str, release: manifest.Release) -> NixSt
             "--hash-type",
             "sha256",
             "--expected-hash",
-            release.sha256,
+            sha256,
             url,
         ],
         capture_output=True,
         check=True,
     )
     end_time = time.time()
-    logging.debug(f"Added {package_name} to the Nix store in {end_time - start_time} seconds.")
+    logging.debug(f"Added {url} to the Nix store in {end_time - start_time} seconds.")
     return NixStoreEntry.parse_raw(result.stdout)
 
 
@@ -62,7 +59,7 @@ def nix_store_unpack_archive(store_path: Path) -> NixStoreEntry:
     )
     end_time = time.time()
     logging.debug(f"Unpacked {store_path} in {end_time - start_time} seconds.")
-    return pydantic.parse_raw_as(NixStoreEntry, result.stdout)
+    return parse_raw_as(NixStoreEntry, result.stdout)
 
 
 def nix_store_delete(store_paths: Sequence[Path]) -> None:

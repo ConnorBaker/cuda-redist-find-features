@@ -1,6 +1,8 @@
 {
   buildPythonPackage,
   lib,
+  # buildInputs
+  cudaPackages,
   # propagatedBuildInputs
   click,
   pydantic,
@@ -13,6 +15,11 @@
 }: let
   toModuleName = builtins.replaceStrings ["-"] ["_"];
   moduleName = toModuleName attrs.pname;
+  pythonPropagatedBuildInputs = [
+    click
+    pydantic
+    typing-extensions
+  ];
   attrs = {
     pname = "cuda-redist-find-features";
     version = "0.1.0";
@@ -21,15 +28,16 @@
       "${moduleName}(:?/.*)?"
       "pyproject.toml"
     ];
-    propagatedBuildInputs = [
-      click
-      pydantic
-      typing-extensions
-    ];
+    propagatedBuildInputs =
+      [
+        cudaPackages.cuda_cuobjdump
+      ]
+      ++ pythonPropagatedBuildInputs;
     pythonImportsCheck =
       builtins.map
       (drv: toModuleName drv.pname)
-      (attrs.propagatedBuildInputs ++ [attrs]);
+      # Check all python propagated build inputs and the package itself
+      (pythonPropagatedBuildInputs ++ [attrs]);
     passthru.optional-dependencies.dev = [
       black
       mypy

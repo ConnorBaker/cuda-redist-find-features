@@ -2,10 +2,12 @@ import logging
 
 import click
 
-from ..types import VERSION_OPTION, NoneOrVersion
+from ..types import VERSION_PARAM_TYPE, NoneOrVersion
 
 
-def _max_version_callback(ctx: click.Context, param: click.Parameter, max_version: NoneOrVersion) -> NoneOrVersion:
+def _max_version_option_callback(
+    ctx: click.Context, param: click.Parameter, max_version: NoneOrVersion
+) -> NoneOrVersion:
     if max_version is not None:
         if ctx.params.get("version") is not None:
             raise click.BadParameter("Cannot specify both --max-version and --version.")
@@ -15,10 +17,10 @@ def _max_version_callback(ctx: click.Context, param: click.Parameter, max_versio
     return max_version
 
 
-max_version = click.option(
+max_version_option = click.option(
     "--max-version",
-    type=VERSION_OPTION,
+    type=VERSION_PARAM_TYPE,
     default=None,
     help="Maximum version to accept. Exclusive with --version.",
-    callback=_max_version_callback,
+    callback=_max_version_option_callback,
 )

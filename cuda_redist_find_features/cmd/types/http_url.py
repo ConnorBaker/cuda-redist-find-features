@@ -12,4 +12,4 @@ class HttpUrl(click.ParamType):
             self.fail(f"{value} is not a valid URL: {err}", param, ctx)
 
 
-HTTP_URL_OPTION = HttpUrl()
+HTTP_URL_PARAM_TYPE = HttpUrl()

@@ -2,10 +2,12 @@ import logging
 
 import click
 
-from ..types import VERSION_OPTION, NoneOrVersion
+from ..types import VERSION_PARAM_TYPE, NoneOrVersion
 
 
-def _min_version_callback(ctx: click.Context, param: click.Parameter, min_version: NoneOrVersion) -> NoneOrVersion:
+def _min_version_option_callback(
+    ctx: click.Context, param: click.Parameter, min_version: NoneOrVersion
+) -> NoneOrVersion:
     if min_version is not None:
         if ctx.params.get("version") is not None:
             raise click.BadParameter("Cannot specify both --min-version and --version.")
@@ -15,10 +17,10 @@ def _min_version_callback(ctx: click.Context, param: click.Parameter, min_versio
     return min_version
 
 
-min_version = click.option(
+min_version_option = click.option(
     "--min-version",
-    type=VERSION_OPTION,
+    type=VERSION_PARAM_TYPE,
     default=None,
     help="Minimum version to accept. Exclusive with --version.",
-    callback=_min_version_callback,
+    callback=_min_version_option_callback,
 )
