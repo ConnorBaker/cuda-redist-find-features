@@ -63,7 +63,7 @@ nix run .# -- process-manifests --help
 <details><summary>download-manifests</summary>
 
 ```regen-readme
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug
 ```
 
 </details>
@@ -71,7 +71,7 @@ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/c
 <details><summary>download-manifests with --version</summary>
 
 ```regen-readme
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --version 1.4.0
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --version 1.4.0 --debug
 ```
 
 </details>
@@ -79,7 +79,7 @@ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/c
 <details><summary>download-manifests with --min-version and --max-version</summary>
 
 ```regen-readme
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2 --debug
 ```
 
 </details>
@@ -89,13 +89,13 @@ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/c
 Assuming
 
 ```console
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2 --debug
 ```
 
 was run previously,
 
 ```regen-readme
-nix run .# -- --debug process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests
+nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug
 ```
 
 </details>

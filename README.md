@@ -45,8 +45,7 @@ $ nix run .# -- --help
 Usage: cuda-redist-find-features [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  --debug / --no-debug  Enable debug logging.  [default: no-debug]
-  --help                Show this message and exit.
+  --help  Show this message and exit.
 
 Commands:
   download-manifests  Downloads manifest files found at URL to MANIFEST_DIR.
@@ -123,30 +122,30 @@ Options:
 <details><summary>download-manifests</summary>
 
 ```console
-$ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests
-[2023-09-25T20:48:42+0000][PID270526][debug][_debug_option_callback][INFO] Debug logging enabled.
-[2023-09-25T20:48:42+0000][PID270526][url][_url_argument_callback][INFO] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
-[2023-09-25T20:48:42+0000][PID270526][manifest_dir][_manifest_dir_argument_callback][INFO] Using dir cutensor_manifests.
-[2023-09-25T20:48:42+0000][PID270526][manifest_ref][from_ref][DEBUG] Fetching manifests from https://developer.download.nvidia.com/compute/cutensor/redist...
-[2023-09-25T20:48:43+0000][PID270526][manifest_ref][_from_url][DEBUG] Fetched https://developer.download.nvidia.com/compute/cutensor/redist successfully.
-[2023-09-25T20:48:43+0000][PID270526][manifest_ref][_from_url][DEBUG] Searching with regex href=[\'"]redistrib_(\d+\.\d+\.\d+(?:.\d+)?)\.json[\'"]...
-[2023-09-25T20:48:43+0000][PID270526][manifest_ref][from_ref][DEBUG] Found 8 manifests in 0.21956348419189453 seconds.
-[2023-09-25T20:48:43+0000][PID270538][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.2.json...
-[2023-09-25T20:48:43+0000][PID270539][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.3.json...
-[2023-09-25T20:48:43+0000][PID270540][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...
-[2023-09-25T20:48:43+0000][PID270541][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json...
-[2023-09-25T20:48:43+0000][PID270542][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json...
-[2023-09-25T20:48:43+0000][PID270543][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json...
-[2023-09-25T20:48:43+0000][PID270544][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json...
-[2023-09-25T20:48:43+0000][PID270545][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json...
-[2023-09-25T20:48:43+0000][PID270542][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json in 0.04378509521484375 seconds.
-[2023-09-25T20:48:43+0000][PID270538][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.2.json in 0.044081687927246094 seconds.
-[2023-09-25T20:48:43+0000][PID270540][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json in 0.044466257095336914 seconds.
-[2023-09-25T20:48:43+0000][PID270539][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.3.json in 0.04463458061218262 seconds.
-[2023-09-25T20:48:43+0000][PID270543][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json in 0.0456392765045166 seconds.
-[2023-09-25T20:48:43+0000][PID270541][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json in 0.04841113090515137 seconds.
-[2023-09-25T20:48:43+0000][PID270544][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json in 0.05264472961425781 seconds.
-[2023-09-25T20:48:43+0000][PID270545][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json in 0.05589413642883301 seconds.
+$ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug
+[2023-09-25T23:26:50+0000][PID602590][debug][_debug_option_callback][DEBUG] Debug logging enabled.
+[2023-09-25T23:26:50+0000][PID602590][url][_url_argument_callback][DEBUG] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
+[2023-09-25T23:26:50+0000][PID602590][manifest_dir][_manifest_dir_argument_callback][DEBUG] Using dir cutensor_manifests.
+[2023-09-25T23:26:50+0000][PID602590][manifest_ref][from_ref][DEBUG] Fetching manifests from https://developer.download.nvidia.com/compute/cutensor/redist...
+[2023-09-25T23:26:50+0000][PID602590][manifest_ref][_from_url][DEBUG] Fetched https://developer.download.nvidia.com/compute/cutensor/redist successfully.
+[2023-09-25T23:26:50+0000][PID602590][manifest_ref][_from_url][DEBUG] Searching with regex href=[\'"]redistrib_(\d+\.\d+\.\d+(?:.\d+)?)\.json[\'"]...
+[2023-09-25T23:26:50+0000][PID602590][manifest_ref][from_ref][DEBUG] Found 8 manifests in 0.49600982666015625 seconds.
+[2023-09-25T23:26:50+0000][PID604225][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.2.json...
+[2023-09-25T23:26:50+0000][PID604226][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.3.json...
+[2023-09-25T23:26:50+0000][PID604227][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...
+[2023-09-25T23:26:50+0000][PID604228][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json...
+[2023-09-25T23:26:50+0000][PID604229][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json...
+[2023-09-25T23:26:50+0000][PID604230][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json...
+[2023-09-25T23:26:50+0000][PID604232][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json...
+[2023-09-25T23:26:50+0000][PID604231][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json...
+[2023-09-25T23:26:50+0000][PID604232][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json in 0.04049253463745117 seconds.
+[2023-09-25T23:26:50+0000][PID604229][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json in 0.04684638977050781 seconds.
+[2023-09-25T23:26:50+0000][PID604225][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.2.json in 0.047983646392822266 seconds.
+[2023-09-25T23:26:50+0000][PID604228][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json in 0.05008816719055176 seconds.
+[2023-09-25T23:26:50+0000][PID604231][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json in 0.05514073371887207 seconds.
+[2023-09-25T23:26:50+0000][PID604230][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json in 0.055915117263793945 seconds.
+[2023-09-25T23:26:50+0000][PID604227][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json in 0.057801246643066406 seconds.
+[2023-09-25T23:26:50+0000][PID604226][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.3.json in 0.06162762641906738 seconds.
 ```
 
 </details>
@@ -154,18 +153,8 @@ $ nix run .# -- --debug download-manifests https://developer.download.nvidia.com
 <details><summary>download-manifests with --version</summary>
 
 ```console
-$ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --version 1.4.0
-[2023-09-25T20:48:43+0000][PID270575][debug][_debug_option_callback][INFO] Debug logging enabled.
-[2023-09-25T20:48:43+0000][PID270575][version][_version_option_callback][INFO] {}
-[2023-09-25T20:48:43+0000][PID270575][version][_version_option_callback][INFO] Version set to 1.4.0.
-[2023-09-25T20:48:43+0000][PID270575][url][_url_argument_callback][INFO] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
-[2023-09-25T20:48:43+0000][PID270575][manifest_dir][_manifest_dir_argument_callback][INFO] Using dir cutensor_manifests.
-[2023-09-25T20:48:43+0000][PID270575][manifest_ref][from_ref][DEBUG] Fetching manifests from https://developer.download.nvidia.com/compute/cutensor/redist...
-[2023-09-25T20:48:43+0000][PID270575][manifest_ref][_from_url][DEBUG] Fetched https://developer.download.nvidia.com/compute/cutensor/redist successfully.
-[2023-09-25T20:48:43+0000][PID270575][manifest_ref][_from_url][DEBUG] Searching with regex href=['"]redistrib_(1\.4\.0)\.json['"]...
-[2023-09-25T20:48:43+0000][PID270575][manifest_ref][from_ref][DEBUG] Found 1 manifests in 0.21380019187927246 seconds.
-[2023-09-25T20:48:43+0000][PID272210][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...
-[2023-09-25T20:48:43+0000][PID272210][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json in 0.04692959785461426 seconds.
+$ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --version 1.4.0 --debug
+
 ```
 
 </details>
@@ -173,29 +162,8 @@ $ nix run .# -- --debug download-manifests https://developer.download.nvidia.com
 <details><summary>download-manifests with --min-version and --max-version</summary>
 
 ```console
-$ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2
-[2023-09-25T20:48:44+0000][PID272247][debug][_debug_option_callback][INFO] Debug logging enabled.
-[2023-09-25T20:48:44+0000][PID272247][min_version][_min_version_option_callback][INFO] Minimum version set to 1.4.0.
-[2023-09-25T20:48:44+0000][PID272247][max_version][_max_version_option_callback][INFO] Maximum version set to 1.6.2.
-[2023-09-25T20:48:44+0000][PID272247][url][_url_argument_callback][INFO] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
-[2023-09-25T20:48:44+0000][PID272247][manifest_dir][_manifest_dir_argument_callback][INFO] Using dir cutensor_manifests.
-[2023-09-25T20:48:44+0000][PID272247][manifest_ref][from_ref][DEBUG] Fetching manifests from https://developer.download.nvidia.com/compute/cutensor/redist...
-[2023-09-25T20:48:44+0000][PID272247][manifest_ref][_from_url][DEBUG] Fetched https://developer.download.nvidia.com/compute/cutensor/redist successfully.
-[2023-09-25T20:48:44+0000][PID272247][manifest_ref][_from_url][DEBUG] Searching with regex href=[\'"]redistrib_(\d+\.\d+\.\d+(?:.\d+)?)\.json[\'"]...
-[2023-09-25T20:48:44+0000][PID272247][manifest_ref][_from_url][DEBUG] Skipping 1.3.2 because version 1.3.2 is not between 1.4.0 and 1.6.2
-[2023-09-25T20:48:44+0000][PID272247][manifest_ref][_from_url][DEBUG] Skipping 1.3.3 because version 1.3.3 is not between 1.4.0 and 1.6.2
-[2023-09-25T20:48:44+0000][PID272247][manifest_ref][_from_url][DEBUG] Skipping 1.7.0 because version 1.7.0 is not between 1.4.0 and 1.6.2
-[2023-09-25T20:48:44+0000][PID272247][manifest_ref][from_ref][DEBUG] Found 5 manifests in 0.23302197456359863 seconds.
-[2023-09-25T20:48:44+0000][PID273882][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...
-[2023-09-25T20:48:44+0000][PID273883][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json...
-[2023-09-25T20:48:44+0000][PID273884][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json...
-[2023-09-25T20:48:44+0000][PID273885][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json...
-[2023-09-25T20:48:44+0000][PID273886][manifest_ref][retrieve][DEBUG] Retrieving manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json...
-[2023-09-25T20:48:44+0000][PID273883][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json in 0.04961872100830078 seconds.
-[2023-09-25T20:48:44+0000][PID273886][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json in 0.049695730209350586 seconds.
-[2023-09-25T20:48:44+0000][PID273885][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json in 0.050943851470947266 seconds.
-[2023-09-25T20:48:44+0000][PID273884][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json in 0.0515291690826416 seconds.
-[2023-09-25T20:48:44+0000][PID273882][manifest_ref][retrieve][DEBUG] Retrieved https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json in 0.06182241439819336 seconds.
+$ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2 --debug
+
 ```
 
 </details>
@@ -205,2315 +173,1635 @@ $ nix run .# -- --debug download-manifests https://developer.download.nvidia.com
 Assuming
 
 ```console
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2 --debug
 ```
 
 was run previously,
 
 ```console
-$ nix run .# -- --debug process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests
-[2023-09-25T20:48:45+0000][PID273919][debug][_debug_option_callback][INFO] Debug logging enabled.
-[2023-09-25T20:48:45+0000][PID273919][url][_url_argument_callback][INFO] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
-[2023-09-25T20:48:45+0000][PID273919][manifest_dir][_manifest_dir_argument_callback][INFO] Using dir cutensor_manifests.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][from_ref][DEBUG] Fetching manifests from cutensor_manifests...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][_from_dir][DEBUG] Globbing for redistrib_[0123456789]*.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][from_ref][DEBUG] Found 8 manifests in 0.00033211708068847656 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.3.2.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.3.2.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.3.2.json in 5.269050598144531e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Read cutensor_manifests/redistrib_1.3.2.json in 0.000164031982421875 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest version: 1.3.2
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest date: 2021-09-22
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest label: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest product: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.3.3.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.3.3.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.3.3.json in 1.6450881958007812e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Read cutensor_manifests/redistrib_1.3.3.json in 0.00012803077697753906 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest version: 1.3.3
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest date: 2021-09-22
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest label: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest product: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.6.2.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.6.2.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.6.2.json in 1.430511474609375e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Read cutensor_manifests/redistrib_1.6.2.json in 9.799003601074219e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest version: 1.6.2
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest date: 2022-12-12
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest label: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest product: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.4.0.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.4.0.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.4.0.json in 1.2874603271484375e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Read cutensor_manifests/redistrib_1.4.0.json in 8.988380432128906e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest version: 1.4.0
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest date: 2021-11-19
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest label: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest product: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.6.0.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.6.0.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.6.0.json in 1.2159347534179688e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Read cutensor_manifests/redistrib_1.6.0.json in 8.821487426757812e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest version: 1.6.0
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest date: 2022-06-24
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest label: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest product: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.5.0.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.5.0.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.5.0.json in 1.1682510375976562e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Read cutensor_manifests/redistrib_1.5.0.json in 9.322166442871094e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest version: 1.5.0
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest date: 2022-03-08
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest label: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest product: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.6.1.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.6.1.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.6.1.json in 1.1444091796875e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Read cutensor_manifests/redistrib_1.6.1.json in 8.678436279296875e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest version: 1.6.1
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest date: 2022-10-05
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest label: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest product: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.7.0.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.7.0.json...
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.7.0.json in 1.1205673217773438e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Read cutensor_manifests/redistrib_1.7.0.json in 8.463859558105469e-05 seconds.
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest version: 1.7.0
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest date: 2023-03-16
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest label: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][INFO] Manifest product: unknown
-[2023-09-25T20:48:45+0000][PID273919][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-25T20:48:45+0000][PID273919][manifest][of][INFO] Release date: 2021-09-22
-[2023-09-25T20:48:45+0000][PID273919][manifest][of][INFO] Release label: None
-[2023-09-25T20:48:45+0000][PID273919][manifest][of][INFO] Release product: None
-[2023-09-25T20:48:45+0000][PID273919][manifest][of][INFO] Package: libcutensor
-[2023-09-25T20:48:45+0000][PID275554][release][of][INFO] Package: NVIDIA cuTENSOR
-[2023-09-25T20:48:45+0000][PID275554][release][of][DEBUG] License: cuTensor
-[2023-09-25T20:48:45+0000][PID275554][release][of][INFO] Version: 1.3.2.3
-[2023-09-25T20:48:45+0000][PID275554][release][of][INFO] Architecture: linux-ppc64le
-[2023-09-25T20:48:45+0000][PID275554][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz
-[2023-09-25T20:48:45+0000][PID275554][package][of][DEBUG] SHA256: 8a219f0bbbebabc9ad3ea70a77a84012fb4e3bc9da2808b1eca82b02e01d5113
-[2023-09-25T20:48:45+0000][PID275554][package][of][DEBUG] MD5: 9a70cf2abd0ba85ea4b5ec9da619900f
-[2023-09-25T20:48:45+0000][PID275554][package][of][DEBUG] Size: 202534904
-[2023-09-25T20:48:45+0000][PID275554][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:45+0000][PID275554][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz to the Nix store in 0.012848615646362305 seconds.
-[2023-09-25T20:48:45+0000][PID275554][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/1x3z7yz7w8i30i6y6ijbn2klyzw1aij0-libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz...
-[2023-09-25T20:48:45+0000][PID275554][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/1x3z7yz7w8i30i6y6ijbn2klyzw1aij0-libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz in 0.012529373168945312 seconds.
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/bin
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/include
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/info
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/doc
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/gtk-doc
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/devhelp/books
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/man
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib
-[2023-09-25T20:48:45+0000][PID275554][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so'), PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so')]
-[2023-09-25T20:48:45+0000][PID275554][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib
-[2023-09-25T20:48:45+0000][PID275554][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:45+0000][PID275554][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:45+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/samples
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source...
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so in 0.11990690231323242 seconds.
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so in 0.08373093605041504 seconds.
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_30'}
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so in 0.11661696434020996 seconds.
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a in 0.1804826259613037 seconds.
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a in 0.1239156723022461 seconds.
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:45+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a in 0.17730116844177246 seconds.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so to support the same architectures as sibling /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so to support the same architectures as sibling /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75'] but got ['sm_30', 'sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so to support the same architectures as sibling /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a to support the same architectures as sibling /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a to support the same architectures as sibling /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so: expected ['sm_30', 'sm_60', 'sm_70', 'sm_75'] but got ['sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a to support the same architectures as sibling /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a and /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source in 0.8033812046051025 seconds.
-[2023-09-25T20:48:46+0000][PID275554][release][of][INFO] Architecture: linux-sbsa
-[2023-09-25T20:48:46+0000][PID275554][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz
-[2023-09-25T20:48:46+0000][PID275554][package][of][DEBUG] SHA256: 6e92fee6a192f9fc19876df99544893f7b4cfb8b5ff1ce6d172474c6e13154ea
-[2023-09-25T20:48:46+0000][PID275554][package][of][DEBUG] MD5: 2fa78066ec2d5a734e4fb2732b87756e
-[2023-09-25T20:48:46+0000][PID275554][package][of][DEBUG] Size: 149057692
-[2023-09-25T20:48:46+0000][PID275554][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:46+0000][PID275554][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz to the Nix store in 0.01247715950012207 seconds.
-[2023-09-25T20:48:46+0000][PID275554][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/vbq8b32vzarri6x3scvp9prgff7szspx-libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz...
-[2023-09-25T20:48:46+0000][PID275554][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/vbq8b32vzarri6x3scvp9prgff7szspx-libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz in 0.01265263557434082 seconds.
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/bin
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/include
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/info
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/doc
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/gtk-doc
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/devhelp/books
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/man
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib
-[2023-09-25T20:48:46+0000][PID275554][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so'), PosixPath('/nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so')]
-[2023-09-25T20:48:46+0000][PID275554][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib
-[2023-09-25T20:48:46+0000][PID275554][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:46+0000][PID275554][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/samples
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so in 0.11825776100158691 seconds.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so in 0.1154322624206543 seconds.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a in 0.1617414951324463 seconds.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a in 0.16033124923706055 seconds.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so and /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so and /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so and /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so and /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a and /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a and /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a and /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a and /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source in 0.5566041469573975 seconds.
-[2023-09-25T20:48:46+0000][PID275554][release][of][INFO] Architecture: linux-x86_64
-[2023-09-25T20:48:46+0000][PID275554][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz
-[2023-09-25T20:48:46+0000][PID275554][package][of][DEBUG] SHA256: cf2b8f1f220cdc90aaec577bde144509f805739e00a857ef161f6a5e8b769697
-[2023-09-25T20:48:46+0000][PID275554][package][of][DEBUG] MD5: 0c73c3918dd893a8bdfec48de9e5c312
-[2023-09-25T20:48:46+0000][PID275554][package][of][DEBUG] Size: 201844004
-[2023-09-25T20:48:46+0000][PID275554][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:46+0000][PID275554][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz to the Nix store in 0.012421131134033203 seconds.
-[2023-09-25T20:48:46+0000][PID275554][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/0ss5gzdi3g7bmha52pqla9l29i2gmv2x-libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz...
-[2023-09-25T20:48:46+0000][PID275554][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/0ss5gzdi3g7bmha52pqla9l29i2gmv2x-libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz in 0.012712717056274414 seconds.
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/bin
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/include
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/info
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/doc
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/gtk-doc
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/devhelp/books
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/man
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib
-[2023-09-25T20:48:46+0000][PID275554][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so'), PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so')]
-[2023-09-25T20:48:46+0000][PID275554][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib
-[2023-09-25T20:48:46+0000][PID275554][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:46+0000][PID275554][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:46+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/samples
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so in 0.12030720710754395 seconds.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so in 0.08399271965026855 seconds.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_30'}
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so in 0.11783766746520996 seconds.
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:46+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a in 0.16557955741882324 seconds.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a in 0.1147756576538086 seconds.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a in 0.1637129783630371 seconds.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so to support the same architectures as sibling /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so to support the same architectures as sibling /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75'] but got ['sm_30', 'sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so to support the same architectures as sibling /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a to support the same architectures as sibling /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a to support the same architectures as sibling /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so: expected ['sm_30', 'sm_60', 'sm_70', 'sm_75'] but got ['sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][WARNING] Expected /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a to support the same architectures as sibling /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a and /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source in 0.7676205635070801 seconds.
-[2023-09-25T20:48:47+0000][PID275554][release][of][INFO] Architecture: windows-x86_64
-[2023-09-25T20:48:47+0000][PID275554][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.2.3-archive.zip
-[2023-09-25T20:48:47+0000][PID275554][package][of][DEBUG] SHA256: 7c7880de9c15db1d45cc24ce5758fcf9d1cd596139cfb57c97c2f764d86794b7
-[2023-09-25T20:48:47+0000][PID275554][package][of][DEBUG] MD5: b1a15df717b9aee125583150dda30150
-[2023-09-25T20:48:47+0000][PID275554][package][of][DEBUG] Size: 374934832
-[2023-09-25T20:48:47+0000][PID275554][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.2.3-archive.zip to the Nix store...
-[2023-09-25T20:48:47+0000][PID275554][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.2.3-archive.zip to the Nix store in 0.012338638305664062 seconds.
-[2023-09-25T20:48:47+0000][PID275554][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/1n8xrchy7im8v746vqjjj4s6jqhciv8g-libcutensor-windows-x86_64-1.3.2.3-archive.zip...
-[2023-09-25T20:48:47+0000][PID275554][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/1n8xrchy7im8v746vqjjj4s6jqhciv8g-libcutensor-windows-x86_64-1.3.2.3-archive.zip in 0.01251363754272461 seconds.
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/bin
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/include
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/info
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/doc
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/gtk-doc
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/devhelp/books
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/man
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/lib
-[2023-09-25T20:48:47+0000][PID275554][dynamic_library][detect][DEBUG] Found dynamic libraries: []
-[2023-09-25T20:48:47+0000][PID275554][dynamic_library][detect][INFO] Found dynamic libraries: False
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Found non-empty directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/lib
-[2023-09-25T20:48:47+0000][PID275554][static_library][detect][DEBUG] Found static libraries: []
-[2023-09-25T20:48:47+0000][PID275554][static_library][detect][INFO] Found static libraries: False
-[2023-09-25T20:48:47+0000][PID275554][dir][detect][INFO] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/samples
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source...
-[2023-09-25T20:48:47+0000][PID275554][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source in 7.200241088867188e-05 seconds.
-[2023-09-25T20:48:47+0000][PID273919][manifest][of][INFO] Release date: 2021-09-22
-[2023-09-25T20:48:47+0000][PID273919][manifest][of][INFO] Release label: None
-[2023-09-25T20:48:47+0000][PID273919][manifest][of][INFO] Release product: None
-[2023-09-25T20:48:47+0000][PID273919][manifest][of][INFO] Package: libcutensor
-[2023-09-25T20:48:47+0000][PID275644][release][of][INFO] Package: NVIDIA cuTENSOR
-[2023-09-25T20:48:47+0000][PID275644][release][of][DEBUG] License: cuTensor
-[2023-09-25T20:48:47+0000][PID275644][release][of][INFO] Version: 1.3.3.2
-[2023-09-25T20:48:47+0000][PID275644][release][of][INFO] Architecture: linux-ppc64le
-[2023-09-25T20:48:47+0000][PID275644][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz
-[2023-09-25T20:48:47+0000][PID275644][package][of][DEBUG] SHA256: 79f294c4a7933e5acee5f150145c526d6cd4df16eefb63f2d65df1dbc683cd68
-[2023-09-25T20:48:47+0000][PID275644][package][of][DEBUG] MD5: 1f632c9d33ffef9c819e10c95d69a134
-[2023-09-25T20:48:47+0000][PID275644][package][of][DEBUG] Size: 202541908
-[2023-09-25T20:48:47+0000][PID275644][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:47+0000][PID275644][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz to the Nix store in 0.012582063674926758 seconds.
-[2023-09-25T20:48:47+0000][PID275644][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/rr9mzpij9lb6ayzni2haf0vakl8jvgdf-libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz...
-[2023-09-25T20:48:47+0000][PID275644][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/rr9mzpij9lb6ayzni2haf0vakl8jvgdf-libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz in 0.012624263763427734 seconds.
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/bin
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/include
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/info
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/doc
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/gtk-doc
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/devhelp/books
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/man
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib
-[2023-09-25T20:48:47+0000][PID275644][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so'), PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so')]
-[2023-09-25T20:48:47+0000][PID275644][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib
-[2023-09-25T20:48:47+0000][PID275644][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:47+0000][PID275644][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:47+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/samples
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source...
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so in 0.11885714530944824 seconds.
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so in 0.08295083045959473 seconds.
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_30'}
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so in 0.11615252494812012 seconds.
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a in 0.17807412147521973 seconds.
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:47+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a in 0.1228480339050293 seconds.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a in 0.17655014991760254 seconds.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so to support the same architectures as sibling /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so to support the same architectures as sibling /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75'] but got ['sm_30', 'sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so to support the same architectures as sibling /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a to support the same architectures as sibling /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a to support the same architectures as sibling /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so: expected ['sm_30', 'sm_60', 'sm_70', 'sm_75'] but got ['sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a to support the same architectures as sibling /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a and /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source in 0.7969393730163574 seconds.
-[2023-09-25T20:48:48+0000][PID275644][release][of][INFO] Architecture: linux-sbsa
-[2023-09-25T20:48:48+0000][PID275644][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz
-[2023-09-25T20:48:48+0000][PID275644][package][of][DEBUG] SHA256: 0b62d5305abfdfca4776290f16a1796c78c1fa83b203680c012f37d44706fcdb
-[2023-09-25T20:48:48+0000][PID275644][package][of][DEBUG] MD5: e476675490aff0b154f2f38063f0c10b
-[2023-09-25T20:48:48+0000][PID275644][package][of][DEBUG] Size: 149059520
-[2023-09-25T20:48:48+0000][PID275644][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:48+0000][PID275644][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz to the Nix store in 0.012389421463012695 seconds.
-[2023-09-25T20:48:48+0000][PID275644][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/syxzdnwk6bik6kc2p559lga3wbs9wr0n-libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz...
-[2023-09-25T20:48:48+0000][PID275644][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/syxzdnwk6bik6kc2p559lga3wbs9wr0n-libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz in 0.012438297271728516 seconds.
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/bin
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/include
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/info
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/doc
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/gtk-doc
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/devhelp/books
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/man
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib
-[2023-09-25T20:48:48+0000][PID275644][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so'), PosixPath('/nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so')]
-[2023-09-25T20:48:48+0000][PID275644][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib
-[2023-09-25T20:48:48+0000][PID275644][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:48+0000][PID275644][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/samples
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so in 0.11816668510437012 seconds.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so in 0.11554551124572754 seconds.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a in 0.16198158264160156 seconds.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a in 0.16025924682617188 seconds.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so and /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so and /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so and /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so and /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a and /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a and /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a and /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a and /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source in 0.5568275451660156 seconds.
-[2023-09-25T20:48:48+0000][PID275644][release][of][INFO] Architecture: linux-x86_64
-[2023-09-25T20:48:48+0000][PID275644][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz
-[2023-09-25T20:48:48+0000][PID275644][package][of][DEBUG] SHA256: 2e9517f31305872a7e496b6aa8ea329acda6b947b0c1eb1250790eaa2d4e2ecc
-[2023-09-25T20:48:48+0000][PID275644][package][of][DEBUG] MD5: 977699555cfcc8d2ffeff018a0f975b0
-[2023-09-25T20:48:48+0000][PID275644][package][of][DEBUG] Size: 201849628
-[2023-09-25T20:48:48+0000][PID275644][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:48+0000][PID275644][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz to the Nix store in 0.012303829193115234 seconds.
-[2023-09-25T20:48:48+0000][PID275644][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/hqihs0z31dmd76ld4j7rlw3d77wmyd9m-libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz...
-[2023-09-25T20:48:48+0000][PID275644][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/hqihs0z31dmd76ld4j7rlw3d77wmyd9m-libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz in 0.01231074333190918 seconds.
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/bin
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/include
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/info
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/doc
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/gtk-doc
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/devhelp/books
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/man
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib
-[2023-09-25T20:48:48+0000][PID275644][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so'), PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so')]
-[2023-09-25T20:48:48+0000][PID275644][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib
-[2023-09-25T20:48:48+0000][PID275644][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:48+0000][PID275644][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:48+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/samples
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so in 0.11926722526550293 seconds.
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:48+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so in 0.08444738388061523 seconds.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_30'}
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so in 0.11804795265197754 seconds.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a in 0.16598987579345703 seconds.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a in 0.1153719425201416 seconds.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a in 0.16434550285339355 seconds.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so to support the same architectures as sibling /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so to support the same architectures as sibling /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75'] but got ['sm_30', 'sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so to support the same architectures as sibling /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a to support the same architectures as sibling /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a to support the same architectures as sibling /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so: expected ['sm_30', 'sm_60', 'sm_70', 'sm_75'] but got ['sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][WARNING] Expected /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a to support the same architectures as sibling /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a and /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source in 0.7689042091369629 seconds.
-[2023-09-25T20:48:49+0000][PID275644][release][of][INFO] Architecture: windows-x86_64
-[2023-09-25T20:48:49+0000][PID275644][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.3.2-archive.zip
-[2023-09-25T20:48:49+0000][PID275644][package][of][DEBUG] SHA256: 3abeacbe7085af7026ca1399a77c681c219c10a1448a062964e97aaac2b05851
-[2023-09-25T20:48:49+0000][PID275644][package][of][DEBUG] MD5: fe75f031c53260c00ad5f7c5d69d31e5
-[2023-09-25T20:48:49+0000][PID275644][package][of][DEBUG] Size: 374926147
-[2023-09-25T20:48:49+0000][PID275644][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.3.2-archive.zip to the Nix store...
-[2023-09-25T20:48:49+0000][PID275644][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.3.2-archive.zip to the Nix store in 0.01241159439086914 seconds.
-[2023-09-25T20:48:49+0000][PID275644][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/jbs6pjc4z4mn5pa392s84dad5nskysh0-libcutensor-windows-x86_64-1.3.3.2-archive.zip...
-[2023-09-25T20:48:49+0000][PID275644][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/jbs6pjc4z4mn5pa392s84dad5nskysh0-libcutensor-windows-x86_64-1.3.3.2-archive.zip in 0.012508630752563477 seconds.
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/bin
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/include
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/info
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/doc
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/gtk-doc
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/devhelp/books
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/man
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/lib
-[2023-09-25T20:48:49+0000][PID275644][dynamic_library][detect][DEBUG] Found dynamic libraries: []
-[2023-09-25T20:48:49+0000][PID275644][dynamic_library][detect][INFO] Found dynamic libraries: False
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Found non-empty directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/lib
-[2023-09-25T20:48:49+0000][PID275644][static_library][detect][DEBUG] Found static libraries: []
-[2023-09-25T20:48:49+0000][PID275644][static_library][detect][INFO] Found static libraries: False
-[2023-09-25T20:48:49+0000][PID275644][dir][detect][INFO] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/samples
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source...
-[2023-09-25T20:48:49+0000][PID275644][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source in 7.581710815429688e-05 seconds.
-[2023-09-25T20:48:49+0000][PID273919][manifest][of][INFO] Release date: 2022-12-12
-[2023-09-25T20:48:49+0000][PID273919][manifest][of][INFO] Release label: None
-[2023-09-25T20:48:49+0000][PID273919][manifest][of][INFO] Release product: None
-[2023-09-25T20:48:49+0000][PID273919][manifest][of][INFO] Package: libcutensor
-[2023-09-25T20:48:49+0000][PID275734][release][of][INFO] Package: NVIDIA cuTENSOR
-[2023-09-25T20:48:49+0000][PID275734][release][of][DEBUG] License: cuTensor
-[2023-09-25T20:48:49+0000][PID275734][release][of][INFO] Version: 1.6.2.3
-[2023-09-25T20:48:49+0000][PID275734][release][of][INFO] Architecture: linux-ppc64le
-[2023-09-25T20:48:49+0000][PID275734][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz
-[2023-09-25T20:48:49+0000][PID275734][package][of][DEBUG] SHA256: 558329fa05409f914ebbe218a1cf7c9ccffdb7aa2642b96db85fd78b5ad534d1
-[2023-09-25T20:48:49+0000][PID275734][package][of][DEBUG] MD5: 8d5d129aa7863312a95084ab5a27b7e7
-[2023-09-25T20:48:49+0000][PID275734][package][of][DEBUG] Size: 535585612
-[2023-09-25T20:48:49+0000][PID275734][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:49+0000][PID275734][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz to the Nix store in 0.012472152709960938 seconds.
-[2023-09-25T20:48:49+0000][PID275734][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/8gvv8lyz2qcjasxvxbq6mi3na8j4ncf1-libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz...
-[2023-09-25T20:48:49+0000][PID275734][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/8gvv8lyz2qcjasxvxbq6mi3na8j4ncf1-libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz in 0.01254892349243164 seconds.
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/bin
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/include
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/info
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/doc
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/gtk-doc
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/devhelp/books
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/man
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib
-[2023-09-25T20:48:49+0000][PID275734][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:48:49+0000][PID275734][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib
-[2023-09-25T20:48:49+0000][PID275734][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:49+0000][PID275734][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:49+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/samples
-[2023-09-25T20:48:49+0000][PID275734][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source...
-[2023-09-25T20:48:49+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:49+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so in 0.25818514823913574 seconds.
-[2023-09-25T20:48:49+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:49+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:48:49+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg.so in 0.0033712387084960938 seconds.
-[2023-09-25T20:48:49+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:49+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so in 0.16206908226013184 seconds.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg.so in 0.0030837059020996094 seconds.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so...
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so in 0.2938570976257324 seconds.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg.so...
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg.so in 0.0032491683959960938 seconds.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so in 0.22356653213500977 seconds.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg.so in 0.0031206607818603516 seconds.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg_static.a in 0.0029914379119873047 seconds.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:50+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a in 0.3630645275115967 seconds.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg_static.a in 0.003378152847290039 seconds.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a in 0.1897737979888916 seconds.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg_static.a...
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg_static.a in 0.00321197509765625 seconds.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a...
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a in 0.3574059009552002 seconds.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg_static.a in 0.003231048583984375 seconds.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a in 0.2746107578277588 seconds.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a and /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source in 2.1508514881134033 seconds.
-[2023-09-25T20:48:51+0000][PID275734][release][of][INFO] Architecture: linux-sbsa
-[2023-09-25T20:48:51+0000][PID275734][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz
-[2023-09-25T20:48:51+0000][PID275734][package][of][DEBUG] SHA256: 7d4d9088c892bb692ffd70750b49625d1ccbb85390f6eb7c70d6cf582df6d935
-[2023-09-25T20:48:51+0000][PID275734][package][of][DEBUG] MD5: f6e0cce3a3b38ced736e55a19da587a3
-[2023-09-25T20:48:51+0000][PID275734][package][of][DEBUG] Size: 450705724
-[2023-09-25T20:48:51+0000][PID275734][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:51+0000][PID275734][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz to the Nix store in 0.012498855590820312 seconds.
-[2023-09-25T20:48:51+0000][PID275734][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/gj9hgzj57jvnbh9h2rvqd957366d00k8-libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz...
-[2023-09-25T20:48:51+0000][PID275734][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/gj9hgzj57jvnbh9h2rvqd957366d00k8-libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz in 0.012619495391845703 seconds.
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/bin
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/include
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/info
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/doc
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/gtk-doc
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/devhelp/books
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/man
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib
-[2023-09-25T20:48:51+0000][PID275734][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:48:51+0000][PID275734][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib
-[2023-09-25T20:48:51+0000][PID275734][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:51+0000][PID275734][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:51+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/samples
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source...
-[2023-09-25T20:48:51+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so in 0.2827005386352539 seconds.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg.so in 0.003447294235229492 seconds.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so...
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so in 0.2838938236236572 seconds.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg.so...
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg.so in 0.0034439563751220703 seconds.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so in 0.22126007080078125 seconds.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg.so in 0.0034110546112060547 seconds.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg_static.a in 0.00301361083984375 seconds.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:52+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a in 0.3461456298828125 seconds.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg_static.a...
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg_static.a in 0.0032453536987304688 seconds.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a...
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a in 0.3417937755584717 seconds.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg_static.a in 0.0032815933227539062 seconds.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a in 0.26487040519714355 seconds.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a and /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source in 1.7625010013580322 seconds.
-[2023-09-25T20:48:53+0000][PID275734][release][of][INFO] Architecture: linux-x86_64
-[2023-09-25T20:48:53+0000][PID275734][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz
-[2023-09-25T20:48:53+0000][PID275734][package][of][DEBUG] SHA256: 0f2745681b1d0556f9f46ff6af4937662793498d7367b5f8f6b8625ac051629e
-[2023-09-25T20:48:53+0000][PID275734][package][of][DEBUG] MD5: b84a2f6712e39314f6c54b429152339f
-[2023-09-25T20:48:53+0000][PID275734][package][of][DEBUG] Size: 538838404
-[2023-09-25T20:48:53+0000][PID275734][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:53+0000][PID275734][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz to the Nix store in 0.012426137924194336 seconds.
-[2023-09-25T20:48:53+0000][PID275734][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/yxam1ah0h3lp7y15kjmj7mghnik2s799-libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz...
-[2023-09-25T20:48:53+0000][PID275734][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/yxam1ah0h3lp7y15kjmj7mghnik2s799-libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz in 0.02109241485595703 seconds.
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/bin
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/include
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/info
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/doc
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/gtk-doc
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/devhelp/books
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/man
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib
-[2023-09-25T20:48:53+0000][PID275734][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:48:53+0000][PID275734][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib
-[2023-09-25T20:48:53+0000][PID275734][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:53+0000][PID275734][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:53+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/samples
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source...
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so in 0.2854323387145996 seconds.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg.so in 0.0038826465606689453 seconds.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:53+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so in 0.15958690643310547 seconds.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg.so in 0.0037009716033935547 seconds.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so...
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so in 0.3025679588317871 seconds.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg.so...
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg.so in 0.0037848949432373047 seconds.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so in 0.22502732276916504 seconds.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg.so in 0.003781557083129883 seconds.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg_static.a in 0.003007173538208008 seconds.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:54+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a in 0.3547952175140381 seconds.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg_static.a in 0.0034189224243164062 seconds.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a in 0.19122934341430664 seconds.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg_static.a...
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg_static.a in 0.003371000289916992 seconds.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a...
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a in 0.3650703430175781 seconds.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg_static.a in 0.0033478736877441406 seconds.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a in 0.30200958251953125 seconds.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a and /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source in 2.216701030731201 seconds.
-[2023-09-25T20:48:55+0000][PID275734][release][of][INFO] Architecture: windows-x86_64
-[2023-09-25T20:48:55+0000][PID275734][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.2.3-archive.zip
-[2023-09-25T20:48:55+0000][PID275734][package][of][DEBUG] SHA256: 07cb312d7cafc7bb2f33d775e1ef5fffd1703d5c6656e785a7a8f0f01939907e
-[2023-09-25T20:48:55+0000][PID275734][package][of][DEBUG] MD5: 5ae1c56bf4d457933dc1acb58a4ac995
-[2023-09-25T20:48:55+0000][PID275734][package][of][DEBUG] Size: 1063805254
-[2023-09-25T20:48:55+0000][PID275734][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.2.3-archive.zip to the Nix store...
-[2023-09-25T20:48:55+0000][PID275734][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.2.3-archive.zip to the Nix store in 0.012433528900146484 seconds.
-[2023-09-25T20:48:55+0000][PID275734][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/kd1n6npcraidqj8yjpyr7iavjchdpgvw-libcutensor-windows-x86_64-1.6.2.3-archive.zip...
-[2023-09-25T20:48:55+0000][PID275734][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/kd1n6npcraidqj8yjpyr7iavjchdpgvw-libcutensor-windows-x86_64-1.6.2.3-archive.zip in 0.020880699157714844 seconds.
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/bin
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/include
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/info
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/doc
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/gtk-doc
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/devhelp/books
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/man
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/lib
-[2023-09-25T20:48:55+0000][PID275734][dynamic_library][detect][DEBUG] Found dynamic libraries: []
-[2023-09-25T20:48:55+0000][PID275734][dynamic_library][detect][INFO] Found dynamic libraries: False
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Found non-empty directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/lib
-[2023-09-25T20:48:55+0000][PID275734][static_library][detect][DEBUG] Found static libraries: []
-[2023-09-25T20:48:55+0000][PID275734][static_library][detect][INFO] Found static libraries: False
-[2023-09-25T20:48:55+0000][PID275734][dir][detect][INFO] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/samples
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source...
-[2023-09-25T20:48:55+0000][PID275734][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source in 0.00010156631469726562 seconds.
-[2023-09-25T20:48:55+0000][PID273919][manifest][of][INFO] Release date: 2021-11-19
-[2023-09-25T20:48:55+0000][PID273919][manifest][of][INFO] Release label: None
-[2023-09-25T20:48:55+0000][PID273919][manifest][of][INFO] Release product: None
-[2023-09-25T20:48:55+0000][PID273919][manifest][of][INFO] Package: libcutensor
-[2023-09-25T20:48:55+0000][PID275852][release][of][INFO] Package: NVIDIA cuTENSOR
-[2023-09-25T20:48:55+0000][PID275852][release][of][DEBUG] License: cuTensor
-[2023-09-25T20:48:55+0000][PID275852][release][of][INFO] Version: 1.4.0.6
-[2023-09-25T20:48:55+0000][PID275852][release][of][INFO] Architecture: linux-ppc64le
-[2023-09-25T20:48:55+0000][PID275852][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz
-[2023-09-25T20:48:55+0000][PID275852][package][of][DEBUG] SHA256: 5da44ff2562ab7b9286122653e54f28d2222c8aab4bb02e9bdd4cf7e4b7809be
-[2023-09-25T20:48:55+0000][PID275852][package][of][DEBUG] MD5: 6058c728485072c980f652c2de38b016
-[2023-09-25T20:48:55+0000][PID275852][package][of][DEBUG] Size: 218951992
-[2023-09-25T20:48:55+0000][PID275852][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:55+0000][PID275852][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz to the Nix store in 0.012577056884765625 seconds.
-[2023-09-25T20:48:55+0000][PID275852][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/5b7bmhi1l35i6kqx6rwxq2hxiicshkh4-libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz...
-[2023-09-25T20:48:56+0000][PID275852][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/5b7bmhi1l35i6kqx6rwxq2hxiicshkh4-libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz in 0.012605667114257812 seconds.
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/bin
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/include
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/info
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/doc
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/gtk-doc
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/devhelp/books
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/man
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib
-[2023-09-25T20:48:56+0000][PID275852][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:48:56+0000][PID275852][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib
-[2023-09-25T20:48:56+0000][PID275852][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:56+0000][PID275852][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:56+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/samples
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so in 0.1396191120147705 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg.so in 0.0019621849060058594 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so in 0.09237289428710938 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_30'}
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg.so in 0.0019216537475585938 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so in 0.13821911811828613 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg.so in 0.0018153190612792969 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg_static.a in 0.003486156463623047 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a in 0.21877026557922363 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg_static.a in 0.011961698532104492 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a in 0.1501476764678955 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg_static.a in 0.00457453727722168 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a in 0.2241687774658203 seconds.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so to support the same architectures as sibling /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so to support the same architectures as sibling /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75'] but got ['sm_30', 'sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so to support the same architectures as sibling /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a to support the same architectures as sibling /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a to support the same architectures as sibling /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so: expected ['sm_30', 'sm_60', 'sm_70', 'sm_75'] but got ['sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a to support the same architectures as sibling /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a and /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:56+0000][PID275852][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source in 0.9906847476959229 seconds.
-[2023-09-25T20:48:56+0000][PID275852][release][of][INFO] Architecture: linux-sbsa
-[2023-09-25T20:48:56+0000][PID275852][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz
-[2023-09-25T20:48:56+0000][PID275852][package][of][DEBUG] SHA256: 6b06d63a5bc49c1660be8c307795f8a901c93dcde7b064455a6c81333c7327f4
-[2023-09-25T20:48:56+0000][PID275852][package][of][DEBUG] MD5: a6f3fd515c052df43fbee9508ea87e1e
-[2023-09-25T20:48:56+0000][PID275852][package][of][DEBUG] Size: 163596044
-[2023-09-25T20:48:56+0000][PID275852][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:57+0000][PID275852][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz to the Nix store in 0.012490987777709961 seconds.
-[2023-09-25T20:48:57+0000][PID275852][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/jkzvn343kkanvldzp0apz0570zi766xg-libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz...
-[2023-09-25T20:48:57+0000][PID275852][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/jkzvn343kkanvldzp0apz0570zi766xg-libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz in 0.021114110946655273 seconds.
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/bin
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/include
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/info
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/doc
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/gtk-doc
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/devhelp/books
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/man
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib
-[2023-09-25T20:48:57+0000][PID275852][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:48:57+0000][PID275852][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib
-[2023-09-25T20:48:57+0000][PID275852][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:57+0000][PID275852][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/samples
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so in 0.1417250633239746 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg.so in 0.0019130706787109375 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so in 0.13862061500549316 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg.so in 0.0018832683563232422 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg_static.a in 0.0034978389739990234 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a in 0.21321582794189453 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg_static.a in 0.0027337074279785156 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a in 0.21816420555114746 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so and /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so and /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so and /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so and /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a and /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a and /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a and /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a and /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source in 0.7229251861572266 seconds.
-[2023-09-25T20:48:57+0000][PID275852][release][of][INFO] Architecture: linux-x86_64
-[2023-09-25T20:48:57+0000][PID275852][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz
-[2023-09-25T20:48:57+0000][PID275852][package][of][DEBUG] SHA256: 467ba189195fcc4b868334fc16a0ae1e51574139605975cc8004cedebf595964
-[2023-09-25T20:48:57+0000][PID275852][package][of][DEBUG] MD5: 5d4009390be0226fc3ee75d225053123
-[2023-09-25T20:48:57+0000][PID275852][package][of][DEBUG] Size: 218277136
-[2023-09-25T20:48:57+0000][PID275852][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:57+0000][PID275852][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz to the Nix store in 0.012607574462890625 seconds.
-[2023-09-25T20:48:57+0000][PID275852][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/q7jcksly352yawl1l7yzzf7l376ziwa3-libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz...
-[2023-09-25T20:48:57+0000][PID275852][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/q7jcksly352yawl1l7yzzf7l376ziwa3-libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz in 0.020966053009033203 seconds.
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/bin
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/include
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/info
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/doc
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/gtk-doc
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/devhelp/books
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/man
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib
-[2023-09-25T20:48:57+0000][PID275852][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:48:57+0000][PID275852][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib
-[2023-09-25T20:48:57+0000][PID275852][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:57+0000][PID275852][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:57+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/samples
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so in 0.14229607582092285 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg.so in 0.001874685287475586 seconds.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:57+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so in 0.09302759170532227 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_30'}
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg.so in 0.0018243789672851562 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so in 0.1379234790802002 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg.so in 0.001277923583984375 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg_static.a in 0.0021805763244628906 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a in 0.1790611743927002 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg_static.a in 0.002384185791015625 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a in 0.1191091537475586 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg_static.a in 0.0023827552795410156 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a in 0.18082070350646973 seconds.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so to support the same architectures as sibling /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so to support the same architectures as sibling /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75'] but got ['sm_30', 'sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so to support the same architectures as sibling /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a to support the same architectures as sibling /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a to support the same architectures as sibling /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so: expected ['sm_30', 'sm_60', 'sm_70', 'sm_75'] but got ['sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][WARNING] Expected /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a to support the same architectures as sibling /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a and /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source in 0.865924596786499 seconds.
-[2023-09-25T20:48:58+0000][PID275852][release][of][INFO] Architecture: windows-x86_64
-[2023-09-25T20:48:58+0000][PID275852][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.4.0.6-archive.zip
-[2023-09-25T20:48:58+0000][PID275852][package][of][DEBUG] SHA256: 4f01a8aac2c25177e928c63381a80e3342f214ec86ad66965dcbfe81fc5c901d
-[2023-09-25T20:48:58+0000][PID275852][package][of][DEBUG] MD5: d21e0d5f2bd8c29251ffacaa85f0d733
-[2023-09-25T20:48:58+0000][PID275852][package][of][DEBUG] Size: 431385567
-[2023-09-25T20:48:58+0000][PID275852][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.4.0.6-archive.zip to the Nix store...
-[2023-09-25T20:48:58+0000][PID275852][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.4.0.6-archive.zip to the Nix store in 0.012441873550415039 seconds.
-[2023-09-25T20:48:58+0000][PID275852][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/7j2jppzd7fi00m0hhq7b2jjp363y8i7v-libcutensor-windows-x86_64-1.4.0.6-archive.zip...
-[2023-09-25T20:48:58+0000][PID275852][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/7j2jppzd7fi00m0hhq7b2jjp363y8i7v-libcutensor-windows-x86_64-1.4.0.6-archive.zip in 0.012320518493652344 seconds.
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/bin
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/include
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/info
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/doc
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/gtk-doc
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/devhelp/books
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/man
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/lib
-[2023-09-25T20:48:58+0000][PID275852][dynamic_library][detect][DEBUG] Found dynamic libraries: []
-[2023-09-25T20:48:58+0000][PID275852][dynamic_library][detect][INFO] Found dynamic libraries: False
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Found non-empty directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/lib
-[2023-09-25T20:48:58+0000][PID275852][static_library][detect][DEBUG] Found static libraries: []
-[2023-09-25T20:48:58+0000][PID275852][static_library][detect][INFO] Found static libraries: False
-[2023-09-25T20:48:58+0000][PID275852][dir][detect][INFO] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/samples
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source...
-[2023-09-25T20:48:58+0000][PID275852][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source in 8.487701416015625e-05 seconds.
-[2023-09-25T20:48:58+0000][PID273919][manifest][of][INFO] Release date: 2022-06-24
-[2023-09-25T20:48:58+0000][PID273919][manifest][of][INFO] Release label: None
-[2023-09-25T20:48:58+0000][PID273919][manifest][of][INFO] Release product: None
-[2023-09-25T20:48:58+0000][PID273919][manifest][of][INFO] Package: libcutensor
-[2023-09-25T20:48:58+0000][PID275958][release][of][INFO] Package: NVIDIA cuTENSOR
-[2023-09-25T20:48:58+0000][PID275958][release][of][DEBUG] License: cuTensor
-[2023-09-25T20:48:58+0000][PID275958][release][of][INFO] Version: 1.6.0.3
-[2023-09-25T20:48:58+0000][PID275958][release][of][INFO] Architecture: linux-ppc64le
-[2023-09-25T20:48:58+0000][PID275958][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz
-[2023-09-25T20:48:58+0000][PID275958][package][of][DEBUG] SHA256: 6af9563a3581e1879dd17e9bae79ceae1b4084f45e735780125aab86056646eb
-[2023-09-25T20:48:58+0000][PID275958][package][of][DEBUG] MD5: 38e3cd74fb7c0fa9c0836a9d172b9737
-[2023-09-25T20:48:58+0000][PID275958][package][of][DEBUG] Size: 332890432
-[2023-09-25T20:48:58+0000][PID275958][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:58+0000][PID275958][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz to the Nix store in 0.012725114822387695 seconds.
-[2023-09-25T20:48:58+0000][PID275958][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/897fvwmby7nc9ii3adshfn7f2f671bbs-libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz...
-[2023-09-25T20:48:58+0000][PID275958][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/897fvwmby7nc9ii3adshfn7f2f671bbs-libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz in 0.012696027755737305 seconds.
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/bin
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/include
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/info
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/doc
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/gtk-doc
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/devhelp/books
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/man
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib
-[2023-09-25T20:48:58+0000][PID275958][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:48:58+0000][PID275958][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib
-[2023-09-25T20:48:58+0000][PID275958][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:58+0000][PID275958][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:58+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/samples
-[2023-09-25T20:48:58+0000][PID275958][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source...
-[2023-09-25T20:48:58+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so...
-[2023-09-25T20:48:58+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so in 0.202683687210083 seconds.
-[2023-09-25T20:48:58+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:58+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:48:58+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg.so in 0.0023691654205322266 seconds.
-[2023-09-25T20:48:58+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:58+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so in 0.1196901798248291 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg.so in 0.0023348331451416016 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so in 0.19337224960327148 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg.so in 0.0022296905517578125 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg_static.a in 0.0030977725982666016 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a in 0.26378417015075684 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg_static.a in 0.003308534622192383 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a in 0.16442418098449707 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg_static.a in 0.003185749053955078 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a in 0.2577049732208252 seconds.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a and /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source in 1.2199335098266602 seconds.
-[2023-09-25T20:48:59+0000][PID275958][release][of][INFO] Architecture: linux-sbsa
-[2023-09-25T20:48:59+0000][PID275958][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz
-[2023-09-25T20:48:59+0000][PID275958][package][of][DEBUG] SHA256: 802f030de069e7eeec2e72f151471fc9776f0272a81804690c749373505dcb70
-[2023-09-25T20:48:59+0000][PID275958][package][of][DEBUG] MD5: 38436011c8375ba78e2cd8c47182c6de
-[2023-09-25T20:48:59+0000][PID275958][package][of][DEBUG] Size: 253328216
-[2023-09-25T20:48:59+0000][PID275958][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:48:59+0000][PID275958][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz to the Nix store in 0.012278556823730469 seconds.
-[2023-09-25T20:48:59+0000][PID275958][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/0fldgjlk64r6yfs383ra9kmqqhydjyxx-libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz...
-[2023-09-25T20:48:59+0000][PID275958][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/0fldgjlk64r6yfs383ra9kmqqhydjyxx-libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz in 0.01250910758972168 seconds.
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/bin
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/include
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/info
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/doc
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/gtk-doc
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/devhelp/books
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/man
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib
-[2023-09-25T20:48:59+0000][PID275958][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:48:59+0000][PID275958][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib
-[2023-09-25T20:48:59+0000][PID275958][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:48:59+0000][PID275958][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:48:59+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/samples
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source...
-[2023-09-25T20:48:59+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so in 0.20048236846923828 seconds.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg.so in 0.002226591110229492 seconds.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so in 0.18967318534851074 seconds.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg.so in 0.0021162033081054688 seconds.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg_static.a in 0.0029909610748291016 seconds.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a in 0.25684046745300293 seconds.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg_static.a in 0.0032050609588623047 seconds.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a in 0.24905681610107422 seconds.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so and /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so and /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so and /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so and /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a and /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a and /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a and /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a and /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source in 0.9076073169708252 seconds.
-[2023-09-25T20:49:00+0000][PID275958][release][of][INFO] Architecture: linux-x86_64
-[2023-09-25T20:49:00+0000][PID275958][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz
-[2023-09-25T20:49:00+0000][PID275958][package][of][DEBUG] SHA256: b07e32a37eee1df7d9330e6d7faf9baf7fffd58007e2544164ea30aec49a5281
-[2023-09-25T20:49:00+0000][PID275958][package][of][DEBUG] MD5: 80ffc765748952385d3dbbaef262d72e
-[2023-09-25T20:49:00+0000][PID275958][package][of][DEBUG] Size: 333834656
-[2023-09-25T20:49:00+0000][PID275958][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:00+0000][PID275958][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz to the Nix store in 0.012563705444335938 seconds.
-[2023-09-25T20:49:00+0000][PID275958][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/gyzp5pspbipp9nmn0sqdl05b01br1rl2-libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz...
-[2023-09-25T20:49:00+0000][PID275958][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/gyzp5pspbipp9nmn0sqdl05b01br1rl2-libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz in 0.012502908706665039 seconds.
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/bin
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/include
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/info
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/doc
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/gtk-doc
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/devhelp/books
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/man
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib
-[2023-09-25T20:49:00+0000][PID275958][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:00+0000][PID275958][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib
-[2023-09-25T20:49:00+0000][PID275958][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:00+0000][PID275958][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:00+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/samples
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source...
-[2023-09-25T20:49:00+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so in 0.20168042182922363 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg.so in 0.0024242401123046875 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so in 0.12176084518432617 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg.so in 0.0023076534271240234 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so in 0.193314790725708 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg.so in 0.0022368431091308594 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg_static.a in 0.002904653549194336 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a in 0.2596566677093506 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg_static.a in 0.0031049251556396484 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a in 0.15969562530517578 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg_static.a in 0.0031404495239257812 seconds.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:01+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a in 0.2506260871887207 seconds.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a and /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source in 1.2046008110046387 seconds.
-[2023-09-25T20:49:02+0000][PID275958][release][of][INFO] Architecture: windows-x86_64
-[2023-09-25T20:49:02+0000][PID275958][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.0.3-archive.zip
-[2023-09-25T20:49:02+0000][PID275958][package][of][DEBUG] SHA256: e8875e43d8c4169dc65095cb81c5d1e4120f664b4e2288658d73a4a2c2558f3c
-[2023-09-25T20:49:02+0000][PID275958][package][of][DEBUG] MD5: 4c76fb8d24296d644033bc992e4159e4
-[2023-09-25T20:49:02+0000][PID275958][package][of][DEBUG] Size: 624418613
-[2023-09-25T20:49:02+0000][PID275958][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.0.3-archive.zip to the Nix store...
-[2023-09-25T20:49:02+0000][PID275958][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.0.3-archive.zip to the Nix store in 0.012602806091308594 seconds.
-[2023-09-25T20:49:02+0000][PID275958][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/ccl9i73nxn1vp47wq8a5mpnp68khdz2z-libcutensor-windows-x86_64-1.6.0.3-archive.zip...
-[2023-09-25T20:49:02+0000][PID275958][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/ccl9i73nxn1vp47wq8a5mpnp68khdz2z-libcutensor-windows-x86_64-1.6.0.3-archive.zip in 0.012572765350341797 seconds.
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/bin
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/include
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/info
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/doc
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/gtk-doc
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/devhelp/books
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/man
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/lib
-[2023-09-25T20:49:02+0000][PID275958][dynamic_library][detect][DEBUG] Found dynamic libraries: []
-[2023-09-25T20:49:02+0000][PID275958][dynamic_library][detect][INFO] Found dynamic libraries: False
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Found non-empty directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/lib
-[2023-09-25T20:49:02+0000][PID275958][static_library][detect][DEBUG] Found static libraries: []
-[2023-09-25T20:49:02+0000][PID275958][static_library][detect][INFO] Found static libraries: False
-[2023-09-25T20:49:02+0000][PID275958][dir][detect][INFO] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/samples
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source...
-[2023-09-25T20:49:02+0000][PID275958][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source in 8.368492126464844e-05 seconds.
-[2023-09-25T20:49:02+0000][PID273919][manifest][of][INFO] Release date: 2022-03-08
-[2023-09-25T20:49:02+0000][PID273919][manifest][of][INFO] Release label: None
-[2023-09-25T20:49:02+0000][PID273919][manifest][of][INFO] Release product: None
-[2023-09-25T20:49:02+0000][PID273919][manifest][of][INFO] Package: libcutensor
-[2023-09-25T20:49:02+0000][PID276064][release][of][INFO] Package: NVIDIA cuTENSOR
-[2023-09-25T20:49:02+0000][PID276064][release][of][DEBUG] License: cuTensor
-[2023-09-25T20:49:02+0000][PID276064][release][of][INFO] Version: 1.5.0.3
-[2023-09-25T20:49:02+0000][PID276064][release][of][INFO] Architecture: linux-ppc64le
-[2023-09-25T20:49:02+0000][PID276064][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz
-[2023-09-25T20:49:02+0000][PID276064][package][of][DEBUG] SHA256: ad736acc94e88673b04a3156d7d3a408937cac32d083acdfbd8435582cbe15db
-[2023-09-25T20:49:02+0000][PID276064][package][of][DEBUG] MD5: bcdafb6d493aceebfb9a420880f1486c
-[2023-09-25T20:49:02+0000][PID276064][package][of][DEBUG] Size: 208384668
-[2023-09-25T20:49:02+0000][PID276064][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:02+0000][PID276064][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz to the Nix store in 0.012737751007080078 seconds.
-[2023-09-25T20:49:02+0000][PID276064][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/9fy3afhldjlgigyc09348nc50ccr7kq1-libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz...
-[2023-09-25T20:49:02+0000][PID276064][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/9fy3afhldjlgigyc09348nc50ccr7kq1-libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz in 0.012670516967773438 seconds.
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/bin
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/include
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/info
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/doc
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/gtk-doc
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/devhelp/books
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/man
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib
-[2023-09-25T20:49:02+0000][PID276064][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:02+0000][PID276064][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib
-[2023-09-25T20:49:02+0000][PID276064][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:02+0000][PID276064][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:02+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/samples
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so in 0.1417534351348877 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg.so in 0.0023729801177978516 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so in 0.09076094627380371 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_30'}
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg.so in 0.002196073532104492 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so in 0.12686705589294434 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg.so in 0.0022971630096435547 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg_static.a in 0.0028228759765625 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a in 0.1665663719177246 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg_static.a in 0.0031392574310302734 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a in 0.11481785774230957 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg_static.a in 0.0032062530517578125 seconds.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:02+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a in 0.16562724113464355 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so to support the same architectures as sibling /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so to support the same architectures as sibling /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75'] but got ['sm_30', 'sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so to support the same architectures as sibling /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a to support the same architectures as sibling /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a to support the same architectures as sibling /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so: expected ['sm_30', 'sm_60', 'sm_70', 'sm_75'] but got ['sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a to support the same architectures as sibling /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a and /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source in 0.8241097927093506 seconds.
-[2023-09-25T20:49:03+0000][PID276064][release][of][INFO] Architecture: linux-sbsa
-[2023-09-25T20:49:03+0000][PID276064][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz
-[2023-09-25T20:49:03+0000][PID276064][package][of][DEBUG] SHA256: 5b9ac479b1dadaf40464ff3076e45f2ec92581c07df1258a155b5bcd142f6090
-[2023-09-25T20:49:03+0000][PID276064][package][of][DEBUG] MD5: 62149d726480d12c9a953d27edc208dc
-[2023-09-25T20:49:03+0000][PID276064][package][of][DEBUG] Size: 156512748
-[2023-09-25T20:49:03+0000][PID276064][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:03+0000][PID276064][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz to the Nix store in 0.012486457824707031 seconds.
-[2023-09-25T20:49:03+0000][PID276064][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/5vb91ij9n4rbc0zj6118flzbx1dp3n8j-libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz...
-[2023-09-25T20:49:03+0000][PID276064][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/5vb91ij9n4rbc0zj6118flzbx1dp3n8j-libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz in 0.021233081817626953 seconds.
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/bin
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/include
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/info
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/doc
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/gtk-doc
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/devhelp/books
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/man
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib
-[2023-09-25T20:49:03+0000][PID276064][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:03+0000][PID276064][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib
-[2023-09-25T20:49:03+0000][PID276064][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:03+0000][PID276064][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/samples
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so in 0.13134765625 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg.so in 0.002218484878540039 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so in 0.12678313255310059 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg.so in 0.002197742462158203 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg_static.a in 0.003017425537109375 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a in 0.15949630737304688 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg_static.a in 0.003095865249633789 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a in 0.15612435340881348 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so and /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so and /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so and /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so and /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a and /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a and /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a and /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a and /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source in 0.5854625701904297 seconds.
-[2023-09-25T20:49:03+0000][PID276064][release][of][INFO] Architecture: linux-x86_64
-[2023-09-25T20:49:03+0000][PID276064][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz
-[2023-09-25T20:49:03+0000][PID276064][package][of][DEBUG] SHA256: 4fdebe94f0ba3933a422cff3dd05a0ef7a18552ca274dd12564056993f55471d
-[2023-09-25T20:49:03+0000][PID276064][package][of][DEBUG] MD5: 7e1b1a613b819d6cf6ee7fbc70f16105
-[2023-09-25T20:49:03+0000][PID276064][package][of][DEBUG] Size: 208925360
-[2023-09-25T20:49:03+0000][PID276064][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:03+0000][PID276064][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz to the Nix store in 0.012496232986450195 seconds.
-[2023-09-25T20:49:03+0000][PID276064][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/k5xq37i1j3w710ppy8v0qqg91pkdxflc-libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz...
-[2023-09-25T20:49:03+0000][PID276064][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/k5xq37i1j3w710ppy8v0qqg91pkdxflc-libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz in 0.020957231521606445 seconds.
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/bin
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/include
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/info
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/doc
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/gtk-doc
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/devhelp/books
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/man
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib
-[2023-09-25T20:49:03+0000][PID276064][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:03+0000][PID276064][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib
-[2023-09-25T20:49:03+0000][PID276064][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:03+0000][PID276064][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:03+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/samples
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so in 0.13210082054138184 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg.so in 0.002427339553833008 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so in 0.09162497520446777 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_30'}
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg.so in 0.0021750926971435547 seconds.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:03+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so in 0.127791166305542 seconds.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_70', 'sm_75', 'sm_60', 'sm_52', 'sm_80'}
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg.so in 0.002173900604248047 seconds.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg_static.a in 0.0026998519897460938 seconds.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a in 0.1619114875793457 seconds.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg_static.a in 0.0030961036682128906 seconds.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a in 0.11112618446350098 seconds.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg_static.a in 0.0028891563415527344 seconds.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a in 0.15867972373962402 seconds.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so to support the same architectures as sibling /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so to support the same architectures as sibling /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75'] but got ['sm_30', 'sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so to support the same architectures as sibling /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a: expected ['sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a to support the same architectures as sibling /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a to support the same architectures as sibling /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so: expected ['sm_30', 'sm_60', 'sm_70', 'sm_75'] but got ['sm_60', 'sm_70', 'sm_75'].
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][WARNING] Expected /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a to support the same architectures as sibling /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so: expected ['sm_52', 'sm_60', 'sm_70', 'sm_75', 'sm_80'] but got ['sm_60', 'sm_70', 'sm_75', 'sm_80'].
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a and /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source in 0.8001964092254639 seconds.
-[2023-09-25T20:49:04+0000][PID276064][release][of][INFO] Architecture: windows-x86_64
-[2023-09-25T20:49:04+0000][PID276064][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.5.0.3-archive.zip
-[2023-09-25T20:49:04+0000][PID276064][package][of][DEBUG] SHA256: de76f7d92600dda87a14ac756e9d0b5733cbceb88bcd20b3935a82c99342e6cd
-[2023-09-25T20:49:04+0000][PID276064][package][of][DEBUG] MD5: 66feef08de8c7fccf7269383e663fd06
-[2023-09-25T20:49:04+0000][PID276064][package][of][DEBUG] Size: 421810766
-[2023-09-25T20:49:04+0000][PID276064][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.5.0.3-archive.zip to the Nix store...
-[2023-09-25T20:49:04+0000][PID276064][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.5.0.3-archive.zip to the Nix store in 0.012528657913208008 seconds.
-[2023-09-25T20:49:04+0000][PID276064][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/66s6g8dx81akm36p1fh8vz4r3m2dqjjm-libcutensor-windows-x86_64-1.5.0.3-archive.zip...
-[2023-09-25T20:49:04+0000][PID276064][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/66s6g8dx81akm36p1fh8vz4r3m2dqjjm-libcutensor-windows-x86_64-1.5.0.3-archive.zip in 0.021127700805664062 seconds.
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/bin
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/include
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/info
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/doc
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/gtk-doc
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/devhelp/books
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/man
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/lib
-[2023-09-25T20:49:04+0000][PID276064][dynamic_library][detect][DEBUG] Found dynamic libraries: []
-[2023-09-25T20:49:04+0000][PID276064][dynamic_library][detect][INFO] Found dynamic libraries: False
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Found non-empty directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/lib
-[2023-09-25T20:49:04+0000][PID276064][static_library][detect][DEBUG] Found static libraries: []
-[2023-09-25T20:49:04+0000][PID276064][static_library][detect][INFO] Found static libraries: False
-[2023-09-25T20:49:04+0000][PID276064][dir][detect][INFO] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/samples
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source...
-[2023-09-25T20:49:04+0000][PID276064][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source in 8.463859558105469e-05 seconds.
-[2023-09-25T20:49:04+0000][PID273919][manifest][of][INFO] Release date: 2022-10-05
-[2023-09-25T20:49:04+0000][PID273919][manifest][of][INFO] Release label: None
-[2023-09-25T20:49:04+0000][PID273919][manifest][of][INFO] Release product: None
-[2023-09-25T20:49:04+0000][PID273919][manifest][of][INFO] Package: libcutensor
-[2023-09-25T20:49:04+0000][PID276170][release][of][INFO] Package: NVIDIA cuTENSOR
-[2023-09-25T20:49:04+0000][PID276170][release][of][DEBUG] License: cuTensor
-[2023-09-25T20:49:04+0000][PID276170][release][of][INFO] Version: 1.6.1.5
-[2023-09-25T20:49:04+0000][PID276170][release][of][INFO] Architecture: linux-ppc64le
-[2023-09-25T20:49:04+0000][PID276170][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz
-[2023-09-25T20:49:04+0000][PID276170][package][of][DEBUG] SHA256: e895476ab13c4a28bdf018f23299746968564024783c066a2602bc0f09b86e47
-[2023-09-25T20:49:04+0000][PID276170][package][of][DEBUG] MD5: c44194d2067ce296f9a2c51ddbd6eb7b
-[2023-09-25T20:49:04+0000][PID276170][package][of][DEBUG] Size: 365411216
-[2023-09-25T20:49:04+0000][PID276170][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:04+0000][PID276170][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz to the Nix store in 0.012646913528442383 seconds.
-[2023-09-25T20:49:04+0000][PID276170][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/mcdm0ifn6lwnbrqskki5jnvrzs07vkpb-libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz...
-[2023-09-25T20:49:04+0000][PID276170][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/mcdm0ifn6lwnbrqskki5jnvrzs07vkpb-libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz in 0.012804746627807617 seconds.
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/bin
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/include
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/info
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/doc
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/gtk-doc
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/devhelp/books
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/man
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib
-[2023-09-25T20:49:04+0000][PID276170][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:04+0000][PID276170][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib
-[2023-09-25T20:49:04+0000][PID276170][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:04+0000][PID276170][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:04+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/samples
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source...
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so in 0.27460384368896484 seconds.
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg.so in 0.0024373531341552734 seconds.
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so in 0.1379079818725586 seconds.
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg.so in 0.0023152828216552734 seconds.
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:04+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so in 0.21318697929382324 seconds.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg.so in 0.0023419857025146484 seconds.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg_static.a in 0.0033140182495117188 seconds.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a in 0.34322118759155273 seconds.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg_static.a in 0.003304719924926758 seconds.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a in 0.16240882873535156 seconds.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg_static.a in 0.0035080909729003906 seconds.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a in 0.26798248291015625 seconds.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a and /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:05+0000][PID276170][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source in 1.41841459274292 seconds.
-[2023-09-25T20:49:05+0000][PID276170][release][of][INFO] Architecture: linux-sbsa
-[2023-09-25T20:49:05+0000][PID276170][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz
-[2023-09-25T20:49:05+0000][PID276170][package][of][DEBUG] SHA256: f0644bbdca81b890056a7b92714e787333b06a4bd384e4dfbdc3938fbd132e65
-[2023-09-25T20:49:05+0000][PID276170][package][of][DEBUG] MD5: a1c841dd532e7aef6963452439042f09
-[2023-09-25T20:49:05+0000][PID276170][package][of][DEBUG] Size: 288691268
-[2023-09-25T20:49:05+0000][PID276170][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:05+0000][PID276170][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz to the Nix store in 0.012476205825805664 seconds.
-[2023-09-25T20:49:05+0000][PID276170][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/qz1hpcq6nxv0z0n0p1rjdg2ag2kyi7g1-libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz...
-[2023-09-25T20:49:06+0000][PID276170][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/qz1hpcq6nxv0z0n0p1rjdg2ag2kyi7g1-libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz in 0.021153926849365234 seconds.
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/bin
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/include
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/info
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/doc
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/gtk-doc
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/devhelp/books
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/man
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib
-[2023-09-25T20:49:06+0000][PID276170][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:06+0000][PID276170][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib
-[2023-09-25T20:49:06+0000][PID276170][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:06+0000][PID276170][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:06+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/samples
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source...
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so in 0.27181315422058105 seconds.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg.so in 0.0022933483123779297 seconds.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so in 0.2207176685333252 seconds.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg.so in 0.0021402835845947266 seconds.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg_static.a in 0.003136157989501953 seconds.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a in 0.331129789352417 seconds.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg_static.a in 0.0032672882080078125 seconds.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:06+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a in 0.25672411918640137 seconds.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so and /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so and /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so and /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so and /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a and /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a and /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a and /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a and /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source in 1.0922234058380127 seconds.
-[2023-09-25T20:49:07+0000][PID276170][release][of][INFO] Architecture: linux-x86_64
-[2023-09-25T20:49:07+0000][PID276170][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz
-[2023-09-25T20:49:07+0000][PID276170][package][of][DEBUG] SHA256: 793b425c30ffd423c4f3a2e94acaf4fcb6752264aa73b74695a002dd2fe94b1a
-[2023-09-25T20:49:07+0000][PID276170][package][of][DEBUG] MD5: 055271e1e237beb102394a5431684a37
-[2023-09-25T20:49:07+0000][PID276170][package][of][DEBUG] Size: 365956196
-[2023-09-25T20:49:07+0000][PID276170][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:07+0000][PID276170][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz to the Nix store in 0.012473106384277344 seconds.
-[2023-09-25T20:49:07+0000][PID276170][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/53hp68861qra26fcb8gac7g18lswwbrg-libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz...
-[2023-09-25T20:49:07+0000][PID276170][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/53hp68861qra26fcb8gac7g18lswwbrg-libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz in 0.012651920318603516 seconds.
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/bin
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/include
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/info
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/doc
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/gtk-doc
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/devhelp/books
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/man
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib
-[2023-09-25T20:49:07+0000][PID276170][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:07+0000][PID276170][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib
-[2023-09-25T20:49:07+0000][PID276170][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:07+0000][PID276170][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:07+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/samples
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so in 0.28318190574645996 seconds.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg.so in 0.002524137496948242 seconds.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so in 0.13793635368347168 seconds.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg.so in 0.0023593902587890625 seconds.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so in 0.21996712684631348 seconds.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg.so in 0.0023245811462402344 seconds.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg_static.a in 0.002879619598388672 seconds.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:07+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a in 0.3327174186706543 seconds.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg_static.a in 0.0032122135162353516 seconds.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a in 0.1570148468017578 seconds.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg_static.a in 0.0030868053436279297 seconds.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a in 0.2577183246612549 seconds.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a and /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source in 1.4065899848937988 seconds.
-[2023-09-25T20:49:08+0000][PID276170][release][of][INFO] Architecture: windows-x86_64
-[2023-09-25T20:49:08+0000][PID276170][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.1.5-archive.zip
-[2023-09-25T20:49:08+0000][PID276170][package][of][DEBUG] SHA256: 36eac790df7b2c7bb4578cb355f1df65d17965ffc9b4f6218d1cdb82f87ab866
-[2023-09-25T20:49:08+0000][PID276170][package][of][DEBUG] MD5: 1d5f775c2bbf8e68827a23913e2896bd
-[2023-09-25T20:49:08+0000][PID276170][package][of][DEBUG] Size: 690592392
-[2023-09-25T20:49:08+0000][PID276170][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.1.5-archive.zip to the Nix store...
-[2023-09-25T20:49:08+0000][PID276170][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.1.5-archive.zip to the Nix store in 0.012518882751464844 seconds.
-[2023-09-25T20:49:08+0000][PID276170][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/z7dfb3ydp8c280yqgbk3shxs6adanqi3-libcutensor-windows-x86_64-1.6.1.5-archive.zip...
-[2023-09-25T20:49:08+0000][PID276170][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/z7dfb3ydp8c280yqgbk3shxs6adanqi3-libcutensor-windows-x86_64-1.6.1.5-archive.zip in 0.02100062370300293 seconds.
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/bin
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/include
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/info
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/doc
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/gtk-doc
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/devhelp/books
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/man
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/lib
-[2023-09-25T20:49:08+0000][PID276170][dynamic_library][detect][DEBUG] Found dynamic libraries: []
-[2023-09-25T20:49:08+0000][PID276170][dynamic_library][detect][INFO] Found dynamic libraries: False
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Found non-empty directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/lib
-[2023-09-25T20:49:08+0000][PID276170][static_library][detect][DEBUG] Found static libraries: []
-[2023-09-25T20:49:08+0000][PID276170][static_library][detect][INFO] Found static libraries: False
-[2023-09-25T20:49:08+0000][PID276170][dir][detect][INFO] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/samples
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source...
-[2023-09-25T20:49:08+0000][PID276170][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source in 8.368492126464844e-05 seconds.
-[2023-09-25T20:49:08+0000][PID273919][manifest][of][INFO] Release date: 2023-03-16
-[2023-09-25T20:49:08+0000][PID273919][manifest][of][INFO] Release label: None
-[2023-09-25T20:49:08+0000][PID273919][manifest][of][INFO] Release product: None
-[2023-09-25T20:49:08+0000][PID273919][manifest][of][INFO] Package: libcutensor
-[2023-09-25T20:49:08+0000][PID276276][release][of][INFO] Package: NVIDIA cuTENSOR
-[2023-09-25T20:49:08+0000][PID276276][release][of][DEBUG] License: cuTensor
-[2023-09-25T20:49:08+0000][PID276276][release][of][INFO] Version: 1.7.0.1
-[2023-09-25T20:49:08+0000][PID276276][release][of][INFO] Architecture: linux-ppc64le
-[2023-09-25T20:49:08+0000][PID276276][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz
-[2023-09-25T20:49:08+0000][PID276276][package][of][DEBUG] SHA256: af4ad5e29dcb636f1bf941ed1fd7fc8053eeec4813fbc0b41581e114438e84c8
-[2023-09-25T20:49:08+0000][PID276276][package][of][DEBUG] MD5: 30739decf9f5267f2a5f28c7c1a1dc3d
-[2023-09-25T20:49:08+0000][PID276276][package][of][DEBUG] Size: 538487672
-[2023-09-25T20:49:08+0000][PID276276][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:08+0000][PID276276][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz to the Nix store in 0.012894630432128906 seconds.
-[2023-09-25T20:49:08+0000][PID276276][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/7la6i8zid632wsmimn2n0bya7kz0j5hm-libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz...
-[2023-09-25T20:49:08+0000][PID276276][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/7la6i8zid632wsmimn2n0bya7kz0j5hm-libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz in 0.012461423873901367 seconds.
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/bin
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/include
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/info
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/doc
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/gtk-doc
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/devhelp/books
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/man
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib
-[2023-09-25T20:49:08+0000][PID276276][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:08+0000][PID276276][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib
-[2023-09-25T20:49:08+0000][PID276276][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:08+0000][PID276276][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:08+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/samples
-[2023-09-25T20:49:08+0000][PID276276][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source...
-[2023-09-25T20:49:08+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:08+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so in 0.2902028560638428 seconds.
-[2023-09-25T20:49:08+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:08+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:08+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg.so in 0.003353595733642578 seconds.
-[2023-09-25T20:49:08+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:08+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so in 0.15838837623596191 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg.so in 0.0032660961151123047 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so in 0.2972090244293213 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg.so...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg.so in 0.003182649612426758 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so in 0.2219715118408203 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg.so in 0.0031228065490722656 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg_static.a in 0.0031583309173583984 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a in 0.36781764030456543 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg_static.a in 0.003475189208984375 seconds.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:09+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a in 0.18806242942810059 seconds.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg_static.a...
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg_static.a in 0.003290414810180664 seconds.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a...
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a in 0.3590066432952881 seconds.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg_static.a in 0.003308534622192383 seconds.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a in 0.2741076946258545 seconds.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a and /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source in 2.185652017593384 seconds.
-[2023-09-25T20:49:10+0000][PID276276][release][of][INFO] Architecture: linux-sbsa
-[2023-09-25T20:49:10+0000][PID276276][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz
-[2023-09-25T20:49:10+0000][PID276276][package][of][DEBUG] SHA256: c31f8e4386539434a5d1643ebfed74572011783b4e21b62be52003e3a9de3720
-[2023-09-25T20:49:10+0000][PID276276][package][of][DEBUG] MD5: 3185c17e8f32c9c54f591006b917365e
-[2023-09-25T20:49:10+0000][PID276276][package][of][DEBUG] Size: 454324456
-[2023-09-25T20:49:10+0000][PID276276][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:10+0000][PID276276][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz to the Nix store in 0.012560129165649414 seconds.
-[2023-09-25T20:49:10+0000][PID276276][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/spqx52qx2g7g7gr805870j9csvg6f3h0-libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz...
-[2023-09-25T20:49:10+0000][PID276276][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/spqx52qx2g7g7gr805870j9csvg6f3h0-libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz in 0.02088761329650879 seconds.
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/bin
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/include
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/info
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/doc
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/gtk-doc
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/devhelp/books
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/man
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib
-[2023-09-25T20:49:10+0000][PID276276][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:10+0000][PID276276][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib
-[2023-09-25T20:49:10+0000][PID276276][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:10+0000][PID276276][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:10+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/samples
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source...
-[2023-09-25T20:49:10+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so in 0.2932276725769043 seconds.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg.so in 0.0034799575805664062 seconds.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so...
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so in 0.2871246337890625 seconds.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg.so...
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg.so in 0.0035109519958496094 seconds.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so in 0.22198081016540527 seconds.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg.so in 0.003292560577392578 seconds.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg_static.a in 0.0029888153076171875 seconds.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a in 0.35166335105895996 seconds.
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:11+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg_static.a...
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg_static.a in 0.0032405853271484375 seconds.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a...
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a in 0.3426976203918457 seconds.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg_static.a in 0.0032761096954345703 seconds.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a in 0.26267528533935547 seconds.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a and /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source in 1.7811338901519775 seconds.
-[2023-09-25T20:49:12+0000][PID276276][release][of][INFO] Architecture: linux-x86_64
-[2023-09-25T20:49:12+0000][PID276276][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz
-[2023-09-25T20:49:12+0000][PID276276][package][of][DEBUG] SHA256: dd3557891371a19e73e7c955efe5383b0bee954aba6a30e4892b0e7acb9deb26
-[2023-09-25T20:49:12+0000][PID276276][package][of][DEBUG] MD5: 7c7e655e2ef1c57ede351f5f5c7c59be
-[2023-09-25T20:49:12+0000][PID276276][package][of][DEBUG] Size: 542970468
-[2023-09-25T20:49:12+0000][PID276276][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz to the Nix store...
-[2023-09-25T20:49:12+0000][PID276276][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz to the Nix store in 0.012394428253173828 seconds.
-[2023-09-25T20:49:12+0000][PID276276][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/wzffa3ih9157qvp25i1awmw9x7zwqgfg-libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz...
-[2023-09-25T20:49:12+0000][PID276276][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/wzffa3ih9157qvp25i1awmw9x7zwqgfg-libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz in 0.021002531051635742 seconds.
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/bin
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/include
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/info
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/doc
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/gtk-doc
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/devhelp/books
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/man
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib
-[2023-09-25T20:49:12+0000][PID276276][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg.so')]
-[2023-09-25T20:49:12+0000][PID276276][dynamic_library][detect][INFO] Found dynamic libraries: True
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib
-[2023-09-25T20:49:12+0000][PID276276][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a')]
-[2023-09-25T20:49:12+0000][PID276276][static_library][detect][INFO] Found static libraries: True
-[2023-09-25T20:49:12+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/samples
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source...
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so...
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so in 0.2910592555999756 seconds.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg.so...
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg.so in 0.0038051605224609375 seconds.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:12+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so...
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so in 0.1588895320892334 seconds.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg.so...
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg.so in 0.003685474395751953 seconds.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so...
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so in 0.3018794059753418 seconds.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg.so...
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg.so in 0.0036919116973876953 seconds.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so...
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so in 0.2244734764099121 seconds.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg.so...
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg.so in 0.003592252731323242 seconds.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg_static.a...
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg_static.a in 0.0028748512268066406 seconds.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a...
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a in 0.3568389415740967 seconds.
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:13+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg_static.a...
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg_static.a in 0.003231048583984375 seconds.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a...
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a in 0.18479394912719727 seconds.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60'}
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg_static.a...
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg_static.a in 0.0031290054321289062 seconds.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a...
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a in 0.36547231674194336 seconds.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_90', 'sm_70', 'sm_75', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg_static.a...
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg_static.a in 0.0033538341522216797 seconds.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a...
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a in 0.2679142951965332 seconds.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][cuobjdump_for_architectures][DEBUG] Found architectures: {'sm_75', 'sm_70', 'sm_60', 'sm_80'}
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Skipping comparison of /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a and /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a because they are not in the same dir.
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source in 2.1814770698547363 seconds.
-[2023-09-25T20:49:14+0000][PID276276][release][of][INFO] Architecture: windows-x86_64
-[2023-09-25T20:49:14+0000][PID276276][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.7.0.1-archive.zip
-[2023-09-25T20:49:14+0000][PID276276][package][of][DEBUG] SHA256: cdbb53bcc1c7b20ee0aa2dee781644a324d2d5e8065944039024fe22d6b822ab
-[2023-09-25T20:49:14+0000][PID276276][package][of][DEBUG] MD5: 7d20a5823e94074e273525b0713f812b
-[2023-09-25T20:49:14+0000][PID276276][package][of][DEBUG] Size: 1070143817
-[2023-09-25T20:49:14+0000][PID276276][nix][nix_store_prefetch_file][DEBUG] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.7.0.1-archive.zip to the Nix store...
-[2023-09-25T20:49:14+0000][PID276276][nix][nix_store_prefetch_file][DEBUG] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.7.0.1-archive.zip to the Nix store in 0.012494564056396484 seconds.
-[2023-09-25T20:49:14+0000][PID276276][nix][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/j01j34lbnzj7pgg1prbavxm9l1zrpb42-libcutensor-windows-x86_64-1.7.0.1-archive.zip...
-[2023-09-25T20:49:14+0000][PID276276][nix][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/j01j34lbnzj7pgg1prbavxm9l1zrpb42-libcutensor-windows-x86_64-1.7.0.1-archive.zip in 0.020844221115112305 seconds.
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/bin
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/include
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/info
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/doc
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/gtk-doc
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/devhelp/books
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/man
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/lib
-[2023-09-25T20:49:14+0000][PID276276][dynamic_library][detect][DEBUG] Found dynamic libraries: []
-[2023-09-25T20:49:14+0000][PID276276][dynamic_library][detect][INFO] Found dynamic libraries: False
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Found non-empty directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/lib
-[2023-09-25T20:49:14+0000][PID276276][static_library][detect][DEBUG] Found static libraries: []
-[2023-09-25T20:49:14+0000][PID276276][static_library][detect][INFO] Found static libraries: False
-[2023-09-25T20:49:14+0000][PID276276][dir][detect][INFO] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/samples
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source...
-[2023-09-25T20:49:14+0000][PID276276][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source in 0.00010204315185546875 seconds.
+$ nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug
+[2023-09-25T23:26:52+0000][PID607606][debug][_debug_option_callback][DEBUG] Debug logging enabled.
+[2023-09-25T23:26:52+0000][PID607606][url][_url_argument_callback][DEBUG] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
+[2023-09-25T23:26:52+0000][PID607606][manifest_dir][_manifest_dir_argument_callback][DEBUG] Using dir cutensor_manifests.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][from_ref][DEBUG] Fetching manifests from cutensor_manifests...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][_from_dir][DEBUG] Globbing for redistrib_[0123456789]*.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][from_ref][DEBUG] Found 8 manifests in 0.00032520294189453125 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Reading manifest from cutensor_manifests/redistrib_1.3.2.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.3.2.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.3.2.json in 5.245208740234375e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Read cutensor_manifests/redistrib_1.3.2.json in 0.00015616416931152344 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest version: 1.3.2
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest date: 2021-09-22
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest label: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest product: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Reading manifest from cutensor_manifests/redistrib_1.3.3.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.3.3.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.3.3.json in 1.6689300537109375e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Read cutensor_manifests/redistrib_1.3.3.json in 9.965896606445312e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest version: 1.3.3
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest date: 2021-09-22
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest label: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest product: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Reading manifest from cutensor_manifests/redistrib_1.6.2.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.6.2.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.6.2.json in 1.33514404296875e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Read cutensor_manifests/redistrib_1.6.2.json in 8.845329284667969e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest version: 1.6.2
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest date: 2022-12-12
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest label: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest product: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Reading manifest from cutensor_manifests/redistrib_1.4.0.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.4.0.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.4.0.json in 1.2159347534179688e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Read cutensor_manifests/redistrib_1.4.0.json in 8.440017700195312e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest version: 1.4.0
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest date: 2021-11-19
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest label: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest product: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Reading manifest from cutensor_manifests/redistrib_1.6.0.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.6.0.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.6.0.json in 1.239776611328125e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Read cutensor_manifests/redistrib_1.6.0.json in 8.511543273925781e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest version: 1.6.0
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest date: 2022-06-24
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest label: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest product: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Reading manifest from cutensor_manifests/redistrib_1.5.0.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.5.0.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.5.0.json in 1.1920928955078125e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Read cutensor_manifests/redistrib_1.5.0.json in 8.58306884765625e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest version: 1.5.0
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest date: 2022-03-08
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest label: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest product: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Reading manifest from cutensor_manifests/redistrib_1.6.1.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.6.1.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.6.1.json in 1.1920928955078125e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Read cutensor_manifests/redistrib_1.6.1.json in 8.440017700195312e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest version: 1.6.1
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest date: 2022-10-05
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest label: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest product: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Reading manifest from cutensor_manifests/redistrib_1.7.0.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieving manifest from cutensor_manifests/redistrib_1.7.0.json...
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][retrieve][DEBUG] Retrieved cutensor_manifests/redistrib_1.7.0.json in 1.3113021850585938e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Read cutensor_manifests/redistrib_1.7.0.json in 9.107589721679688e-05 seconds.
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest version: 1.7.0
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest date: 2023-03-16
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest label: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][INFO] Manifest product: unknown
+[2023-09-25T23:26:52+0000][PID607606][manifest_ref][parse][DEBUG] Manifest keys: dict_keys(['libcutensor'])
+[2023-09-25T23:26:52+0000][PID609241][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz
+[2023-09-25T23:26:52+0000][PID609241][package][of][DEBUG] SHA256: 8a219f0bbbebabc9ad3ea70a77a84012fb4e3bc9da2808b1eca82b02e01d5113
+[2023-09-25T23:26:52+0000][PID609241][package][of][DEBUG] MD5: 9a70cf2abd0ba85ea4b5ec9da619900f
+[2023-09-25T23:26:52+0000][PID609241][package][of][DEBUG] Size: 202534904
+[2023-09-25T23:26:52+0000][PID609242][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz
+[2023-09-25T23:26:52+0000][PID609242][package][of][DEBUG] SHA256: 79f294c4a7933e5acee5f150145c526d6cd4df16eefb63f2d65df1dbc683cd68
+[2023-09-25T23:26:52+0000][PID609242][package][of][DEBUG] MD5: 1f632c9d33ffef9c819e10c95d69a134
+[2023-09-25T23:26:52+0000][PID609243][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz
+[2023-09-25T23:26:52+0000][PID609242][package][of][DEBUG] Size: 202541908
+[2023-09-25T23:26:52+0000][PID609243][package][of][DEBUG] SHA256: 558329fa05409f914ebbe218a1cf7c9ccffdb7aa2642b96db85fd78b5ad534d1
+[2023-09-25T23:26:52+0000][PID609243][package][of][DEBUG] MD5: 8d5d129aa7863312a95084ab5a27b7e7
+[2023-09-25T23:26:52+0000][PID609243][package][of][DEBUG] Size: 535585612
+[2023-09-25T23:26:52+0000][PID609244][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz
+[2023-09-25T23:26:52+0000][PID609244][package][of][DEBUG] SHA256: 5da44ff2562ab7b9286122653e54f28d2222c8aab4bb02e9bdd4cf7e4b7809be
+[2023-09-25T23:26:52+0000][PID609244][package][of][DEBUG] MD5: 6058c728485072c980f652c2de38b016
+[2023-09-25T23:26:52+0000][PID609241][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:26:52+0000][PID609244][package][of][DEBUG] Size: 218951992
+[2023-09-25T23:26:52+0000][PID609245][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz
+[2023-09-25T23:26:52+0000][PID609245][package][of][DEBUG] SHA256: 6af9563a3581e1879dd17e9bae79ceae1b4084f45e735780125aab86056646eb
+[2023-09-25T23:26:52+0000][PID609246][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz
+[2023-09-25T23:26:52+0000][PID609245][package][of][DEBUG] MD5: 38e3cd74fb7c0fa9c0836a9d172b9737
+[2023-09-25T23:26:52+0000][PID609245][package][of][DEBUG] Size: 332890432
+[2023-09-25T23:26:52+0000][PID609246][package][of][DEBUG] SHA256: ad736acc94e88673b04a3156d7d3a408937cac32d083acdfbd8435582cbe15db
+[2023-09-25T23:26:52+0000][PID609242][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz to the Nix store...
+[2023-09-25T23:26:52+0000][PID609246][package][of][DEBUG] MD5: bcdafb6d493aceebfb9a420880f1486c
+[2023-09-25T23:26:52+0000][PID609247][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz
+[2023-09-25T23:26:52+0000][PID609246][package][of][DEBUG] Size: 208384668
+[2023-09-25T23:26:52+0000][PID609243][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:26:52+0000][PID609247][package][of][DEBUG] SHA256: e895476ab13c4a28bdf018f23299746968564024783c066a2602bc0f09b86e47
+[2023-09-25T23:26:52+0000][PID609248][package][of][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz
+[2023-09-25T23:26:52+0000][PID609247][package][of][DEBUG] MD5: c44194d2067ce296f9a2c51ddbd6eb7b
+[2023-09-25T23:26:52+0000][PID609247][package][of][DEBUG] Size: 365411216
+[2023-09-25T23:26:52+0000][PID609248][package][of][DEBUG] SHA256: af4ad5e29dcb636f1bf941ed1fd7fc8053eeec4813fbc0b41581e114438e84c8
+[2023-09-25T23:26:52+0000][PID609248][package][of][DEBUG] MD5: 30739decf9f5267f2a5f28c7c1a1dc3d
+[2023-09-25T23:26:52+0000][PID609248][package][of][DEBUG] Size: 538487672
+[2023-09-25T23:26:52+0000][PID609244][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz to the Nix store...
+[2023-09-25T23:26:52+0000][PID609245][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:26:52+0000][PID609246][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:26:52+0000][PID609247][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz to the Nix store...
+[2023-09-25T23:26:52+0000][PID609248][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz to the Nix store...
+[2023-09-25T23:26:52+0000][PID609246][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz to the Nix store in 0.021981477737426758 seconds.
+[2023-09-25T23:26:52+0000][PID609243][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz to the Nix store in 0.022182941436767578 seconds.
+[2023-09-25T23:26:52+0000][PID609244][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz to the Nix store in 0.02211451530456543 seconds.
+[2023-09-25T23:26:52+0000][PID609246][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/9fy3afhldjlgigyc09348nc50ccr7kq1-libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz...
+[2023-09-25T23:26:52+0000][PID609242][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz to the Nix store in 0.022279739379882812 seconds.
+[2023-09-25T23:26:52+0000][PID609243][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/8gvv8lyz2qcjasxvxbq6mi3na8j4ncf1-libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz...
+[2023-09-25T23:26:52+0000][PID609244][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/5b7bmhi1l35i6kqx6rwxq2hxiicshkh4-libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz...
+[2023-09-25T23:26:52+0000][PID609242][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/rr9mzpij9lb6ayzni2haf0vakl8jvgdf-libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz...
+[2023-09-25T23:26:52+0000][PID609247][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz to the Nix store in 0.022353172302246094 seconds.
+[2023-09-25T23:26:52+0000][PID609248][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz to the Nix store in 0.022329092025756836 seconds.
+[2023-09-25T23:26:52+0000][PID609245][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz to the Nix store in 0.0224611759185791 seconds.
+[2023-09-25T23:26:52+0000][PID609247][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/mcdm0ifn6lwnbrqskki5jnvrzs07vkpb-libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz...
+[2023-09-25T23:26:52+0000][PID609248][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/7la6i8zid632wsmimn2n0bya7kz0j5hm-libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz...
+[2023-09-25T23:26:52+0000][PID609241][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz to the Nix store in 0.02274942398071289 seconds.
+[2023-09-25T23:26:52+0000][PID609245][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/897fvwmby7nc9ii3adshfn7f2f671bbs-libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz...
+[2023-09-25T23:26:52+0000][PID609241][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/1x3z7yz7w8i30i6y6ijbn2klyzw1aij0-libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz...
+[2023-09-25T23:27:04+0000][PID609242][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/rr9mzpij9lb6ayzni2haf0vakl8jvgdf-libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz in 11.771495819091797 seconds.
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/bin
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/include
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/info
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/doc
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/gtk-doc
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/devhelp/books
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/share/man
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib
+[2023-09-25T23:27:04+0000][PID609242][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so'), PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so')]
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib
+[2023-09-25T23:27:04+0000][PID609242][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:04+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/samples
+[2023-09-25T23:27:04+0000][PID609242][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source...
+[2023-09-25T23:27:04+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib.
+[2023-09-25T23:27:04+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib.
+[2023-09-25T23:27:04+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib.
+[2023-09-25T23:27:04+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:04+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor.so in 0.29395413398742676 seconds.
+[2023-09-25T23:27:04+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:04+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11/libcutensor_static.a in 0.4502553939819336 seconds.
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor.so in 0.18714642524719238 seconds.
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_30'}
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/10.2/libcutensor_static.a in 0.33786487579345703 seconds.
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:05+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:06+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor.so in 0.2540771961212158 seconds.
+[2023-09-25T23:27:06+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:06+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:06+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source/lib/11.0/libcutensor_static.a in 0.4562227725982666 seconds.
+[2023-09-25T23:27:06+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:06+0000][PID609242][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/pf9m66sbfw0334vlmjcmlk9xq08fv9cn-source in 1.9806010723114014 seconds.
+[2023-09-25T23:27:06+0000][PID609242][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz
+[2023-09-25T23:27:06+0000][PID609242][package][of][DEBUG] SHA256: 0b62d5305abfdfca4776290f16a1796c78c1fa83b203680c012f37d44706fcdb
+[2023-09-25T23:27:06+0000][PID609242][package][of][DEBUG] MD5: e476675490aff0b154f2f38063f0c10b
+[2023-09-25T23:27:06+0000][PID609242][package][of][DEBUG] Size: 149059520
+[2023-09-25T23:27:06+0000][PID609242][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:06+0000][PID609242][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz to the Nix store in 0.013834953308105469 seconds.
+[2023-09-25T23:27:06+0000][PID609242][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/syxzdnwk6bik6kc2p559lga3wbs9wr0n-libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz...
+[2023-09-25T23:27:07+0000][PID609241][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/1x3z7yz7w8i30i6y6ijbn2klyzw1aij0-libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz in 14.536414384841919 seconds.
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/bin
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/include
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/info
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/doc
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/gtk-doc
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/devhelp/books
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/share/man
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib
+[2023-09-25T23:27:07+0000][PID609241][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so'), PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so')]
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib
+[2023-09-25T23:27:07+0000][PID609241][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:07+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/samples
+[2023-09-25T23:27:07+0000][PID609241][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source...
+[2023-09-25T23:27:07+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib.
+[2023-09-25T23:27:07+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib.
+[2023-09-25T23:27:07+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib.
+[2023-09-25T23:27:07+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:07+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor.so in 0.21267008781433105 seconds.
+[2023-09-25T23:27:07+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:07+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:07+0000][PID609246][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/9fy3afhldjlgigyc09348nc50ccr7kq1-libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz in 14.85745096206665 seconds.
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/bin
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/include
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/info
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/doc
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/gtk-doc
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/devhelp/books
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/share/man
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib
+[2023-09-25T23:27:07+0000][PID609246][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib
+[2023-09-25T23:27:07+0000][PID609246][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:07+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/samples
+[2023-09-25T23:27:07+0000][PID609246][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source...
+[2023-09-25T23:27:07+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib.
+[2023-09-25T23:27:07+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib.
+[2023-09-25T23:27:07+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib.
+[2023-09-25T23:27:07+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:08+0000][PID609244][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/5b7bmhi1l35i6kqx6rwxq2hxiicshkh4-libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz in 15.193228244781494 seconds.
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/bin
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/include
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/info
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/doc
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/gtk-doc
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/devhelp/books
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/share/man
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib
+[2023-09-25T23:27:08+0000][PID609244][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib
+[2023-09-25T23:27:08+0000][PID609244][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:08+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/samples
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source...
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib.
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib.
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib.
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:08+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11/libcutensor_static.a in 0.7248115539550781 seconds.
+[2023-09-25T23:27:08+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:08+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor.so in 0.6588037014007568 seconds.
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg.so in 0.024264812469482422 seconds.
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg_static.a in 0.029225826263427734 seconds.
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:08+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:08+0000][PID609245][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/897fvwmby7nc9ii3adshfn7f2f671bbs-libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz in 15.653242826461792 seconds.
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/bin
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/include
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/info
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/doc
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/gtk-doc
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/devhelp/books
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/share/man
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib
+[2023-09-25T23:27:08+0000][PID609245][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib
+[2023-09-25T23:27:08+0000][PID609245][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:08+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/samples
+[2023-09-25T23:27:08+0000][PID609245][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source...
+[2023-09-25T23:27:08+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib.
+[2023-09-25T23:27:08+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib.
+[2023-09-25T23:27:08+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib.
+[2023-09-25T23:27:08+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:08+0000][PID609247][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/mcdm0ifn6lwnbrqskki5jnvrzs07vkpb-libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz in 15.92581844329834 seconds.
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/bin
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/include
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/info
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/doc
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/gtk-doc
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/devhelp/books
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/share/man
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor.so in 0.7314598560333252 seconds.
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:08+0000][PID609247][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib
+[2023-09-25T23:27:08+0000][PID609247][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:08+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/samples
+[2023-09-25T23:27:08+0000][PID609247][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source...
+[2023-09-25T23:27:08+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib.
+[2023-09-25T23:27:08+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib.
+[2023-09-25T23:27:08+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib.
+[2023-09-25T23:27:08+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg.so in 0.0026090145111083984 seconds.
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg_static.a in 0.005117893218994141 seconds.
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:08+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:08+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor.so in 0.4972264766693115 seconds.
+[2023-09-25T23:27:08+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_30'}
+[2023-09-25T23:27:08+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11/libcutensor_static.a in 0.583146333694458 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/10.2/libcutensor_static.a in 0.1980454921722412 seconds.
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor.so in 0.5243532657623291 seconds.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg.so in 0.0041849613189697266 seconds.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg_static.a in 0.0060002803802490234 seconds.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor.so in 0.11599445343017578 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_30'}
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg.so in 0.0047800540924072266 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg_static.a in 0.005262613296508789 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor.so in 0.35729551315307617 seconds.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg.so in 0.00424957275390625 seconds.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg_static.a in 0.007323503494262695 seconds.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11/libcutensor_static.a in 0.3712198734283447 seconds.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor.so in 0.18624663352966309 seconds.
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/10.2/libcutensor_static.a in 0.18346762657165527 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor.so in 0.1569676399230957 seconds.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_30'}
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg.so in 0.002730846405029297 seconds.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg_static.a in 0.004986763000488281 seconds.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11/libcutensor_static.a in 0.41019272804260254 seconds.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor.so in 0.1570417881011963 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg.so in 0.004678010940551758 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg_static.a in 0.007010221481323242 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source/lib/11.0/libcutensor_static.a in 0.28216028213500977 seconds.
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609241][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/f6h3xpp1p8d83f6k4dl55ni6dl3mab4d-source in 2.102679967880249 seconds.
+[2023-09-25T23:27:09+0000][PID609241][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz
+[2023-09-25T23:27:09+0000][PID609241][package][of][DEBUG] SHA256: 6e92fee6a192f9fc19876df99544893f7b4cfb8b5ff1ce6d172474c6e13154ea
+[2023-09-25T23:27:09+0000][PID609241][package][of][DEBUG] MD5: 2fa78066ec2d5a734e4fb2732b87756e
+[2023-09-25T23:27:09+0000][PID609241][package][of][DEBUG] Size: 149057692
+[2023-09-25T23:27:09+0000][PID609241][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:09+0000][PID609241][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz to the Nix store in 0.014707088470458984 seconds.
+[2023-09-25T23:27:09+0000][PID609241][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/vbq8b32vzarri6x3scvp9prgff7szspx-libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz...
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/10.2/libcutensor_static.a in 0.2286832332611084 seconds.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor.so in 0.16259121894836426 seconds.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg.so in 0.004901885986328125 seconds.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg_static.a in 0.006933689117431641 seconds.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11/libcutensor_static.a in 0.5374739170074463 seconds.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor.so in 0.16764259338378906 seconds.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg.so in 0.0026464462280273438 seconds.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg_static.a in 0.0054666996002197266 seconds.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source/lib/11.0/libcutensor_static.a in 0.2686748504638672 seconds.
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:09+0000][PID609246][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/dqxk1lmyr8hab5kg7v365r592s69wgq9-source in 2.0445127487182617 seconds.
+[2023-09-25T23:27:09+0000][PID609246][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz
+[2023-09-25T23:27:09+0000][PID609246][package][of][DEBUG] SHA256: 5b9ac479b1dadaf40464ff3076e45f2ec92581c07df1258a155b5bcd142f6090
+[2023-09-25T23:27:09+0000][PID609246][package][of][DEBUG] MD5: 62149d726480d12c9a953d27edc208dc
+[2023-09-25T23:27:09+0000][PID609246][package][of][DEBUG] Size: 156512748
+[2023-09-25T23:27:09+0000][PID609246][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:09+0000][PID609246][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz to the Nix store in 0.015107154846191406 seconds.
+[2023-09-25T23:27:09+0000][PID609246][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/5vb91ij9n4rbc0zj6118flzbx1dp3n8j-libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz...
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor.so in 0.1495954990386963 seconds.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg.so in 0.0035376548767089844 seconds.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg_static.a in 0.0052301883697509766 seconds.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:09+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/10.2/libcutensor_static.a in 0.25737929344177246 seconds.
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:09+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:10+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source/lib/11.0/libcutensor_static.a in 0.2851433753967285 seconds.
+[2023-09-25T23:27:10+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:10+0000][PID609244][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/4n2g8s7xvaf2q2i2pd3gjspn5vl488rl-source in 1.967195987701416 seconds.
+[2023-09-25T23:27:10+0000][PID609244][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz
+[2023-09-25T23:27:10+0000][PID609244][package][of][DEBUG] SHA256: 6b06d63a5bc49c1660be8c307795f8a901c93dcde7b064455a6c81333c7327f4
+[2023-09-25T23:27:10+0000][PID609244][package][of][DEBUG] MD5: a6f3fd515c052df43fbee9508ea87e1e
+[2023-09-25T23:27:10+0000][PID609244][package][of][DEBUG] Size: 163596044
+[2023-09-25T23:27:10+0000][PID609244][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:10+0000][PID609244][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz to the Nix store in 0.02263641357421875 seconds.
+[2023-09-25T23:27:10+0000][PID609244][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/jkzvn343kkanvldzp0apz0570zi766xg-libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz...
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/10.2/libcutensor_static.a in 0.21679973602294922 seconds.
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor.so in 0.24029898643493652 seconds.
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg.so in 0.0035338401794433594 seconds.
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg_static.a in 0.004558086395263672 seconds.
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor.so in 0.2253878116607666 seconds.
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg.so in 0.0034589767456054688 seconds.
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg_static.a in 0.004385232925415039 seconds.
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source/lib/11.0/libcutensor_static.a in 0.3026156425476074 seconds.
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:10+0000][PID609245][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/0a7n8z6z539ivlppadil6r81s4wx7kdb-source in 1.9298741817474365 seconds.
+[2023-09-25T23:27:10+0000][PID609245][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz
+[2023-09-25T23:27:10+0000][PID609245][package][of][DEBUG] SHA256: 802f030de069e7eeec2e72f151471fc9776f0272a81804690c749373505dcb70
+[2023-09-25T23:27:10+0000][PID609245][package][of][DEBUG] MD5: 38436011c8375ba78e2cd8c47182c6de
+[2023-09-25T23:27:10+0000][PID609245][package][of][DEBUG] Size: 253328216
+[2023-09-25T23:27:10+0000][PID609245][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:10+0000][PID609245][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz to the Nix store in 0.013787031173706055 seconds.
+[2023-09-25T23:27:10+0000][PID609245][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/0fldgjlk64r6yfs383ra9kmqqhydjyxx-libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz...
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source/lib/11.0/libcutensor_static.a in 0.30394577980041504 seconds.
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:10+0000][PID609247][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2xzmpd8g89aq7idvcm46dfq3h0gdx2c6-source in 1.821089267730713 seconds.
+[2023-09-25T23:27:10+0000][PID609247][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz
+[2023-09-25T23:27:10+0000][PID609247][package][of][DEBUG] SHA256: f0644bbdca81b890056a7b92714e787333b06a4bd384e4dfbdc3938fbd132e65
+[2023-09-25T23:27:10+0000][PID609247][package][of][DEBUG] MD5: a1c841dd532e7aef6963452439042f09
+[2023-09-25T23:27:10+0000][PID609247][package][of][DEBUG] Size: 288691268
+[2023-09-25T23:27:10+0000][PID609247][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:10+0000][PID609247][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz to the Nix store in 0.013765573501586914 seconds.
+[2023-09-25T23:27:10+0000][PID609247][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/qz1hpcq6nxv0z0n0p1rjdg2ag2kyi7g1-libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz...
+[2023-09-25T23:27:15+0000][PID609242][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/syxzdnwk6bik6kc2p559lga3wbs9wr0n-libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz in 8.391029834747314 seconds.
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/bin
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/include
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/info
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/doc
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/gtk-doc
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/devhelp/books
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/share/man
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib
+[2023-09-25T23:27:15+0000][PID609242][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so'), PosixPath('/nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so')]
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib
+[2023-09-25T23:27:15+0000][PID609242][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:15+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/samples
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source...
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib.
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib.
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor.so in 0.44492411613464355 seconds.
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11/libcutensor_static.a in 0.49718546867370605 seconds.
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:15+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:16+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor.so in 0.44362354278564453 seconds.
+[2023-09-25T23:27:16+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:16+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:16+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source/lib/11.0/libcutensor_static.a in 0.4564075469970703 seconds.
+[2023-09-25T23:27:16+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:16+0000][PID609242][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/x116bcc1ji4mdg8zpjmdlcsbr5hwpb9i-source in 1.8431546688079834 seconds.
+[2023-09-25T23:27:16+0000][PID609242][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz
+[2023-09-25T23:27:16+0000][PID609242][package][of][DEBUG] SHA256: 2e9517f31305872a7e496b6aa8ea329acda6b947b0c1eb1250790eaa2d4e2ecc
+[2023-09-25T23:27:16+0000][PID609242][package][of][DEBUG] MD5: 977699555cfcc8d2ffeff018a0f975b0
+[2023-09-25T23:27:16+0000][PID609242][package][of][DEBUG] Size: 201849628
+[2023-09-25T23:27:16+0000][PID609242][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:16+0000][PID609242][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz to the Nix store in 0.013170242309570312 seconds.
+[2023-09-25T23:27:16+0000][PID609242][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/hqihs0z31dmd76ld4j7rlw3d77wmyd9m-libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz...
+[2023-09-25T23:27:24+0000][PID609241][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/vbq8b32vzarri6x3scvp9prgff7szspx-libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz in 15.034162521362305 seconds.
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/bin
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/include
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/info
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/doc
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/gtk-doc
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/devhelp/books
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/share/man
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib
+[2023-09-25T23:27:24+0000][PID609241][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so'), PosixPath('/nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so')]
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib
+[2023-09-25T23:27:24+0000][PID609241][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:24+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/samples
+[2023-09-25T23:27:24+0000][PID609241][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source...
+[2023-09-25T23:27:24+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib.
+[2023-09-25T23:27:24+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib.
+[2023-09-25T23:27:24+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:24+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor.so in 0.32840418815612793 seconds.
+[2023-09-25T23:27:24+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:24+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:25+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11/libcutensor_static.a in 0.43418002128601074 seconds.
+[2023-09-25T23:27:25+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:25+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:25+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor.so in 0.29944419860839844 seconds.
+[2023-09-25T23:27:25+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:25+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:26+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source/lib/11.0/libcutensor_static.a in 0.46833109855651855 seconds.
+[2023-09-25T23:27:26+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:26+0000][PID609241][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/33m95dj873hcbfx6nrdlzqnx5d097in6-source in 1.5311574935913086 seconds.
+[2023-09-25T23:27:26+0000][PID609241][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz
+[2023-09-25T23:27:26+0000][PID609241][package][of][DEBUG] SHA256: cf2b8f1f220cdc90aaec577bde144509f805739e00a857ef161f6a5e8b769697
+[2023-09-25T23:27:26+0000][PID609241][package][of][DEBUG] MD5: 0c73c3918dd893a8bdfec48de9e5c312
+[2023-09-25T23:27:26+0000][PID609241][package][of][DEBUG] Size: 201844004
+[2023-09-25T23:27:26+0000][PID609241][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:26+0000][PID609241][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz to the Nix store in 0.014101982116699219 seconds.
+[2023-09-25T23:27:26+0000][PID609241][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/0ss5gzdi3g7bmha52pqla9l29i2gmv2x-libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz...
+[2023-09-25T23:27:26+0000][PID609246][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/5vb91ij9n4rbc0zj6118flzbx1dp3n8j-libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz in 16.481131553649902 seconds.
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/bin
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/include
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/info
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/doc
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/gtk-doc
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/devhelp/books
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/share/man
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib
+[2023-09-25T23:27:26+0000][PID609246][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib
+[2023-09-25T23:27:26+0000][PID609246][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:26+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/samples
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source...
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib.
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib.
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor.so in 0.3194270133972168 seconds.
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg.so in 0.004438161849975586 seconds.
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg_static.a in 0.02019333839416504 seconds.
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:26+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11/libcutensor_static.a in 0.4615311622619629 seconds.
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:27+0000][PID609244][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/jkzvn343kkanvldzp0apz0570zi766xg-libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz in 17.155333280563354 seconds.
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/bin
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/include
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/info
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/doc
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/gtk-doc
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/devhelp/books
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/share/man
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib
+[2023-09-25T23:27:27+0000][PID609244][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib
+[2023-09-25T23:27:27+0000][PID609244][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:27+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/samples
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source...
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib.
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib.
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor.so in 0.3344292640686035 seconds.
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg.so in 0.011328697204589844 seconds.
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg_static.a in 0.003471851348876953 seconds.
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor.so in 0.36536502838134766 seconds.
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg.so in 0.00767970085144043 seconds.
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg_static.a in 0.010970592498779297 seconds.
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:27+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source/lib/11.0/libcutensor_static.a in 0.45553159713745117 seconds.
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:27+0000][PID609246][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/lllqfpqphlhmdx1bici3cv4bppz0rafb-source in 1.6116588115692139 seconds.
+[2023-09-25T23:27:27+0000][PID609246][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz
+[2023-09-25T23:27:27+0000][PID609246][package][of][DEBUG] SHA256: 4fdebe94f0ba3933a422cff3dd05a0ef7a18552ca274dd12564056993f55471d
+[2023-09-25T23:27:27+0000][PID609246][package][of][DEBUG] MD5: 7e1b1a613b819d6cf6ee7fbc70f16105
+[2023-09-25T23:27:27+0000][PID609246][package][of][DEBUG] Size: 208925360
+[2023-09-25T23:27:27+0000][PID609246][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:27+0000][PID609246][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz to the Nix store in 0.02251720428466797 seconds.
+[2023-09-25T23:27:27+0000][PID609246][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/k5xq37i1j3w710ppy8v0qqg91pkdxflc-libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz...
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11/libcutensor_static.a in 0.57828688621521 seconds.
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor.so in 0.3275606632232666 seconds.
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg.so in 0.0019838809967041016 seconds.
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg_static.a in 0.002661466598510742 seconds.
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:28+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:29+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source/lib/11.0/libcutensor_static.a in 0.5675399303436279 seconds.
+[2023-09-25T23:27:29+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:29+0000][PID609244][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/q7wwyjzivv27r1wr0marrb9nrfvvkjay-source in 1.8634459972381592 seconds.
+[2023-09-25T23:27:29+0000][PID609244][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz
+[2023-09-25T23:27:29+0000][PID609244][package][of][DEBUG] SHA256: 467ba189195fcc4b868334fc16a0ae1e51574139605975cc8004cedebf595964
+[2023-09-25T23:27:29+0000][PID609244][package][of][DEBUG] MD5: 5d4009390be0226fc3ee75d225053123
+[2023-09-25T23:27:29+0000][PID609244][package][of][DEBUG] Size: 218277136
+[2023-09-25T23:27:29+0000][PID609244][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:29+0000][PID609244][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz to the Nix store in 0.014661550521850586 seconds.
+[2023-09-25T23:27:29+0000][PID609244][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/q7jcksly352yawl1l7yzzf7l376ziwa3-libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz...
+[2023-09-25T23:27:30+0000][PID609243][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/8gvv8lyz2qcjasxvxbq6mi3na8j4ncf1-libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz in 37.15849995613098 seconds.
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/bin
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/include
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/info
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/doc
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/gtk-doc
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/devhelp/books
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/share/man
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib
+[2023-09-25T23:27:30+0000][PID609243][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib
+[2023-09-25T23:27:30+0000][PID609243][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:30+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/samples
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source...
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 12 under /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:30+0000][PID609245][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/0fldgjlk64r6yfs383ra9kmqqhydjyxx-libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz in 20.1598801612854 seconds.
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/bin
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/include
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/info
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/doc
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/gtk-doc
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/devhelp/books
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/share/man
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib
+[2023-09-25T23:27:30+0000][PID609245][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib
+[2023-09-25T23:27:30+0000][PID609245][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:30+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/samples
+[2023-09-25T23:27:30+0000][PID609245][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source...
+[2023-09-25T23:27:30+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib.
+[2023-09-25T23:27:30+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib.
+[2023-09-25T23:27:30+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor.so in 0.7344667911529541 seconds.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:30+0000][PID609242][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/hqihs0z31dmd76ld4j7rlw3d77wmyd9m-libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz in 13.903926849365234 seconds.
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/bin
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/include
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/info
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/doc
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/gtk-doc
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/devhelp/books
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/share/man
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib
+[2023-09-25T23:27:30+0000][PID609242][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so'), PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so')]
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib
+[2023-09-25T23:27:30+0000][PID609242][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:30+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/samples
+[2023-09-25T23:27:30+0000][PID609242][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source...
+[2023-09-25T23:27:30+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib.
+[2023-09-25T23:27:30+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib.
+[2023-09-25T23:27:30+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib.
+[2023-09-25T23:27:30+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg.so in 0.02183699607849121 seconds.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg_static.a in 0.02452230453491211 seconds.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:30+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:30+0000][PID609247][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/qz1hpcq6nxv0z0n0p1rjdg2ag2kyi7g1-libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz in 20.251457929611206 seconds.
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/bin
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/include
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/info
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/doc
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/gtk-doc
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/devhelp/books
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/share/man
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib
+[2023-09-25T23:27:30+0000][PID609247][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib
+[2023-09-25T23:27:30+0000][PID609247][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:30+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/samples
+[2023-09-25T23:27:30+0000][PID609247][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source...
+[2023-09-25T23:27:30+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib.
+[2023-09-25T23:27:30+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib.
+[2023-09-25T23:27:30+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor.so in 0.2798764705657959 seconds.
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor.so in 0.5149099826812744 seconds.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg.so in 0.01298069953918457 seconds.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg_static.a in 0.006347179412841797 seconds.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor.so in 0.3668787479400635 seconds.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg.so in 0.003240823745727539 seconds.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg_static.a in 0.006165742874145508 seconds.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11/libcutensor_static.a in 0.23145580291748047 seconds.
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor.so in 0.1119239330291748 seconds.
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_30'}
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11/libcutensor_static.a in 0.6300404071807861 seconds.
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11/libcutensor_static.a in 0.35402488708496094 seconds.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:31+0000][PID609248][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/7la6i8zid632wsmimn2n0bya7kz0j5hm-libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz in 38.67001223564148 seconds.
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/bin
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/include
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/info
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/doc
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/gtk-doc
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/devhelp/books
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/share/man
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib
+[2023-09-25T23:27:31+0000][PID609248][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib
+[2023-09-25T23:27:31+0000][PID609248][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:31+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/samples
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source...
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 12 under /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/10.2/libcutensor_static.a in 0.15943074226379395 seconds.
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor.so in 0.17146730422973633 seconds.
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg.so in 0.006388664245605469 seconds.
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg_static.a in 0.005983114242553711 seconds.
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11/libcutensor_static.a in 0.4502899646759033 seconds.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor.so in 0.16055560111999512 seconds.
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor.so in 0.26038050651550293 seconds.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg.so in 0.0031180381774902344 seconds.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg_static.a in 0.004048347473144531 seconds.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/10.2/libcutensor_static.a in 0.24597954750061035 seconds.
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:31+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so...
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor.so in 0.3459663391113281 seconds.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg.so in 0.005882978439331055 seconds.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg_static.a in 0.005673646926879883 seconds.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source/lib/11.0/libcutensor_static.a in 0.23875975608825684 seconds.
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609242][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/djwrpzsbjgrz5m5clw5fqi4fybdvgmbh-source in 1.183685541152954 seconds.
+[2023-09-25T23:27:31+0000][PID609242][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.3.2-archive.zip
+[2023-09-25T23:27:31+0000][PID609242][package][of][DEBUG] SHA256: 3abeacbe7085af7026ca1399a77c681c219c10a1448a062964e97aaac2b05851
+[2023-09-25T23:27:31+0000][PID609242][package][of][DEBUG] MD5: fe75f031c53260c00ad5f7c5d69d31e5
+[2023-09-25T23:27:31+0000][PID609242][package][of][DEBUG] Size: 374926147
+[2023-09-25T23:27:31+0000][PID609242][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.3.2-archive.zip to the Nix store...
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor.so in 0.25623440742492676 seconds.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg.so in 0.0030193328857421875 seconds.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg_static.a in 0.003866434097290039 seconds.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:31+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:31+0000][PID609242][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.3.2-archive.zip to the Nix store in 0.013979196548461914 seconds.
+[2023-09-25T23:27:31+0000][PID609242][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/jbs6pjc4z4mn5pa392s84dad5nskysh0-libcutensor-windows-x86_64-1.3.3.2-archive.zip...
+[2023-09-25T23:27:32+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source/lib/11.0/libcutensor_static.a in 0.3249485492706299 seconds.
+[2023-09-25T23:27:32+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:32+0000][PID609245][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/kkgmq7l5d4hrlq5scy5pq43202hvw83z-source in 1.482348918914795 seconds.
+[2023-09-25T23:27:32+0000][PID609245][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz
+[2023-09-25T23:27:32+0000][PID609245][package][of][DEBUG] SHA256: b07e32a37eee1df7d9330e6d7faf9baf7fffd58007e2544164ea30aec49a5281
+[2023-09-25T23:27:32+0000][PID609245][package][of][DEBUG] MD5: 80ffc765748952385d3dbbaef262d72e
+[2023-09-25T23:27:32+0000][PID609245][package][of][DEBUG] Size: 333834656
+[2023-09-25T23:27:32+0000][PID609245][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:32+0000][PID609245][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz to the Nix store in 0.014480113983154297 seconds.
+[2023-09-25T23:27:32+0000][PID609245][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/gyzp5pspbipp9nmn0sqdl05b01br1rl2-libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz...
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor.so in 0.31837940216064453 seconds.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg.so...
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg.so in 0.004814624786376953 seconds.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg_static.a...
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg_static.a in 0.004872798919677734 seconds.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a...
+[2023-09-25T23:27:32+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source/lib/11.0/libcutensor_static.a in 0.34900641441345215 seconds.
+[2023-09-25T23:27:32+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:32+0000][PID609247][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/s8k1yxqa54jn49wljfiwzjwr8h7hmli9-source in 1.4402906894683838 seconds.
+[2023-09-25T23:27:32+0000][PID609247][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz
+[2023-09-25T23:27:32+0000][PID609247][package][of][DEBUG] SHA256: 793b425c30ffd423c4f3a2e94acaf4fcb6752264aa73b74695a002dd2fe94b1a
+[2023-09-25T23:27:32+0000][PID609247][package][of][DEBUG] MD5: 055271e1e237beb102394a5431684a37
+[2023-09-25T23:27:32+0000][PID609247][package][of][DEBUG] Size: 365956196
+[2023-09-25T23:27:32+0000][PID609247][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:32+0000][PID609247][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz to the Nix store in 0.014202117919921875 seconds.
+[2023-09-25T23:27:32+0000][PID609247][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/53hp68861qra26fcb8gac7g18lswwbrg-libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz...
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11/libcutensor_static.a in 0.5194556713104248 seconds.
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor.so in 0.1792900562286377 seconds.
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg.so in 0.004908323287963867 seconds.
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg_static.a in 0.004763126373291016 seconds.
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/12/libcutensor_static.a in 0.4850485324859619 seconds.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/10.2/libcutensor_static.a in 0.2447032928466797 seconds.
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:32+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so...
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor.so in 0.2318272590637207 seconds.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg.so in 0.0045375823974609375 seconds.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg_static.a in 0.004361391067504883 seconds.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:32+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor.so in 0.30004143714904785 seconds.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg.so...
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg.so in 0.01707172393798828 seconds.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg_static.a...
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg_static.a in 0.006872892379760742 seconds.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a...
+[2023-09-25T23:27:33+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source/lib/11.0/libcutensor_static.a in 0.3249340057373047 seconds.
+[2023-09-25T23:27:33+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:33+0000][PID609243][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/awd719x7xvxf3p84cv6krk758b5z1y6c-source in 3.22263765335083 seconds.
+[2023-09-25T23:27:33+0000][PID609243][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz
+[2023-09-25T23:27:33+0000][PID609243][package][of][DEBUG] SHA256: 7d4d9088c892bb692ffd70750b49625d1ccbb85390f6eb7c70d6cf582df6d935
+[2023-09-25T23:27:33+0000][PID609243][package][of][DEBUG] MD5: f6e0cce3a3b38ced736e55a19da587a3
+[2023-09-25T23:27:33+0000][PID609243][package][of][DEBUG] Size: 450705724
+[2023-09-25T23:27:33+0000][PID609243][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:33+0000][PID609243][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz to the Nix store in 0.013829469680786133 seconds.
+[2023-09-25T23:27:33+0000][PID609243][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/gj9hgzj57jvnbh9h2rvqd957366d00k8-libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz...
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/12/libcutensor_static.a in 0.4664113521575928 seconds.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor.so in 0.2432727813720703 seconds.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg.so in 0.016847610473632812 seconds.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg_static.a in 0.005183219909667969 seconds.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:33+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:34+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source/lib/11.0/libcutensor_static.a in 0.4154837131500244 seconds.
+[2023-09-25T23:27:34+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:34+0000][PID609248][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/ypsbfij0ks8m9r8pdsm1rzad5a0g3br6-source in 2.7850260734558105 seconds.
+[2023-09-25T23:27:34+0000][PID609248][package][of][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz
+[2023-09-25T23:27:34+0000][PID609248][package][of][DEBUG] SHA256: c31f8e4386539434a5d1643ebfed74572011783b4e21b62be52003e3a9de3720
+[2023-09-25T23:27:34+0000][PID609248][package][of][DEBUG] MD5: 3185c17e8f32c9c54f591006b917365e
+[2023-09-25T23:27:34+0000][PID609248][package][of][DEBUG] Size: 454324456
+[2023-09-25T23:27:34+0000][PID609248][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:34+0000][PID609248][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz to the Nix store in 0.015607595443725586 seconds.
+[2023-09-25T23:27:34+0000][PID609248][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/spqx52qx2g7g7gr805870j9csvg6f3h0-libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz...
+[2023-09-25T23:27:37+0000][PID609241][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/0ss5gzdi3g7bmha52pqla9l29i2gmv2x-libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz in 11.53956651687622 seconds.
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/bin
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/include
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/info
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/doc
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/gtk-doc
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/devhelp/books
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/share/man
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib
+[2023-09-25T23:27:37+0000][PID609241][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so'), PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so')]
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib
+[2023-09-25T23:27:37+0000][PID609241][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:37+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/samples
+[2023-09-25T23:27:37+0000][PID609241][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source...
+[2023-09-25T23:27:37+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib.
+[2023-09-25T23:27:37+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib.
+[2023-09-25T23:27:37+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib.
+[2023-09-25T23:27:37+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:37+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor.so in 0.30410218238830566 seconds.
+[2023-09-25T23:27:37+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:37+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:38+0000][PID609242][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/jbs6pjc4z4mn5pa392s84dad5nskysh0-libcutensor-windows-x86_64-1.3.3.2-archive.zip in 6.334154367446899 seconds.
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/bin
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/include
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/info
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/doc
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/gtk-doc
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/devhelp/books
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/share/man
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/lib
+[2023-09-25T23:27:38+0000][PID609242][dynamic_library][detect][DEBUG] Found dynamic libraries: []
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Found non-empty directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/lib
+[2023-09-25T23:27:38+0000][PID609242][static_library][detect][DEBUG] Found static libraries: []
+[2023-09-25T23:27:38+0000][PID609242][dir][detect][DEBUG] Did not find directory: /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/samples
+[2023-09-25T23:27:38+0000][PID609242][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source...
+[2023-09-25T23:27:38+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/lib.
+[2023-09-25T23:27:38+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/lib.
+[2023-09-25T23:27:38+0000][PID609242][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source/lib.
+[2023-09-25T23:27:38+0000][PID609242][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/la62f121pgwlx43vf4s4lybvq9rqwf9f-source in 0.00024437904357910156 seconds.
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11/libcutensor_static.a in 0.4737858772277832 seconds.
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor.so in 0.2318124771118164 seconds.
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_30'}
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/10.2/libcutensor_static.a in 0.3088691234588623 seconds.
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:38+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:39+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor.so in 0.32472729682922363 seconds.
+[2023-09-25T23:27:39+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:39+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:39+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source/lib/11.0/libcutensor_static.a in 0.4320697784423828 seconds.
+[2023-09-25T23:27:39+0000][PID609241][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:39+0000][PID609241][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/zhpg7d5k9rkg4kd0agkd1zmrklcaggay-source in 2.076514959335327 seconds.
+[2023-09-25T23:27:39+0000][PID609241][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.2.3-archive.zip
+[2023-09-25T23:27:39+0000][PID609241][package][of][DEBUG] SHA256: 7c7880de9c15db1d45cc24ce5758fcf9d1cd596139cfb57c97c2f764d86794b7
+[2023-09-25T23:27:39+0000][PID609241][package][of][DEBUG] MD5: b1a15df717b9aee125583150dda30150
+[2023-09-25T23:27:39+0000][PID609241][package][of][DEBUG] Size: 374934832
+[2023-09-25T23:27:39+0000][PID609241][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.2.3-archive.zip to the Nix store...
+[2023-09-25T23:27:39+0000][PID609241][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.2.3-archive.zip to the Nix store in 0.013343572616577148 seconds.
+[2023-09-25T23:27:39+0000][PID609241][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/1n8xrchy7im8v746vqjjj4s6jqhciv8g-libcutensor-windows-x86_64-1.3.2.3-archive.zip...
+[2023-09-25T23:27:39+0000][PID609244][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/q7jcksly352yawl1l7yzzf7l376ziwa3-libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz in 10.781972885131836 seconds.
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/bin
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/include
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/info
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/doc
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/gtk-doc
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/devhelp/books
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/share/man
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib
+[2023-09-25T23:27:39+0000][PID609244][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib
+[2023-09-25T23:27:39+0000][PID609244][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:39+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/samples
+[2023-09-25T23:27:39+0000][PID609244][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source...
+[2023-09-25T23:27:39+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib.
+[2023-09-25T23:27:39+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib.
+[2023-09-25T23:27:39+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib.
+[2023-09-25T23:27:39+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor.so in 0.3863339424133301 seconds.
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg.so in 0.0034418106079101562 seconds.
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg_static.a in 0.013259649276733398 seconds.
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:40+0000][PID609246][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/k5xq37i1j3w710ppy8v0qqg91pkdxflc-libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz in 12.581399202346802 seconds.
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/bin
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/include
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/info
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/doc
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/gtk-doc
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/devhelp/books
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/share/man
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib
+[2023-09-25T23:27:40+0000][PID609246][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib
+[2023-09-25T23:27:40+0000][PID609246][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:40+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/samples
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source...
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib.
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib.
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib.
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor.so in 0.34699440002441406 seconds.
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg.so in 0.013310670852661133 seconds.
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11/libcutensor_static.a in 0.5769233703613281 seconds.
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:40+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg_static.a in 0.0158383846282959 seconds.
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:40+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor.so in 0.26253795623779297 seconds.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_30'}
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg.so in 0.005765438079833984 seconds.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg_static.a in 0.011794805526733398 seconds.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11/libcutensor_static.a in 0.494720458984375 seconds.
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/10.2/libcutensor_static.a in 0.3598146438598633 seconds.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor.so in 0.22911977767944336 seconds.
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_30'}
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg.so in 0.011477231979370117 seconds.
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg_static.a in 0.01626110076904297 seconds.
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor.so in 0.38436460494995117 seconds.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg.so in 0.006763458251953125 seconds.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg_static.a in 0.008336067199707031 seconds.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:41+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/10.2/libcutensor_static.a in 0.3359689712524414 seconds.
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:41+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor.so in 0.3715794086456299 seconds.
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_52', 'sm_80'}
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg.so in 0.011493206024169922 seconds.
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg_static.a in 0.016809463500976562 seconds.
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:42+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source/lib/11.0/libcutensor_static.a in 0.6258225440979004 seconds.
+[2023-09-25T23:27:42+0000][PID609244][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:42+0000][PID609244][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/6abamjj1m3h5dgy4ij9aw6isvpsakbp0-source in 2.6468465328216553 seconds.
+[2023-09-25T23:27:42+0000][PID609244][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.4.0.6-archive.zip
+[2023-09-25T23:27:42+0000][PID609244][package][of][DEBUG] SHA256: 4f01a8aac2c25177e928c63381a80e3342f214ec86ad66965dcbfe81fc5c901d
+[2023-09-25T23:27:42+0000][PID609244][package][of][DEBUG] MD5: d21e0d5f2bd8c29251ffacaa85f0d733
+[2023-09-25T23:27:42+0000][PID609244][package][of][DEBUG] Size: 431385567
+[2023-09-25T23:27:42+0000][PID609244][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.4.0.6-archive.zip to the Nix store...
+[2023-09-25T23:27:42+0000][PID609244][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.4.0.6-archive.zip to the Nix store in 0.013039112091064453 seconds.
+[2023-09-25T23:27:42+0000][PID609244][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/7j2jppzd7fi00m0hhq7b2jjp363y8i7v-libcutensor-windows-x86_64-1.4.0.6-archive.zip...
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source/lib/11.0/libcutensor_static.a in 0.4769613742828369 seconds.
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:42+0000][PID609246][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/iins56r5hysf33lprc8blssnvq98ly4h-source in 2.341817617416382 seconds.
+[2023-09-25T23:27:42+0000][PID609246][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.5.0.3-archive.zip
+[2023-09-25T23:27:42+0000][PID609246][package][of][DEBUG] SHA256: de76f7d92600dda87a14ac756e9d0b5733cbceb88bcd20b3935a82c99342e6cd
+[2023-09-25T23:27:42+0000][PID609246][package][of][DEBUG] MD5: 66feef08de8c7fccf7269383e663fd06
+[2023-09-25T23:27:42+0000][PID609246][package][of][DEBUG] Size: 421810766
+[2023-09-25T23:27:42+0000][PID609246][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.5.0.3-archive.zip to the Nix store...
+[2023-09-25T23:27:42+0000][PID609246][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.5.0.3-archive.zip to the Nix store in 0.013536691665649414 seconds.
+[2023-09-25T23:27:42+0000][PID609246][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/66s6g8dx81akm36p1fh8vz4r3m2dqjjm-libcutensor-windows-x86_64-1.5.0.3-archive.zip...
+[2023-09-25T23:27:50+0000][PID609245][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/gyzp5pspbipp9nmn0sqdl05b01br1rl2-libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz in 18.4217746257782 seconds.
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/bin
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/include
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/info
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/doc
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/gtk-doc
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/devhelp/books
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/share/man
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib
+[2023-09-25T23:27:50+0000][PID609245][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib
+[2023-09-25T23:27:50+0000][PID609245][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:50+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/samples
+[2023-09-25T23:27:50+0000][PID609245][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source...
+[2023-09-25T23:27:50+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib.
+[2023-09-25T23:27:50+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib.
+[2023-09-25T23:27:50+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib.
+[2023-09-25T23:27:50+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:50+0000][PID609241][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/1n8xrchy7im8v746vqjjj4s6jqhciv8g-libcutensor-windows-x86_64-1.3.2.3-archive.zip in 10.834255695343018 seconds.
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/bin
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/include
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/info
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/doc
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/gtk-doc
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/devhelp/books
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/share/man
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/lib
+[2023-09-25T23:27:50+0000][PID609241][dynamic_library][detect][DEBUG] Found dynamic libraries: []
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Found non-empty directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/lib
+[2023-09-25T23:27:50+0000][PID609241][static_library][detect][DEBUG] Found static libraries: []
+[2023-09-25T23:27:50+0000][PID609241][dir][detect][DEBUG] Did not find directory: /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/samples
+[2023-09-25T23:27:50+0000][PID609241][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source...
+[2023-09-25T23:27:50+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/lib.
+[2023-09-25T23:27:50+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/lib.
+[2023-09-25T23:27:50+0000][PID609241][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source/lib.
+[2023-09-25T23:27:50+0000][PID609241][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2n7dl6q3h25pr14j8w5hiavk0y557l0d-source in 0.00010037422180175781 seconds.
+[2023-09-25T23:27:51+0000][PID609247][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/53hp68861qra26fcb8gac7g18lswwbrg-libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz in 18.963183879852295 seconds.
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/bin
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/include
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/info
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/doc
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/gtk-doc
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/devhelp/books
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/share/man
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib
+[2023-09-25T23:27:51+0000][PID609247][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib
+[2023-09-25T23:27:51+0000][PID609247][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:51+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/samples
+[2023-09-25T23:27:51+0000][PID609247][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source...
+[2023-09-25T23:27:51+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib.
+[2023-09-25T23:27:51+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib.
+[2023-09-25T23:27:51+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib.
+[2023-09-25T23:27:51+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor.so in 0.7818810939788818 seconds.
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg.so in 0.015483617782592773 seconds.
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg_static.a in 0.04209136962890625 seconds.
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:51+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor.so in 0.8204362392425537 seconds.
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg.so in 0.014407634735107422 seconds.
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg_static.a in 0.017966032028198242 seconds.
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:52+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11/libcutensor_static.a in 0.8753962516784668 seconds.
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor.so in 0.3809814453125 seconds.
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg.so in 0.011452436447143555 seconds.
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg_static.a in 0.019359111785888672 seconds.
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:52+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/10.2/libcutensor_static.a in 0.5317678451538086 seconds.
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11/libcutensor_static.a in 1.0665335655212402 seconds.
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor.so in 0.38603949546813965 seconds.
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg.so in 0.017151355743408203 seconds.
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg_static.a in 0.020190000534057617 seconds.
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:53+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:27:53+0000][PID609246][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/66s6g8dx81akm36p1fh8vz4r3m2dqjjm-libcutensor-windows-x86_64-1.5.0.3-archive.zip in 10.832838296890259 seconds.
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/bin
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/include
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/info
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/doc
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/gtk-doc
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/devhelp/books
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/share/man
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/lib
+[2023-09-25T23:27:53+0000][PID609246][dynamic_library][detect][DEBUG] Found dynamic libraries: []
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Found non-empty directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/lib
+[2023-09-25T23:27:53+0000][PID609246][static_library][detect][DEBUG] Found static libraries: []
+[2023-09-25T23:27:53+0000][PID609246][dir][detect][DEBUG] Did not find directory: /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/samples
+[2023-09-25T23:27:53+0000][PID609246][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source...
+[2023-09-25T23:27:53+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/lib.
+[2023-09-25T23:27:53+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/lib.
+[2023-09-25T23:27:53+0000][PID609246][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source/lib.
+[2023-09-25T23:27:53+0000][PID609246][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/pcbvya8jvyzs1ikp5prz7f29fwisdvb1-source in 0.00010585784912109375 seconds.
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor.so in 0.6012437343597412 seconds.
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg.so in 0.012267351150512695 seconds.
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg_static.a in 0.020003318786621094 seconds.
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:53+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:53+0000][PID609244][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/7j2jppzd7fi00m0hhq7b2jjp363y8i7v-libcutensor-windows-x86_64-1.4.0.6-archive.zip in 11.418783187866211 seconds.
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/bin
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/include
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/info
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/doc
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/gtk-doc
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/devhelp/books
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/share/man
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/lib
+[2023-09-25T23:27:53+0000][PID609244][dynamic_library][detect][DEBUG] Found dynamic libraries: []
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Found non-empty directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/lib
+[2023-09-25T23:27:53+0000][PID609244][static_library][detect][DEBUG] Found static libraries: []
+[2023-09-25T23:27:53+0000][PID609244][dir][detect][DEBUG] Did not find directory: /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/samples
+[2023-09-25T23:27:53+0000][PID609244][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source...
+[2023-09-25T23:27:53+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/lib.
+[2023-09-25T23:27:53+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/lib.
+[2023-09-25T23:27:53+0000][PID609244][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source/lib.
+[2023-09-25T23:27:53+0000][PID609244][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/cs1lrkld2xkpcfvkbsqvzhjk34y608qy-source in 0.00010704994201660156 seconds.
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/10.2/libcutensor_static.a in 0.4656503200531006 seconds.
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:54+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source/lib/11.0/libcutensor_static.a in 0.4189903736114502 seconds.
+[2023-09-25T23:27:54+0000][PID609245][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:54+0000][PID609245][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2sbj17g17l56cyfh81fds94qiq1ml38x-source in 3.7126564979553223 seconds.
+[2023-09-25T23:27:54+0000][PID609245][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.0.3-archive.zip
+[2023-09-25T23:27:54+0000][PID609245][package][of][DEBUG] SHA256: e8875e43d8c4169dc65095cb81c5d1e4120f664b4e2288658d73a4a2c2558f3c
+[2023-09-25T23:27:54+0000][PID609245][package][of][DEBUG] MD5: 4c76fb8d24296d644033bc992e4159e4
+[2023-09-25T23:27:54+0000][PID609245][package][of][DEBUG] Size: 624418613
+[2023-09-25T23:27:54+0000][PID609245][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.0.3-archive.zip to the Nix store...
+[2023-09-25T23:27:54+0000][PID609245][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.0.3-archive.zip to the Nix store in 0.013606786727905273 seconds.
+[2023-09-25T23:27:54+0000][PID609245][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/ccl9i73nxn1vp47wq8a5mpnp68khdz2z-libcutensor-windows-x86_64-1.6.0.3-archive.zip...
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor.so in 0.2414557933807373 seconds.
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg.so in 0.0036973953247070312 seconds.
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg_static.a in 0.004231929779052734 seconds.
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:54+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:55+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source/lib/11.0/libcutensor_static.a in 0.6131649017333984 seconds.
+[2023-09-25T23:27:55+0000][PID609247][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:55+0000][PID609247][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/hw4zr4afg0qvxdai16i0mm0ph5pqfnrw-source in 3.672546625137329 seconds.
+[2023-09-25T23:27:55+0000][PID609247][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.1.5-archive.zip
+[2023-09-25T23:27:55+0000][PID609247][package][of][DEBUG] SHA256: 36eac790df7b2c7bb4578cb355f1df65d17965ffc9b4f6218d1cdb82f87ab866
+[2023-09-25T23:27:55+0000][PID609247][package][of][DEBUG] MD5: 1d5f775c2bbf8e68827a23913e2896bd
+[2023-09-25T23:27:55+0000][PID609247][package][of][DEBUG] Size: 690592392
+[2023-09-25T23:27:55+0000][PID609247][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.1.5-archive.zip to the Nix store...
+[2023-09-25T23:27:55+0000][PID609247][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.1.5-archive.zip to the Nix store in 0.013331413269042969 seconds.
+[2023-09-25T23:27:55+0000][PID609247][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/z7dfb3ydp8c280yqgbk3shxs6adanqi3-libcutensor-windows-x86_64-1.6.1.5-archive.zip...
+[2023-09-25T23:27:55+0000][PID609243][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/gj9hgzj57jvnbh9h2rvqd957366d00k8-libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz in 21.94556498527527 seconds.
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/bin
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/include
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/info
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/doc
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/gtk-doc
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/devhelp/books
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/share/man
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib
+[2023-09-25T23:27:55+0000][PID609243][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib
+[2023-09-25T23:27:55+0000][PID609243][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:55+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/samples
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source...
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib.
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 12 under /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib.
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib.
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:55+0000][PID609248][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/spqx52qx2g7g7gr805870j9csvg6f3h0-libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz in 21.18508505821228 seconds.
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/bin
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/include
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/info
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/doc
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/gtk-doc
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/devhelp/books
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/share/man
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib
+[2023-09-25T23:27:55+0000][PID609248][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib
+[2023-09-25T23:27:55+0000][PID609248][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:27:55+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/samples
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source...
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib.
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 12 under /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib.
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib.
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so...
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor.so in 0.3369908332824707 seconds.
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg.so in 0.005777835845947266 seconds.
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg_static.a in 0.005903959274291992 seconds.
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:55+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor.so in 0.3399953842163086 seconds.
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg.so in 0.0051419734954833984 seconds.
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg_static.a in 0.0046176910400390625 seconds.
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:55+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11/libcutensor_static.a in 0.4768404960632324 seconds.
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so...
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11/libcutensor_static.a in 0.43436241149902344 seconds.
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so...
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor.so in 0.29448533058166504 seconds.
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg.so...
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg.so in 0.004897356033325195 seconds.
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg_static.a...
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg_static.a in 0.00347900390625 seconds.
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a...
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor.so in 0.3272671699523926 seconds.
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg.so...
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg.so in 0.011399269104003906 seconds.
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg_static.a...
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg_static.a in 0.003385305404663086 seconds.
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:56+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a...
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/12/libcutensor_static.a in 0.4271667003631592 seconds.
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:56+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor.so in 0.2412891387939453 seconds.
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg.so in 0.004194974899291992 seconds.
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg_static.a in 0.003310680389404297 seconds.
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/12/libcutensor_static.a in 0.4356100559234619 seconds.
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor.so in 0.22854328155517578 seconds.
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg.so in 0.012807607650756836 seconds.
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg_static.a in 0.0033478736877441406 seconds.
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source/lib/11.0/libcutensor_static.a in 0.3382604122161865 seconds.
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:57+0000][PID609243][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2i2aw4fd45nsvz9ka5qc15bnyil60cpm-source in 2.1443073749542236 seconds.
+[2023-09-25T23:27:57+0000][PID609243][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz
+[2023-09-25T23:27:57+0000][PID609243][package][of][DEBUG] SHA256: 0f2745681b1d0556f9f46ff6af4937662793498d7367b5f8f6b8625ac051629e
+[2023-09-25T23:27:57+0000][PID609243][package][of][DEBUG] MD5: b84a2f6712e39314f6c54b429152339f
+[2023-09-25T23:27:57+0000][PID609243][package][of][DEBUG] Size: 538838404
+[2023-09-25T23:27:57+0000][PID609243][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:57+0000][PID609243][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz to the Nix store in 0.013492107391357422 seconds.
+[2023-09-25T23:27:57+0000][PID609243][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/yxam1ah0h3lp7y15kjmj7mghnik2s799-libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz...
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source/lib/11.0/libcutensor_static.a in 0.33418893814086914 seconds.
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:27:57+0000][PID609248][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/2r758bg3q89z8fi15cndimxg2jlx0q55-source in 2.14213490486145 seconds.
+[2023-09-25T23:27:57+0000][PID609248][package][of][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz
+[2023-09-25T23:27:57+0000][PID609248][package][of][DEBUG] SHA256: dd3557891371a19e73e7c955efe5383b0bee954aba6a30e4892b0e7acb9deb26
+[2023-09-25T23:27:57+0000][PID609248][package][of][DEBUG] MD5: 7c7e655e2ef1c57ede351f5f5c7c59be
+[2023-09-25T23:27:57+0000][PID609248][package][of][DEBUG] Size: 542970468
+[2023-09-25T23:27:57+0000][PID609248][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz to the Nix store...
+[2023-09-25T23:27:57+0000][PID609248][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz to the Nix store in 0.013886451721191406 seconds.
+[2023-09-25T23:27:57+0000][PID609248][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/wzffa3ih9157qvp25i1awmw9x7zwqgfg-libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz...
+[2023-09-25T23:28:03+0000][PID609245][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/ccl9i73nxn1vp47wq8a5mpnp68khdz2z-libcutensor-windows-x86_64-1.6.0.3-archive.zip in 9.472003698348999 seconds.
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/bin
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/include
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/info
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/doc
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/gtk-doc
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/devhelp/books
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/share/man
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/lib
+[2023-09-25T23:28:03+0000][PID609245][dynamic_library][detect][DEBUG] Found dynamic libraries: []
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Found non-empty directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/lib
+[2023-09-25T23:28:03+0000][PID609245][static_library][detect][DEBUG] Found static libraries: []
+[2023-09-25T23:28:03+0000][PID609245][dir][detect][DEBUG] Did not find directory: /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/samples
+[2023-09-25T23:28:03+0000][PID609245][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source...
+[2023-09-25T23:28:03+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/lib.
+[2023-09-25T23:28:03+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/lib.
+[2023-09-25T23:28:03+0000][PID609245][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source/lib.
+[2023-09-25T23:28:03+0000][PID609245][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/7f3x11r1yrqki8qnb1r54qnrp4ycr5f5-source in 0.00010585784912109375 seconds.
+[2023-09-25T23:28:04+0000][PID609247][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/z7dfb3ydp8c280yqgbk3shxs6adanqi3-libcutensor-windows-x86_64-1.6.1.5-archive.zip in 9.381367444992065 seconds.
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/bin
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/include
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/info
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/doc
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/gtk-doc
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/devhelp/books
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/share/man
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/lib
+[2023-09-25T23:28:04+0000][PID609247][dynamic_library][detect][DEBUG] Found dynamic libraries: []
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Found non-empty directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/lib
+[2023-09-25T23:28:04+0000][PID609247][static_library][detect][DEBUG] Found static libraries: []
+[2023-09-25T23:28:04+0000][PID609247][dir][detect][DEBUG] Did not find directory: /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/samples
+[2023-09-25T23:28:04+0000][PID609247][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source...
+[2023-09-25T23:28:04+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/lib.
+[2023-09-25T23:28:04+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/lib.
+[2023-09-25T23:28:04+0000][PID609247][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source/lib.
+[2023-09-25T23:28:04+0000][PID609247][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/x8ih1zcwbn0nd9bc3r3yhivlh5ikmr42-source in 0.00010251998901367188 seconds.
+[2023-09-25T23:28:19+0000][PID609243][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/yxam1ah0h3lp7y15kjmj7mghnik2s799-libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz in 22.224931955337524 seconds.
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/bin
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/include
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/info
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/doc
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/gtk-doc
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/devhelp/books
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/share/man
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib
+[2023-09-25T23:28:19+0000][PID609243][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib
+[2023-09-25T23:28:19+0000][PID609243][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:28:19+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/samples
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source...
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 12 under /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so...
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor.so in 0.3032705783843994 seconds.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg.so in 0.013456344604492188 seconds.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg_static.a in 0.008846759796142578 seconds.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:28:19+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:28:20+0000][PID609248][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/wzffa3ih9157qvp25i1awmw9x7zwqgfg-libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz in 22.48642110824585 seconds.
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/bin
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/include
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/info
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/doc
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/gtk-doc
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/devhelp/books
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/share/man
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib
+[2023-09-25T23:28:20+0000][PID609248][dynamic_library][detect][DEBUG] Found dynamic libraries: [PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg.so')]
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib
+[2023-09-25T23:28:20+0000][PID609248][static_library][detect][DEBUG] Found static libraries: [PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg_static.a'), PosixPath('/nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a')]
+[2023-09-25T23:28:20+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/samples
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source...
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 12 under /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so...
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11/libcutensor_static.a in 0.42755913734436035 seconds.
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor.so in 0.3119516372680664 seconds.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg.so...
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg.so in 0.013254165649414062 seconds.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg_static.a...
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg_static.a in 0.004121303558349609 seconds.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a...
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor.so in 0.15966272354125977 seconds.
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg.so in 0.004999876022338867 seconds.
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg_static.a in 0.004534006118774414 seconds.
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/10.2/libcutensor_static.a in 0.23056483268737793 seconds.
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:28:20+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so...
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11/libcutensor_static.a in 0.4360792636871338 seconds.
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:28:20+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so...
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor.so in 0.30605220794677734 seconds.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg.so...
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg.so in 0.013307809829711914 seconds.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg_static.a...
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg_static.a in 0.005739927291870117 seconds.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a...
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor.so in 0.1568748950958252 seconds.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg.so...
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg.so in 0.005372047424316406 seconds.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg_static.a...
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg_static.a in 0.004807949066162109 seconds.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a...
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/10.2/libcutensor_static.a in 0.22270989418029785 seconds.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75'}
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so...
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/12/libcutensor_static.a in 0.42954349517822266 seconds.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor.so in 0.3132662773132324 seconds.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg.so...
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg.so in 0.013530969619750977 seconds.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg_static.a...
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg_static.a in 0.004171609878540039 seconds.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:28:21+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a...
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor.so in 0.23035335540771484 seconds.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg.so in 0.005529880523681641 seconds.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg_static.a in 0.004464864730834961 seconds.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:28:21+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:28:22+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source/lib/11.0/libcutensor_static.a in 0.3114614486694336 seconds.
+[2023-09-25T23:28:22+0000][PID609243][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:28:22+0000][PID609243][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/yin722j6cg4d21xk7rkbnsm4vxadrmh1-source in 2.461325168609619 seconds.
+[2023-09-25T23:28:22+0000][PID609243][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.2.3-archive.zip
+[2023-09-25T23:28:22+0000][PID609243][package][of][DEBUG] SHA256: 07cb312d7cafc7bb2f33d775e1ef5fffd1703d5c6656e785a7a8f0f01939907e
+[2023-09-25T23:28:22+0000][PID609243][package][of][DEBUG] MD5: 5ae1c56bf4d457933dc1acb58a4ac995
+[2023-09-25T23:28:22+0000][PID609243][package][of][DEBUG] Size: 1063805254
+[2023-09-25T23:28:22+0000][PID609243][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.2.3-archive.zip to the Nix store...
+[2023-09-25T23:28:22+0000][PID609243][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.2.3-archive.zip to the Nix store in 0.01287388801574707 seconds.
+[2023-09-25T23:28:22+0000][PID609243][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/kd1n6npcraidqj8yjpyr7iavjchdpgvw-libcutensor-windows-x86_64-1.6.2.3-archive.zip...
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/12/libcutensor_static.a in 0.44028544425964355 seconds.
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_90', 'sm_80'}
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so...
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor.so in 0.22667551040649414 seconds.
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg.so...
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg.so in 0.004642963409423828 seconds.
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg.so is GPU-agnostic.
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg_static.a...
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg_static.a in 0.004146575927734375 seconds.
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensorMg_static.a is GPU-agnostic.
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Running cuobjdmp on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a...
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Ran cuobjdump on /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source/lib/11.0/libcutensor_static.a in 0.3055579662322998 seconds.
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][cuobjdump_lib_path][DEBUG] Found architectures: {'sm_70', 'sm_60', 'sm_75', 'sm_80'}
+[2023-09-25T23:28:22+0000][PID609248][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/d0bf78vfh7fsipdzl9qpa69kvnhz5v3v-source in 2.469487428665161 seconds.
+[2023-09-25T23:28:22+0000][PID609248][package][of][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.7.0.1-archive.zip
+[2023-09-25T23:28:22+0000][PID609248][package][of][DEBUG] SHA256: cdbb53bcc1c7b20ee0aa2dee781644a324d2d5e8065944039024fe22d6b822ab
+[2023-09-25T23:28:22+0000][PID609248][package][of][DEBUG] MD5: 7d20a5823e94074e273525b0713f812b
+[2023-09-25T23:28:22+0000][PID609248][package][of][DEBUG] Size: 1070143817
+[2023-09-25T23:28:22+0000][PID609248][nix][nix_store_prefetch_file][INFO] Adding https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.7.0.1-archive.zip to the Nix store...
+[2023-09-25T23:28:22+0000][PID609248][nix][nix_store_prefetch_file][INFO] Added https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.7.0.1-archive.zip to the Nix store in 0.013136625289916992 seconds.
+[2023-09-25T23:28:22+0000][PID609248][nix][nix_store_unpack_archive][INFO] Unpacking /nix/store/j01j34lbnzj7pgg1prbavxm9l1zrpb42-libcutensor-windows-x86_64-1.7.0.1-archive.zip...
+[2023-09-25T23:28:35+0000][PID609243][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/kd1n6npcraidqj8yjpyr7iavjchdpgvw-libcutensor-windows-x86_64-1.6.2.3-archive.zip in 13.122182130813599 seconds.
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/bin
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/include
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/info
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/doc
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/gtk-doc
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/devhelp/books
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/share/man
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/lib
+[2023-09-25T23:28:35+0000][PID609243][dynamic_library][detect][DEBUG] Found dynamic libraries: []
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Found non-empty directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/lib
+[2023-09-25T23:28:35+0000][PID609243][static_library][detect][DEBUG] Found static libraries: []
+[2023-09-25T23:28:35+0000][PID609243][dir][detect][DEBUG] Did not find directory: /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/samples
+[2023-09-25T23:28:35+0000][PID609243][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source...
+[2023-09-25T23:28:35+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/lib.
+[2023-09-25T23:28:35+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/lib.
+[2023-09-25T23:28:35+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 12 under /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/lib.
+[2023-09-25T23:28:35+0000][PID609243][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source/lib.
+[2023-09-25T23:28:35+0000][PID609243][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/h90azbcm1an2ir1pvr5l7srp2xji0pdj-source in 0.00013184547424316406 seconds.
+[2023-09-25T23:28:36+0000][PID609248][nix][nix_store_unpack_archive][INFO] Unpacked /nix/store/j01j34lbnzj7pgg1prbavxm9l1zrpb42-libcutensor-windows-x86_64-1.7.0.1-archive.zip in 13.40936279296875 seconds.
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/bin
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/include
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/info
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/doc
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/gtk-doc
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/devhelp/books
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/share/man
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/lib
+[2023-09-25T23:28:36+0000][PID609248][dynamic_library][detect][DEBUG] Found dynamic libraries: []
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Found non-empty directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/lib
+[2023-09-25T23:28:36+0000][PID609248][static_library][detect][DEBUG] Found static libraries: []
+[2023-09-25T23:28:36+0000][PID609248][dir][detect][DEBUG] Did not find directory: /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/samples
+[2023-09-25T23:28:36+0000][PID609248][gpu_architectures][of][DEBUG] Getting gencodes for /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source...
+[2023-09-25T23:28:36+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 11 under /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/lib.
+[2023-09-25T23:28:36+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 10.2 under /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/lib.
+[2023-09-25T23:28:36+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 12 under /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/lib.
+[2023-09-25T23:28:36+0000][PID609248][gpu_architectures][of][DEBUG] Found subdirectory 11.0 under /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source/lib.
+[2023-09-25T23:28:36+0000][PID609248][gpu_architectures][of][DEBUG] Got gencodes for /nix/store/7g1rr0hcksqwa4qx1bh0z13bwyr79agy-source in 0.000133514404296875 seconds.
 ```
 
 </details>
