@@ -1,9 +1,10 @@
 import logging
 import subprocess
 import time
+from functools import reduce
 from itertools import chain
 from pathlib import Path
-from typing import Mapping, Sequence
+from typing import Iterable, Mapping, Sequence
 
 from pydantic import BaseModel
 from typing_extensions import Self
@@ -11,7 +12,7 @@ from typing_extensions import Self
 from cuda_redist_find_features.types import GPU_ARCHITECTURE_PATTERN, GpuArchitecture
 
 
-def cuobjdump_for_architectures(lib_path: Path) -> set[GpuArchitecture]:
+def cuobjdump_lib_path(lib_path: Path) -> set[GpuArchitecture]:
     """
     Equivalent to the following bash snippet:
 
@@ -48,57 +49,75 @@ def cuobjdump_for_architectures(lib_path: Path) -> set[GpuArchitecture]:
     return architectures
 
 
+def cuobjdump_lib_paths(lib_paths: Iterable[Path]) -> list[GpuArchitecture]:
+    return sorted(reduce(set.union, map(cuobjdump_lib_path, lib_paths), set()))
+
+
 class FeatureGpuArchitectures(BaseModel):
     """
     Maps libraries to the GPU architectures they support.
     """
 
-    __root__: Mapping[str, Sequence[GpuArchitecture]]
+    __root__: Sequence[GpuArchitecture] | Mapping[str, Sequence[GpuArchitecture]]
 
     @classmethod
     def of(cls, store_path: Path) -> Self:
-        logging.debug(f"Getting gencodes for {store_path}...")
-        start_time = time.time()
         lib = store_path / "lib"
 
-        libs: dict[Path, set[GpuArchitecture]] = {
-            lib_path: cuobjdump_for_architectures(lib_path) for lib_path in chain(lib.rglob("*.so"), lib.rglob("*.a"))
-        }
+        if not lib.exists():
+            logging.debug(f"{lib} does not exist, no gencodes to find")
+            return cls.parse_obj([])
 
-        # A library may have either:
-        # - No architectures, in which case it is GPU-agnostic.
-        # - One or more architectures, in which case it is GPU-specific.
-        # If a library has one or more architectures, it must have the same architectures as all other libraries.
-        device_specific_libraries: dict[Path, set[GpuArchitecture]] = {
-            lib_path: archs for lib_path, archs in libs.items() if len(archs) > 0
-        }
+        logging.debug(f"Getting gencodes for {store_path}...")
+        start_time = time.time()
 
-        # The device specific libraries should all have the same set of architectures.
-        # Note: in the case of packages supporting multiple versions of CUDA, there will be multiple directories under
-        # lib. The test only fails libraries within a single directory for supporting different architectures.
-        # TODO: Quadratic, but whatever.
-        for path1, archs1 in device_specific_libraries.items():
-            for path2, archs2 in device_specific_libraries.items():
-                # Skip if they are not in the same directory.
-                if path1.parent != path2.parent:
-                    logging.debug(f"Skipping comparison of {path1} and {path2} because they are not in the same dir.")
-                    continue
+        # Stub directory does not have any libraries.
+        # Ignore the cmake directory which is used for distribution builds.
+        # Windows directories
+        ignored_dirs: set[str] = {"stubs", "cmake", "Win32", "x64"}
 
-                # Skip if they support the same architectures.
-                if archs1 == archs2:
-                    continue
+        # Two mutually-exclusive cases:
+        #
+        # 1. There are subdirectories other than stubs present under lib.
+        # 2. There are libraries present directly under lib.
+        #
+        # In case 1, we should not have any libraries directly under lib.
+        # In case 2, we should not have any subdirectories other than stubs present under lib.
+        lib_subdirs: list[Path] = []
+        lib_library_paths: list[Path] = []
+        for item in lib.iterdir():
+            if item.is_dir():
+                if item.name not in ignored_dirs:
+                    logging.debug(f"Found subdirectory {item.name} under {lib}.")
+                    lib_subdirs.append(item)
+                else:
+                    logging.debug(f"Ignoring {item.name} because it is an ignored directory ({ignored_dirs}).")
+            elif item.is_file() and item.suffix in {".so", ".a"}:
+                logging.debug(f"Found library {item.name} under {lib}.")
+                lib_library_paths.append(item)
 
-                # Otherwise, raise a warning.
-                logging.warning(
-                    f"Expected {path1} to support the same architectures as sibling {path2}: expected"
-                    f" {sorted(archs2)} but got {sorted(archs1)}."
+        if len(lib_subdirs) > 0 and len(lib_library_paths) > 0:
+            raise RuntimeError(
+                f"Found both subdirectories and libraries directly under {lib}."
+                f" Subdirectories: {lib_subdirs}."
+                f" Libraries: {lib_library_paths}."
+            )
+
+        ret: list[GpuArchitecture] | dict[str, list[GpuArchitecture]]
+        if len(lib_subdirs) > 0:
+            # Take the union of all the capabilities of the libraries in the subdirectory.
+            ret = {
+                lib_subdir.relative_to(store_path).as_posix(): cuobjdump_lib_paths(
+                    chain(lib_subdir.glob("*.so"), lib_subdir.glob("*.a"))
                 )
+                for lib_subdir in lib_subdirs
+            }
+        elif len(lib_library_paths) > 0:
+            ret = cuobjdump_lib_paths(lib_library_paths)
+        else:
+            ret = []
 
         end_time = time.time()
         logging.debug(f"Got gencodes for {store_path} in {end_time - start_time} seconds.")
 
-        libs_serializable: dict[str, list[GpuArchitecture]] = {
-            path.relative_to(store_path).as_posix(): sorted(archs) for path, archs in libs.items()
-        }
-
-        return cls.parse_obj(libs_serializable)
+        return cls.parse_obj(ret)

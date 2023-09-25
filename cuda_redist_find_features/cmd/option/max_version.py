@@ -13,7 +13,7 @@ def _max_version_option_callback(
             raise click.BadParameter("Cannot specify both --max-version and --version.")
         if ctx.params.get("min_version") is not None and max_version < ctx.params["min_version"]:
             raise click.BadParameter("--max-version cannot be less than --min-version.")
-        logging.info(f"Maximum version set to {max_version}.")
+        logging.debug(f"Maximum version set to {max_version}.")
     return max_version
 
 

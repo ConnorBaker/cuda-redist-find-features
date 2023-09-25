@@ -1,4 +1,3 @@
-import logging
 from concurrent.futures import Future, ProcessPoolExecutor
 from pathlib import Path
 from typing import Mapping
@@ -23,26 +22,21 @@ class FeatureManifest(BaseModel):
         url_prefix: HttpUrl,
         nvidia_manifest: NvidiaManifest,
         cleanup: bool = False,
-        no_parallel: bool = False,
+        executor: None | ProcessPoolExecutor = None,
     ) -> Self:
-        logging.info(f"Release date: {nvidia_manifest.release_date}")
-        logging.info(f"Release label: {nvidia_manifest.release_label}")
-        logging.info(f"Release product: {nvidia_manifest.release_product}")
-
         manifest_release_kwargs: dict[str, FeatureRelease] = {}
-        if no_parallel:
+        if executor is not None:
+            futures: dict[str, Future[FeatureRelease]] = {}
             for name, nvidia_package in nvidia_manifest.releases().items():
-                logging.info(f"Package: {name}")
-                manifest_release_kwargs[name] = FeatureRelease.of(url_prefix, nvidia_package, cleanup)
-        else:
-            with ProcessPoolExecutor() as executor:
-                futures: dict[str, Future[FeatureRelease]] = {}
-                for name, nvidia_package in nvidia_manifest.releases().items():
-                    logging.info(f"Package: {name}")
-                    futures[name] = executor.submit(FeatureRelease.of, url_prefix, nvidia_package, cleanup)
+                futures[name] = executor.submit(FeatureRelease.of, url_prefix, nvidia_package, cleanup)
 
-                for name, future in futures.items():
-                    manifest_release_kwargs[name] = future.result()
+            manifest_release_kwargs = {name: future.result() for name, future in futures.items()}
+
+        else:
+            manifest_release_kwargs = {
+                name: FeatureRelease.of(url_prefix, nvidia_package, cleanup)
+                for name, nvidia_package in nvidia_manifest.releases().items()
+            }
 
         return cls.parse_obj(manifest_release_kwargs)
 

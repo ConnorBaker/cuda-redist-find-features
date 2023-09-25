@@ -42,7 +42,7 @@ class FeaturePackage(BaseModel):
         gencodes = FeatureGpuArchitectures.of(unpacked_root)
 
         if cleanup:
-            logging.info(f"Cleaning up {archive.store_path} and {unpacked.store_path}...")
+            logging.debug(f"Cleaning up {archive.store_path} and {unpacked.store_path}...")
             nix_store_delete([archive.store_path, unpacked.store_path])
 
         return cls(outputs=outputs, gencodes=gencodes)

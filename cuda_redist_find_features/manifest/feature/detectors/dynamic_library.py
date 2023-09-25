@@ -19,7 +19,6 @@ class DynamicLibraryDetector(DirDetector):
 
         path = tree / self.dir
         dynamic_libraries = [library for library in path.rglob("*.so") if library.is_file()]
-        has_dynamic_libraries = [] != dynamic_libraries
         logging.debug(f"Found dynamic libraries: {dynamic_libraries}")
-        logging.info(f"Found dynamic libraries: {has_dynamic_libraries}")
+        has_dynamic_libraries = [] != dynamic_libraries
         return has_dynamic_libraries

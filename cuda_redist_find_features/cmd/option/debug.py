@@ -15,7 +15,7 @@ def _debug_option_callback(ctx: click.Context, param: click.Parameter, debug: bo
         datefmt="%Y-%m-%dT%H:%M:%S%z",
     )
     if debug:
-        logging.info("Debug logging enabled.")
+        logging.debug("Debug logging enabled.")
     return debug
 
 

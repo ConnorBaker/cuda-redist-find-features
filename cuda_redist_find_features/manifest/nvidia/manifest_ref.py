@@ -54,13 +54,12 @@ class NvidiaManifestRef(BaseModel):
         return ref.read_bytes()
 
     def parse(self) -> NvidiaManifest:
-        logging.debug(f"Reading manifest from {self.ref}...")
+        logging.info(f"Reading manifest from {self.ref}...")
         start_time = time.time()
         content_bytes: bytes = self.retrieve()
-        # manifest_json: dict[str, Any] = json.loads(content_bytes)
         manifest = NvidiaManifest.parse_raw(content_bytes)
         end_time = time.time()
-        logging.debug(f"Read {self.ref} in {end_time - start_time} seconds.")
+        logging.info(f"Read {self.ref} in {end_time - start_time} seconds.")
         logging.info(f"Manifest version: {self.version}")
         logging.info(f"Manifest date: {manifest.release_date or 'unknown'}")
         logging.info(f"Manifest label: {manifest.release_label or 'unknown'}")

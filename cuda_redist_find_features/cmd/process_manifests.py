@@ -1,3 +1,4 @@
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 from pydantic import HttpUrl
@@ -56,7 +57,20 @@ def process_manifests(
     nvidia_manifests: dict[Path, NvidiaManifest] = {
         manifest_dir / f"redistrib_{ref.version}.json": ref.parse() for ref in refs
     }
+
     # Transform and write them
-    for path, nvidia_manifest in nvidia_manifests.items():
-        feature_manifest = FeatureManifest.of(url, nvidia_manifest, cleanup=cleanup, no_parallel=no_parallel)
-        feature_manifest.write(path.with_stem(path.stem.replace("redistrib", "feature")))
+    if no_parallel:
+        for path, nvidia_manifest in nvidia_manifests.items():
+            feature_manifest = FeatureManifest.of(url, nvidia_manifest, cleanup)
+            feature_manifest.write(path.with_stem(path.stem.replace("redistrib", "feature")))
+
+    else:
+        # Transform into futures
+        with ProcessPoolExecutor() as executor:
+            features = {
+                path: executor.submit(FeatureManifest.of, url, nvidia_manifest, cleanup)
+                for path, nvidia_manifest in nvidia_manifests.items()
+            }
+            for path, future_feature_manifest in features.items():
+                feature_manifest = future_feature_manifest.result()
+                feature_manifest.write(path.with_stem(path.stem.replace("redistrib", "feature")))

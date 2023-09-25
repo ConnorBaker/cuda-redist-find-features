@@ -31,7 +31,7 @@ class PythonModuleDetector(DirDetector):
 
         # If there are no lib subdirs, we can't have python modules.
         if not site_package_dirs:
-            logging.info("No site-packages dir found.")
+            logging.debug("No site-packages dir found.")
             return False
 
         # If there are multiple lib subdirs, we can't have python modules.
@@ -47,8 +47,6 @@ class PythonModuleDetector(DirDetector):
 
         # Get the python modules.
         python_modules = [module for module in site_package_dir.rglob("*.py")]
-        has_python_modules = [] != python_modules
-
         logging.debug(f"Found python modules: {python_modules}")
-        logging.info(f"Found python modules: {has_python_modules}")
+        has_python_modules = [] != python_modules
         return has_python_modules

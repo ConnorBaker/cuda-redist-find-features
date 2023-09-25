@@ -21,7 +21,6 @@ class HeaderDetector(DirDetector):
         headers = [
             header for header in path.rglob("*") if header.is_file() and header.suffix in {".h", ".hh", ".hpp", ".hxx"}
         ]
-        has_headers = [] != headers
         logging.debug(f"Found headers: {headers}")
-        logging.info(f"Found headers: {has_headers}")
+        has_headers = [] != headers
         return has_headers

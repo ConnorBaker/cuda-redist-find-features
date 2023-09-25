@@ -20,7 +20,6 @@ class StaticLibraryDetector(DirDetector):
         path = tree / self.dir
 
         static_libraries = [library for library in path.rglob("*.a") if library.is_file()]
-        has_static_libraries = [] != static_libraries
         logging.debug(f"Found static libraries: {static_libraries}")
-        logging.info(f"Found static libraries: {has_static_libraries}")
+        has_static_libraries = [] != static_libraries
         return has_static_libraries

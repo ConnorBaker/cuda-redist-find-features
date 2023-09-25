@@ -1,4 +1,3 @@
-import logging
 from typing import Mapping
 
 from pydantic import BaseModel, HttpUrl
@@ -30,15 +29,12 @@ class FeatureRelease(BaseModel):
 
     @classmethod
     def of(cls, url_prefix: HttpUrl, nvidia_release: NvidiaRelease, cleanup: bool = False) -> Self:
-        logging.info(f"Package: {nvidia_release.name}")
-        logging.debug(f"License: {nvidia_release.license}")
-        logging.info(f"Version: {nvidia_release.version}")
-        release_arch_kwargs: dict[Architecture, FeaturePackage] = {}
-        for arch, nvidia_package in nvidia_release.packages().items():
-            logging.info(f"Architecture: {arch}")
-            release_arch_kwargs[arch] = FeaturePackage.of(url_prefix, nvidia_package, cleanup)
-
-        return cls.parse_obj(release_arch_kwargs)
+        return cls.parse_obj(
+            {
+                arch: FeaturePackage.of(url_prefix, nvidia_package, cleanup)
+                for arch, nvidia_package in nvidia_release.packages().items()
+            }
+        )
 
     def packages(self) -> dict[Architecture, FeaturePackage]:
         """

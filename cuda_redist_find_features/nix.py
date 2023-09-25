@@ -20,7 +20,7 @@ def nix_store_prefetch_file(url: HttpUrl, sha256: Sha256) -> NixStoreEntry:
 
     NOTE: By specifying the hash type and expected hash, we avoid redownloading.
     """
-    logging.debug(f"Adding {url} to the Nix store...")
+    logging.info(f"Adding {url} to the Nix store...")
     start_time = time.time()
     result = subprocess.run(
         [
@@ -38,7 +38,7 @@ def nix_store_prefetch_file(url: HttpUrl, sha256: Sha256) -> NixStoreEntry:
         check=True,
     )
     end_time = time.time()
-    logging.debug(f"Added {url} to the Nix store in {end_time - start_time} seconds.")
+    logging.info(f"Added {url} to the Nix store in {end_time - start_time} seconds.")
     return NixStoreEntry.parse_raw(result.stdout)
 
 
@@ -50,7 +50,7 @@ def nix_store_unpack_archive(store_path: Path) -> NixStoreEntry:
     NOTE: This command is smart enough to not re-unpack archives.
     """
     url: str = f"file://{store_path.as_posix()}"
-    logging.debug(f"Unpacking {store_path}...")
+    logging.info(f"Unpacking {store_path}...")
     start_time = time.time()
     result = subprocess.run(
         ["nix", "flake", "prefetch", "--json", url],
@@ -58,7 +58,7 @@ def nix_store_unpack_archive(store_path: Path) -> NixStoreEntry:
         check=True,
     )
     end_time = time.time()
-    logging.debug(f"Unpacked {store_path} in {end_time - start_time} seconds.")
+    logging.info(f"Unpacked {store_path} in {end_time - start_time} seconds.")
     return parse_raw_as(NixStoreEntry, result.stdout)
 
 
@@ -68,7 +68,7 @@ def nix_store_delete(store_paths: Sequence[Path]) -> None:
     """
     posix_paths = [path.as_posix() for path in store_paths]
     formatted_paths = ", ".join(posix_paths)
-    logging.debug(f"Deleting {formatted_paths} from the Nix store...")
+    logging.info(f"Deleting {formatted_paths} from the Nix store...")
     start_time = time.time()
     subprocess.run(
         ["nix", "store", "delete", *posix_paths],
@@ -76,4 +76,4 @@ def nix_store_delete(store_paths: Sequence[Path]) -> None:
         check=True,
     )
     end_time = time.time()
-    logging.debug(f"Deleted {formatted_paths} from the Nix store in {end_time - start_time} seconds.")
+    logging.info(f"Deleted {formatted_paths} from the Nix store in {end_time - start_time} seconds.")

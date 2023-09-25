@@ -8,7 +8,7 @@ from ..types import HTTP_URL_PARAM_TYPE
 
 def _url_argument_callback(ctx: click.Context, param: click.Parameter, url: HttpUrl) -> HttpUrl:
     if url:
-        logging.info(f"Using URL {url}.")
+        logging.debug(f"Using URL {url}.")
     return url
 
 
