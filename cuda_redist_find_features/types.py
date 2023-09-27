@@ -16,6 +16,8 @@ GpuArchitecture = NewType("GpuArchitecture", str)
 
 GPU_ARCHITECTURE_PATTERN = re.compile(r"arch = (sm_\d+)")
 
+LibSoName = NewType("LibSoName", str)
+
 Md5 = NewType("Md5", str)
 
 Ref: TypeAlias = HttpUrl | Path

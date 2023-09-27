@@ -60,7 +60,7 @@ jobs:
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "download-manifests" "${{ env.URL }}" "./manifests" "--debug")
+          NIX_ARGS+=(".#" "--" "download-manifests" "--debug" "${{ env.URL }}" "./manifests")
           nix "${NIX_ARGS[@]}"
       - uses: actions/upload-artifact@v3
         with:
@@ -88,14 +88,14 @@ jobs:
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "download-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--version" "${{ matrix.version }}" "--debug")
+          NIX_ARGS+=(".#" "--" "download-manifests" "--debug" "${{ env.URL_PREFIX }}" "./manifests" "--version" "${{ matrix.version }}")
           nix "${NIX_ARGS[@]}"
       - run: |
           NIX_ARGS=("run" "--print-build-logs")
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "process-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--cleanup" "--debug")
+          NIX_ARGS+=(".#" "--" "process-manifests" "--debug" "${{ env.URL_PREFIX }}" "./manifests" "--cleanup")
           nix "${NIX_ARGS[@]}"
       # Collect the processed manifests in the same artifact
       - uses: actions/upload-artifact@v3
@@ -118,7 +118,7 @@ jobs:
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "download-manifests" "${{ env.URL }}" "./manifests" "--debug")
+          NIX_ARGS+=(".#" "--" "download-manifests" "--debug" "${{ env.URL }}" "./manifests")
           nix "${NIX_ARGS[@]}"
       - uses: actions/upload-artifact@v3
         with:
@@ -145,14 +145,14 @@ jobs:
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "download-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--version" "${{ matrix.version }}" "--debug")
+          NIX_ARGS+=(".#" "--" "download-manifests" "--debug" "${{ env.URL_PREFIX }}" "./manifests" "--version" "${{ matrix.version }}")
           nix "${NIX_ARGS[@]}"
       - run: |
           NIX_ARGS=("run" "--print-build-logs")
           if [[ -n "${{ inputs.nixpkgs-commit }}" ]]; then
             NIX_ARGS+=("--override-input" "nixpkgs" "github:NixOS/nixpkgs/${{ inputs.nixpkgs-commit }}")
           fi
-          NIX_ARGS+=(".#" "--" "process-manifests" "${{ env.URL_PREFIX }}" "./manifests" "--cleanup" "--debug")
+          NIX_ARGS+=(".#" "--" "process-manifests" "--debug" "${{ env.URL_PREFIX }}" "./manifests" "--cleanup")
           nix "${NIX_ARGS[@]}"
       # Collect the processed manifests in the same artifact
       - uses: actions/upload-artifact@v3

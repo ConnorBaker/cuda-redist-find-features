@@ -1,6 +1,6 @@
 import logging
 
-from pydantic import BaseModel, HttpUrl, parse_obj_as
+from pydantic import BaseModel, Field, HttpUrl, parse_obj_as
 from typing_extensions import Self
 
 from cuda_redist_find_features.nix import (
@@ -11,8 +11,10 @@ from cuda_redist_find_features.nix import (
 )
 
 from ..nvidia import NvidiaPackage
-from .gpu_architectures import FeatureGpuArchitectures
+from .cuda_architectures import FeatureCudaArchitectures
+from .needed_libs import FeatureNeededLibs
 from .outputs import FeatureOutputs
+from .provided_libs import FeatureProvidedLibs
 
 
 class FeaturePackage(BaseModel):
@@ -23,7 +25,13 @@ class FeaturePackage(BaseModel):
     """
 
     outputs: FeatureOutputs
-    gencodes: FeatureGpuArchitectures
+    cuda_architectures: FeatureCudaArchitectures = Field(alias="cudaArchitectures")
+    provided_libs: FeatureProvidedLibs = Field(alias="providedLibs")
+    needed_libs: FeatureNeededLibs = Field(alias="neededLibs")
+    # There are just way too many headers to list them all.
+    # provided_headers: FeatureProvidedHeaders = Field(alias="providedHeaders")
+    # libs_provided: FeatureLibsProvided
+    # libs_needed: FeatureLibsNeeded
 
     @classmethod
     def of(cls, url_prefix: HttpUrl, nvidia_package: NvidiaPackage, cleanup: bool = False) -> Self:
@@ -39,10 +47,17 @@ class FeaturePackage(BaseModel):
         unpacked_root = unpacked.store_path
 
         outputs = FeatureOutputs.of(unpacked_root)
-        gencodes = FeatureGpuArchitectures.of(unpacked_root)
+        cuda_architectures = FeatureCudaArchitectures.of(unpacked_root)
+        needed_libs = FeatureNeededLibs.of(unpacked_root)
+        provided_libs = FeatureProvidedLibs.of(unpacked_root)
+        # provided_headers = FeatureProvidedHeaders.of(unpacked_root)
+        # libs_provided = FeatureLibsProvided.of(unpacked_root)
+        # libs_needed = FeatureLibsNeeded.of(unpacked_root)
 
         if cleanup:
             logging.debug(f"Cleaning up {archive.store_path} and {unpacked.store_path}...")
             nix_store_delete([archive.store_path, unpacked.store_path])
 
-        return cls(outputs=outputs, gencodes=gencodes)
+        return cls(
+            outputs=outputs, cudaArchitectures=cuda_architectures, providedLibs=provided_libs, neededLibs=needed_libs
+        )

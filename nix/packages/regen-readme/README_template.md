@@ -5,10 +5,8 @@
 
 ## Roadmap
 
+- \[ \] Fix debug only working when it is specified before options which take arguments.
 - \[ \] Further documentation.
-- \[ \] Support extracting information about supported capabilities from libraries.
-  - This can be used to determine whether a library contains device code.
-  - In particular, such information enables determining whether a `linux-sbsa` (Linux ARM server) package can be used as a fallback for `linux-aarch64` (NVIDIA Jetson device) in the case there is no `linux-aarch64` package available.
 - \[ \] Test cases.
 
 ## Overview
@@ -71,7 +69,7 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 <details><summary>download-manifests with --version</summary>
 
 ```regen-readme
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --version 1.4.0 --debug
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug --version 1.4.0
 ```
 
 </details>
@@ -79,7 +77,7 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 <details><summary>download-manifests with --min-version and --max-version</summary>
 
 ```regen-readme
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2 --debug
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug --min-version 1.4.0 --max-version 1.6.2
 ```
 
 </details>
@@ -89,7 +87,7 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 Assuming
 
 ```console
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2 --debug
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug --min-version 1.4.0 --max-version 1.6.2
 ```
 
 was run previously,

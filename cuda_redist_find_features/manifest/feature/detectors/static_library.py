@@ -2,24 +2,31 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 
+from typing_extensions import override
+
 from .dir import DirDetector
+from .types import FeatureDetector
+from .utilities import cached_path_rglob
 
 
 @dataclass
-class StaticLibraryDetector(DirDetector):
+class StaticLibraryDetector(FeatureDetector[list[Path]]):
     """
-    Detects the presence of a static library in the lib directory.
+    Detects the presence of a static library in the `lib` directory.
     """
 
-    dir: Path = Path("lib")
+    @override
+    def find(self, store_path: Path) -> None | list[Path]:
+        """
+        Finds paths of static libraries under `lib` within the given Nix store path.
+        """
+        lib_dir = DirDetector(Path("lib")).find(store_path)
+        if lib_dir is None:
+            return None
 
-    def detect(self, tree: Path) -> bool:
-        if not super().detect(tree):
-            return False
+        static_libraries = cached_path_rglob(lib_dir, "*.a", files_only=True)
+        if [] != static_libraries:
+            logging.debug(f"Found static libraries: {static_libraries}")
+            return static_libraries
 
-        path = tree / self.dir
-
-        static_libraries = [library for library in path.rglob("*.a") if library.is_file()]
-        logging.debug(f"Found static libraries: {static_libraries}")
-        has_static_libraries = [] != static_libraries
-        return has_static_libraries
+        return None

@@ -2,39 +2,47 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 
+from typing_extensions import override
+
 from .dir import DirDetector
-
-
-def file_is_unix_executable(file: Path) -> bool:
-    return bool(file.stat().st_mode & 0o111)
-
-
-def file_is_windows_executable(file: Path) -> bool:
-    # Yes, I know DLLs are not executables, but they are okay to exist in the bin directory.
-    return file.suffix in {".bat", ".dll", ".exe"}
+from .types import FeatureDetector
+from .utilities import cached_path_rglob
 
 
 @dataclass
-class ExecutableDetector(DirDetector):
+class ExecutableDetector(FeatureDetector[list[Path]]):
     """
-    Detects the presence of an executable in the bin directory.
+    Detects the presence of an executable in the `bin` directory.
     """
 
-    dir: Path = Path("bin")
+    @staticmethod
+    def file_is_unix_executable(file: Path) -> bool:
+        return bool(file.stat().st_mode & 0o111)
 
-    def detect(self, tree: Path) -> bool:
-        if not super().detect(tree):
-            return False
+    @staticmethod
+    def file_is_windows_executable(file: Path) -> bool:
+        # Yes, I know DLLs are not executables, but they are okay to exist in the bin directory.
+        return file.suffix in {".bat", ".dll", ".exe"}
 
-        path = tree / self.dir
+    @override
+    def find(self, store_path: Path) -> None | list[Path]:
+        """
+        Finds paths of executables under `bin` within the given Nix store path.
+        """
+        bin_dir = DirDetector(Path("bin")).find(store_path)
+        if bin_dir is None:
+            return None
+
         executables = [
             executable
-            for executable in path.rglob("*")
-            if executable.is_file() and (file_is_unix_executable(executable) or file_is_windows_executable(executable))
+            for executable in cached_path_rglob(bin_dir, "*", files_only=True)
+            if any(
+                test(executable)
+                for test in (ExecutableDetector.file_is_unix_executable, ExecutableDetector.file_is_windows_executable)
+            )
         ]
-        logging.debug(f"Found executables: {executables}")
-        has_executables = [] != executables
-        if not has_executables:
-            # Binary directory which is non-empty but does not contain any executables
-            logging.warning(f"Found bin directory without executable files: {path}")
-        return has_executables
+        if [] != executables:
+            logging.debug(f"Found executables: {executables}")
+            return executables
+
+        return None

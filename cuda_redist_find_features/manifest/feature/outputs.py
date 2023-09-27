@@ -70,18 +70,11 @@ class FeatureOutputs(BaseModel):
         - `share/info`
         - `share/doc`
         - `share/gtk-doc`
-        - `share/devhelp/books`
+        - `share/devhelp`
         - `share/man`
         """
         return any(
-            DirDetector(dir).detect(store_path)
-            for dir in (
-                Path("share", "info"),
-                Path("share", "doc"),
-                Path("share", "gtk-doc"),
-                Path("share", "devhelp", "books"),
-                Path("share", "man"),
-            )
+            DirDetector(Path("share") / dir).detect(store_path) for dir in ("info", "doc", "gtk-doc", "devhelp", "man")
         )
 
     @staticmethod

@@ -2,25 +2,35 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 
+from typing_extensions import override
+
 from .dir import DirDetector
+from .types import FeatureDetector
+from .utilities import cached_path_rglob
 
 
 @dataclass
-class HeaderDetector(DirDetector):
+class HeaderDetector(FeatureDetector[list[Path]]):
     """
-    Detects the presence of headers in the include directory.
+    Detects the presence of headers in the `include` directory.
     """
 
-    dir: Path = Path("include")
+    @override
+    def find(self, store_path: Path) -> None | list[Path]:
+        """
+        Finds paths of headers under `include` within the given Nix store path.
+        """
+        include_dir = DirDetector(Path("include")).find(store_path)
+        if include_dir is None:
+            return None
 
-    def detect(self, tree: Path) -> bool:
-        if not super().detect(tree):
-            return False
-
-        path = tree / self.dir
         headers = [
-            header for header in path.rglob("*") if header.is_file() and header.suffix in {".h", ".hh", ".hpp", ".hxx"}
+            header
+            for header in cached_path_rglob(include_dir, "*.h*", files_only=True)
+            if header.suffix in {".h", ".hh", ".hpp", ".hxx"}
         ]
-        logging.debug(f"Found headers: {headers}")
-        has_headers = [] != headers
-        return has_headers
+        if [] != headers:
+            logging.debug(f"Found headers: {headers}")
+            return headers
+
+        return None

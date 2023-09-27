@@ -3,6 +3,7 @@
   lib,
   # buildInputs
   cudaPackages,
+  patchelf,
   # propagatedBuildInputs
   click,
   pydantic,
@@ -31,6 +32,7 @@
     propagatedBuildInputs =
       [
         cudaPackages.cuda_cuobjdump
+        patchelf
       ]
       ++ pythonPropagatedBuildInputs;
     pythonImportsCheck =

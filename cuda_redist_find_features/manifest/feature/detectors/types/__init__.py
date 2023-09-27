@@ -1,14 +1,18 @@
-from abc import abstractmethod
-from dataclasses import dataclass
+from abc import ABC, abstractmethod
 from pathlib import Path
+from typing import Generic, TypeVar
+
+T = TypeVar("T")
 
 
-@dataclass
-class FeatureDetector:
+class FeatureDetector(ABC, Generic[T]):
     """
     A detector that detects a feature.
     """
 
     @abstractmethod
-    def detect(self, tree: Path) -> bool:
+    def find(self, store_path: Path) -> None | T:
         raise NotImplementedError
+
+    def detect(self, store_path: Path) -> bool:
+        return self.find(store_path) is not None
