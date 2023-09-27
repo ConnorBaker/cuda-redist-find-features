@@ -67,10 +67,10 @@ class CudaArchitecturesDetector(GroupableFeatureDetector[GpuArchitecture]):
         return path.suffix == ".so"
 
     @override
-    def find(self, store_path: Path) -> None | list[GpuArchitecture] | dict[Path, list[GpuArchitecture]]:
+    def find(self, store_path: Path) -> None | list[GpuArchitecture] | dict[str, list[GpuArchitecture]]:
         logging.debug(f"Getting supported CUDA architectures for {store_path}...")
         start_time = time.time()
         ret = super().find(store_path)
         end_time = time.time()
-        logging.debug(f"Got supported CUDA architectures for {store_path} in {end_time - start_time} seconds.")
+        logging.debug(f"Got supported CUDA architectures for {store_path} in {end_time - start_time} seconds: {ret}")
         return ret

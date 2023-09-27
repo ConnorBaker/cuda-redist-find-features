@@ -4,7 +4,6 @@ from .package import FeaturePackage
 from .release import FeatureRelease
 
 __all__ = [
-    "FeatureProvidedCudaArchitectures",
     "FeatureManifest",
     "FeatureOutputs",
     "FeaturePackage",

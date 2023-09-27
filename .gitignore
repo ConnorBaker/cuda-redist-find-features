@@ -12,6 +12,7 @@ __pycache__
 
 # Used in generating the readme
 cutensor_manifests
+cuda_manifests
 
 # Nix
 result

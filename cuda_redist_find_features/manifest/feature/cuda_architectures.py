@@ -17,7 +17,7 @@ class FeatureCudaArchitectures(BaseModel):
     - Mapping from subdirectory name to list of architectures supported by the libraries in that subdirectory.
     """
 
-    __root__: Sequence[GpuArchitecture] | Mapping[Path, Sequence[GpuArchitecture]]
+    __root__: Sequence[GpuArchitecture] | Mapping[str, Sequence[GpuArchitecture]]
 
     @classmethod
     def of(cls, store_path: Path) -> Self:

@@ -10,7 +10,7 @@ from .detectors import NeededLibsDetector
 
 
 class FeatureNeededLibs(BaseModel):
-    __root__: Sequence[LibSoName] | Mapping[Path, Sequence[LibSoName]]
+    __root__: Sequence[LibSoName] | Mapping[str, Sequence[LibSoName]]
 
     @classmethod
     def of(cls, store_path: Path) -> Self:

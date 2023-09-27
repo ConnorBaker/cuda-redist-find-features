@@ -55,10 +55,10 @@ class ProvidedLibsDetector(GroupableFeatureDetector[LibSoName]):
         return path.suffix == ".so"
 
     @override
-    def find(self, store_path: Path) -> None | list[LibSoName] | dict[Path, list[LibSoName]]:
+    def find(self, store_path: Path) -> None | list[LibSoName] | dict[str, list[LibSoName]]:
         logging.debug(f"Getting needed libs for {store_path}...")
         start_time = time.time()
         ret = super().find(store_path)
         end_time = time.time()
-        logging.debug(f"Got needed libs for {store_path} in {end_time - start_time} seconds.")
+        logging.debug(f"Got needed libs for {store_path} in {end_time - start_time} seconds: {ret}.")
         return ret
