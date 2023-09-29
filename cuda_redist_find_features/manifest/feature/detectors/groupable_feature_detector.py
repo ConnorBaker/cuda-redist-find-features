@@ -1,10 +1,10 @@
 import logging
 from abc import abstractmethod
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping, Sequence, Set
 from dataclasses import dataclass
 from functools import reduce
 from pathlib import Path
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, TypeVar, cast
 
 from .dir import DirDetector
 from .types import FeatureDetector
@@ -19,7 +19,7 @@ else:
 
 
 @dataclass
-class GroupableFeatureDetector(FeatureDetector[list[RichlyComparable] | dict[str, list[RichlyComparable]]]):
+class GroupableFeatureDetector(FeatureDetector[Sequence[RichlyComparable] | Mapping[str, Sequence[RichlyComparable]]]):
     """
     A detector that detects a feature or a group of features. Given a directory, ensures that there are subdirectories
     if and only if there are no files directly under the directory. In the case there are no subdirectories, the
@@ -28,11 +28,11 @@ class GroupableFeatureDetector(FeatureDetector[list[RichlyComparable] | dict[str
     """
 
     dir: Path
-    ignored_dirs: set[Path]
+    ignored_dirs: Set[Path]
 
     @staticmethod
     @abstractmethod
-    def path_feature_detector(path: Path) -> set[RichlyComparable]:
+    def path_feature_detector(path: Path) -> Set[RichlyComparable]:
         raise NotImplementedError
 
     @staticmethod
@@ -40,7 +40,7 @@ class GroupableFeatureDetector(FeatureDetector[list[RichlyComparable] | dict[str
     def path_filter(path: Path) -> bool:
         raise NotImplementedError
 
-    def paths_func(self, paths: Iterable[Path]) -> list[RichlyComparable]:
+    def paths_func(self, paths: Iterable[Path]) -> Sequence[RichlyComparable]:
         """
         Operates on a list of paths and accumulates the results of `self.path_feature_detector` on each path.
 
@@ -52,11 +52,11 @@ class GroupableFeatureDetector(FeatureDetector[list[RichlyComparable] | dict[str
             reduce(
                 set.union,  # type: ignore[arg-type]
                 map(self.path_feature_detector, filter(self.path_filter, paths)),
-                set(),
+                cast(set[RichlyComparable], set()),
             )
         )
 
-    def find(self, store_path: Path) -> None | list[RichlyComparable] | dict[str, list[RichlyComparable]]:
+    def find(self, store_path: Path) -> None | Sequence[RichlyComparable] | Mapping[str, Sequence[RichlyComparable]]:
         # Ensure that store_path is a directory which exists and is non-empty.
         absolute_dir: None | Path = DirDetector(self.dir).find(store_path)
         if absolute_dir is None:

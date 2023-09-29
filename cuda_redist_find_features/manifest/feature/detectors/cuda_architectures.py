@@ -1,18 +1,20 @@
 import logging
+import re
 import subprocess
 import time
+from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from typing_extensions import override
 
-from cuda_redist_find_features.types import GPU_ARCHITECTURE_PATTERN, GpuArchitecture
+from cuda_redist_find_features.types import CudaArch, CudaArchTA
 
 from .groupable_feature_detector import GroupableFeatureDetector
 
 
 @dataclass
-class CudaArchitecturesDetector(GroupableFeatureDetector[GpuArchitecture]):
+class CudaArchitecturesDetector(GroupableFeatureDetector[CudaArch]):
     """
     Either:
 
@@ -21,13 +23,13 @@ class CudaArchitecturesDetector(GroupableFeatureDetector[GpuArchitecture]):
     """
 
     dir: Path = Path("lib")
-    ignored_dirs: set[Path] = field(default_factory=lambda: set(map(Path, ("stubs", "cmake", "Win32", "x64"))))
+    ignored_dirs: Set[Path] = field(default_factory=lambda: set(map(Path, ("stubs", "cmake", "Win32", "x64"))))
 
     @staticmethod
     @override
-    def path_feature_detector(path: Path) -> set[GpuArchitecture]:
+    def path_feature_detector(path: Path) -> Set[CudaArch]:
         """
-        Equivalent to the following bash snippet:
+        Equivalent to the following bash snippet, sans ordering:
 
         ```console
         $ cuobjdump libcublas.so | grep 'arch =' | sort -u
@@ -57,7 +59,8 @@ class CudaArchitecturesDetector(GroupableFeatureDetector[GpuArchitecture]):
             raise RuntimeError(f"Failed to run cuobjdump on {path}: {err_msg}")
 
         output = result.stdout.decode("utf-8")
-        architectures: set[GpuArchitecture] = set(GPU_ARCHITECTURE_PATTERN.findall(output))
+        architecture_strs: set[str] = set(re.findall(r"^arch = (.+)$", output, re.MULTILINE))
+        architectures: set[CudaArch] = set(map(CudaArchTA.validate_python, architecture_strs))
         logging.debug(f"Found architectures: {architectures}")
         return architectures
 
@@ -67,7 +70,7 @@ class CudaArchitecturesDetector(GroupableFeatureDetector[GpuArchitecture]):
         return path.suffix == ".so"
 
     @override
-    def find(self, store_path: Path) -> None | list[GpuArchitecture] | dict[str, list[GpuArchitecture]]:
+    def find(self, store_path: Path) -> None | Sequence[CudaArch] | Mapping[str, Sequence[CudaArch]]:
         logging.debug(f"Getting supported CUDA architectures for {store_path}...")
         start_time = time.time()
         ret = super().find(store_path)

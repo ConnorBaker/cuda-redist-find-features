@@ -1,12 +1,13 @@
 import logging
 import subprocess
 import time
+from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from typing_extensions import override
 
-from cuda_redist_find_features.types import LibSoName
+from cuda_redist_find_features.types import LibSoName, LibSoNameTA
 
 from .groupable_feature_detector import GroupableFeatureDetector
 
@@ -21,11 +22,11 @@ class ProvidedLibsDetector(GroupableFeatureDetector[LibSoName]):
     """
 
     dir: Path = Path("lib")
-    ignored_dirs: set[Path] = field(default_factory=lambda: set(map(Path, ("stubs", "cmake", "Win32", "x64"))))
+    ignored_dirs: Set[Path] = field(default_factory=lambda: set(map(Path, ("stubs", "cmake", "Win32", "x64"))))
 
     @staticmethod
     @override
-    def path_feature_detector(path: Path) -> set[LibSoName]:
+    def path_feature_detector(path: Path) -> Set[LibSoName]:
         """
         Returns the soname of the given library.
 
@@ -45,9 +46,14 @@ class ProvidedLibsDetector(GroupableFeatureDetector[LibSoName]):
         )
         end_time = time.time()
         logging.debug(f"Ran patchelf --print-soname on {path} in {end_time - start_time} seconds.")
-        lib_so_name: LibSoName = LibSoName(result.stdout.decode("utf-8").strip())
-        logging.debug(f"Lib soname: {lib_so_name}")
-        return set((lib_so_name,))
+        name: str = result.stdout.decode("utf-8").strip()
+        if name:
+            lib_so_name: LibSoName = LibSoNameTA.validate_python(name)
+            logging.debug(f"Lib soname: {lib_so_name}")
+            return set((lib_so_name,))
+        else:
+            logging.warning(f"No lib soname found for {path}!")
+            return set()
 
     @staticmethod
     @override
@@ -55,7 +61,7 @@ class ProvidedLibsDetector(GroupableFeatureDetector[LibSoName]):
         return path.suffix == ".so"
 
     @override
-    def find(self, store_path: Path) -> None | list[LibSoName] | dict[str, list[LibSoName]]:
+    def find(self, store_path: Path) -> None | Sequence[LibSoName] | Mapping[str, Sequence[LibSoName]]:
         logging.debug(f"Getting needed libs for {store_path}...")
         start_time = time.time()
         ret = super().find(store_path)

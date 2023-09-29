@@ -1,6 +1,7 @@
 import logging
 
 import click
+from rich.logging import RichHandler
 
 
 def _debug_option_callback(ctx: click.Context, param: click.Parameter, debug: bool) -> bool:
@@ -10,9 +11,10 @@ def _debug_option_callback(ctx: click.Context, param: click.Parameter, debug: bo
 
     logging.basicConfig(
         level=logging.DEBUG if debug else logging.INFO,
-        format="[%(asctime)s][PID%(process)s][%(module)s][%(funcName)s][%(levelname)s] %(message)s",
+        format="[PID%(process)s][%(funcName)s] %(message)s",
         # Use ISO8601 format for the timestamp
         datefmt="%Y-%m-%dT%H:%M:%S%z",
+        handlers=[RichHandler()],
     )
     if debug:
         logging.debug("Debug logging enabled.")

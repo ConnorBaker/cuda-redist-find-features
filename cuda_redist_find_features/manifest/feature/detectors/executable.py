@@ -1,4 +1,5 @@
 import logging
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -10,7 +11,7 @@ from .utilities import cached_path_rglob
 
 
 @dataclass
-class ExecutableDetector(FeatureDetector[list[Path]]):
+class ExecutableDetector(FeatureDetector[Sequence[Path]]):
     """
     Detects the presence of an executable in the `bin` directory.
     """
@@ -25,7 +26,7 @@ class ExecutableDetector(FeatureDetector[list[Path]]):
         return file.suffix in {".bat", ".dll", ".exe"}
 
     @override
-    def find(self, store_path: Path) -> None | list[Path]:
+    def find(self, store_path: Path) -> None | Sequence[Path]:
         """
         Finds paths of executables under `bin` within the given Nix store path.
         """

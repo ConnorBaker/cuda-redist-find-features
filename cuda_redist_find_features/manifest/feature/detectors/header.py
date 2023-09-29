@@ -1,4 +1,5 @@
 import logging
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -10,13 +11,13 @@ from .utilities import cached_path_rglob
 
 
 @dataclass
-class HeaderDetector(FeatureDetector[list[Path]]):
+class HeaderDetector(FeatureDetector[Sequence[Path]]):
     """
     Detects the presence of headers in the `include` directory.
     """
 
     @override
-    def find(self, store_path: Path) -> None | list[Path]:
+    def find(self, store_path: Path) -> None | Sequence[Path]:
         """
         Finds paths of headers under `include` within the given Nix store path.
         """

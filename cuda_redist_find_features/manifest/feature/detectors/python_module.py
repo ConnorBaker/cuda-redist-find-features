@@ -1,4 +1,5 @@
 import logging
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -10,13 +11,13 @@ from .utilities import cached_path_rglob
 
 
 @dataclass
-class PythonModuleDetector(FeatureDetector[list[Path]]):
+class PythonModuleDetector(FeatureDetector[Sequence[Path]]):
     """
     Detects the presence of python modules in the `site-packages` directory under `lib`.
     """
 
     @override
-    def find(self, store_path: Path) -> None | list[Path]:
+    def find(self, store_path: Path) -> None | Sequence[Path]:
         """
         Finds paths of python modules under `site-packages` directory under `lib` within the given Nix store path.
         """

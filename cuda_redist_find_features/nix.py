@@ -1,19 +1,23 @@
 import logging
 import subprocess
 import time
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Sequence
+from typing import Annotated
 
-from pydantic import BaseModel, Field, HttpUrl, parse_raw_as
+from annotated_types import Predicate
+from pydantic import FilePath, HttpUrl
+from pydantic.alias_generators import to_camel
 
-from .types import Sha256
+from .types import SFBM, Sha256, validate_call
 
 
-class NixStoreEntry(BaseModel):
+class NixStoreEntry(SFBM, alias_generator=to_camel):
     hash: str
-    store_path: Path = Field(alias="storePath")
+    store_path: Annotated[Path, Predicate(Path.exists)]
 
 
+@validate_call
 def nix_store_prefetch_file(url: HttpUrl, sha256: Sha256) -> NixStoreEntry:
     """
     Adds a release to the Nix store.
@@ -32,37 +36,39 @@ def nix_store_prefetch_file(url: HttpUrl, sha256: Sha256) -> NixStoreEntry:
             "sha256",
             "--expected-hash",
             sha256,
-            url,
+            str(url),
         ],
         capture_output=True,
         check=True,
     )
     end_time = time.time()
     logging.info(f"Added {url} to the Nix store in {end_time - start_time} seconds.")
-    return NixStoreEntry.parse_raw(result.stdout)
+    return NixStoreEntry.model_validate_json(result.stdout, strict=False)
 
 
-def nix_store_unpack_archive(store_path: Path) -> NixStoreEntry:
+@validate_call
+def nix_store_unpack_archive(store_path: FilePath) -> NixStoreEntry:
     """
     Uses nix flake prefetch to unpack an archive.
 
     NOTE: Only operate in the Nix store to avoid redownloading the archive.
     NOTE: This command is smart enough to not re-unpack archives.
     """
-    url: str = f"file://{store_path.as_posix()}"
+    uri: str = store_path.as_uri()
     logging.info(f"Unpacking {store_path}...")
     start_time = time.time()
     result = subprocess.run(
-        ["nix", "flake", "prefetch", "--json", url],
+        ["nix", "flake", "prefetch", "--json", uri],
         capture_output=True,
         check=True,
     )
     end_time = time.time()
     logging.info(f"Unpacked {store_path} in {end_time - start_time} seconds.")
-    return parse_raw_as(NixStoreEntry, result.stdout)
+    return NixStoreEntry.model_validate_json(result.stdout)
 
 
-def nix_store_delete(store_paths: Sequence[Path]) -> None:
+@validate_call
+def nix_store_delete(store_paths: Iterable[Path]) -> None:
     """
     Delete paths from the Nix store.
     """

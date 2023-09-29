@@ -1,4 +1,5 @@
 import logging
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -10,13 +11,13 @@ from .utilities import cached_path_rglob
 
 
 @dataclass
-class DynamicLibraryDetector(FeatureDetector[list[Path]]):
+class DynamicLibraryDetector(FeatureDetector[Sequence[Path]]):
     """
     Detects the presence of a dynamic library in the `lib` directory.
     """
 
     @override
-    def find(self, store_path: Path) -> None | list[Path]:
+    def find(self, store_path: Path) -> None | Sequence[Path]:
         """
         Finds paths of dynamic libraries under `lib` within the given Nix store path.
         """

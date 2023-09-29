@@ -7,7 +7,10 @@ T = TypeVar("T")
 
 class FeatureDetector(ABC, Generic[T]):
     """
-    A detector that detects a feature.
+    A generic feature detector which can detect the presence of a type `T` within a Nix store path.
+
+    1. Retrieves a list of paths of interest using `gather`.
+    2. Applies
     """
 
     @abstractmethod

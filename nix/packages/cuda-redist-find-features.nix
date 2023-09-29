@@ -1,33 +1,40 @@
 {
   buildPythonPackage,
   lib,
-  # buildInputs
+  # nativeBuildInputs
+  flit-core,
+  # propagatedBuildInputs
+  annotated-types,
+  click,
   cudaPackages,
   patchelf,
-  # propagatedBuildInputs
-  click,
-  pydantic,
+  pydantic_v2,
+  rich,
   typing-extensions,
   # passthru.optional-dependencies.dev
   black,
-  mypy,
   pyright,
   ruff,
 }: let
   toModuleName = builtins.replaceStrings ["-"] ["_"];
   moduleName = toModuleName attrs.pname;
   pythonPropagatedBuildInputs = [
+    annotated-types
     click
-    pydantic
+    pydantic_v2
+    rich
     typing-extensions
   ];
   attrs = {
     pname = "cuda-redist-find-features";
     version = "0.1.0";
-    format = "flit";
+    format = "pyproject";
     src = lib.sources.sourceByRegex ../.. [
       "${moduleName}(:?/.*)?"
       "pyproject.toml"
+    ];
+    nativeBuildInputs = [
+      flit-core
     ];
     propagatedBuildInputs =
       [
@@ -42,7 +49,6 @@
       (pythonPropagatedBuildInputs ++ [attrs]);
     passthru.optional-dependencies.dev = [
       black
-      mypy
       pyright
       ruff
     ];

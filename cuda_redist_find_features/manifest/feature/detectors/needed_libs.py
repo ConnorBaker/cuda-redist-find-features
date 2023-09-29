@@ -1,39 +1,15 @@
 import logging
 import subprocess
 import time
+from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from typing_extensions import override
 
-from cuda_redist_find_features.types import LibSoName
+from cuda_redist_find_features.types import LibSoName, LibSoNameTA
 
 from .groupable_feature_detector import GroupableFeatureDetector
-
-
-def patchelf_print_soname(lib_path: Path) -> LibSoName:
-    """
-    Returns the soname of the given library.
-
-    The value is equivalent to the following bash snippet:
-
-    ```console
-    $ patchelf --print-soname ./libcusolver/lib/libcusolver.so
-    libcusolver.so.11
-    ```
-    """
-    logging.debug(f"Running patchelf --print-soname on {lib_path}...")
-    start_time = time.time()
-    result = subprocess.run(
-        ["patchelf", "--print-soname", lib_path],
-        capture_output=True,
-        check=True,
-    )
-    end_time = time.time()
-    logging.debug(f"Ran patchelf --print-soname on {lib_path} in {end_time - start_time} seconds.")
-    lib_so_name: LibSoName = LibSoName(result.stdout.decode("utf-8").strip())
-    logging.debug(f"Lib soname: {lib_so_name}")
-    return lib_so_name
 
 
 @dataclass
@@ -46,11 +22,11 @@ class NeededLibsDetector(GroupableFeatureDetector[LibSoName]):
     """
 
     dir: Path = Path("lib")
-    ignored_dirs: set[Path] = field(default_factory=lambda: set(map(Path, ("stubs", "cmake", "Win32", "x64"))))
+    ignored_dirs: Set[Path] = field(default_factory=lambda: set(map(Path, ("stubs", "cmake", "Win32", "x64"))))
 
     @staticmethod
     @override
-    def path_feature_detector(path: Path) -> set[LibSoName]:
+    def path_feature_detector(path: Path) -> Set[LibSoName]:
         """
         Returns a values equivalent to the following bash snippet:
 
@@ -77,7 +53,7 @@ class NeededLibsDetector(GroupableFeatureDetector[LibSoName]):
         end_time = time.time()
         logging.debug(f"Ran patchelf --print-needed on {path} in {end_time - start_time} seconds.")
         libs_needed: set[LibSoName] = {
-            LibSoName(lib_so_name) for lib_so_name in result.stdout.decode("utf-8").splitlines()
+            LibSoNameTA.validate_python(name) for name in result.stdout.decode("utf-8").splitlines() if name
         }
         logging.debug(f"Libs needed: {libs_needed}")
         return libs_needed
@@ -88,7 +64,7 @@ class NeededLibsDetector(GroupableFeatureDetector[LibSoName]):
         return path.suffix == ".so"
 
     @override
-    def find(self, store_path: Path) -> None | list[LibSoName] | dict[str, list[LibSoName]]:
+    def find(self, store_path: Path) -> None | Sequence[LibSoName] | Mapping[str, Sequence[LibSoName]]:
         logging.debug(f"Getting needed libs for {store_path}...")
         start_time = time.time()
         ret = super().find(store_path)

@@ -1,12 +1,14 @@
 from pathlib import Path
+from typing import Self
 
-from pydantic import BaseModel, Field
-from typing_extensions import Self
+from pydantic.alias_generators import to_camel
+
+from cuda_redist_find_features.types import SFBM
 
 from .detectors import DirDetector, DynamicLibraryDetector, ExecutableDetector, StaticLibraryDetector
 
 
-class FeatureOutputs(BaseModel):
+class FeatureOutputs(SFBM, alias_generator=to_camel):
     """
     Describes the different outputs a release can have.
 
@@ -14,22 +16,22 @@ class FeatureOutputs(BaseModel):
     https://github.com/NixOS/nixpkgs/blob/d4d822f526f1f72a450da88bf35abe132181170f/pkgs/build-support/setup-hooks/multiple-outputs.sh.
     """
 
-    has_bin: bool = Field(False, alias="hasBin")
-    has_dev: bool = Field(False, alias="hasDev")
-    has_doc: bool = Field(False, alias="hasDoc")
-    has_lib: bool = Field(False, alias="hasLib")
-    has_static: bool = Field(False, alias="hasStatic")
-    has_sample: bool = Field(False, alias="hasSample")
+    has_bin: bool
+    has_dev: bool
+    has_doc: bool
+    has_lib: bool
+    has_static: bool
+    has_sample: bool
 
     @classmethod
     def of(cls, store_path: Path) -> Self:
         return cls(
-            hasBin=cls.check_has_bin(store_path),
-            hasDev=cls.check_has_dev(store_path),
-            hasDoc=cls.check_has_doc(store_path),
-            hasLib=cls.check_has_lib(store_path),
-            hasStatic=cls.check_has_static(store_path),
-            hasSample=cls.check_has_sample(store_path),
+            has_bin=cls.check_has_bin(store_path),
+            has_dev=cls.check_has_dev(store_path),
+            has_doc=cls.check_has_doc(store_path),
+            has_lib=cls.check_has_lib(store_path),
+            has_static=cls.check_has_static(store_path),
+            has_sample=cls.check_has_sample(store_path),
         )
 
     @staticmethod

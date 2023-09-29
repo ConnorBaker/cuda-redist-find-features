@@ -1,7 +1,9 @@
+from collections.abc import Callable, Mapping, Sequence
 from concurrent.futures import ProcessPoolExecutor
+from functools import partial
 from pathlib import Path
 
-from pydantic import HttpUrl
+from pydantic import FilePath, HttpUrl
 
 from ..manifest.feature import FeatureManifest
 from ..manifest.nvidia import NvidiaManifest, NvidiaManifestRef
@@ -17,6 +19,15 @@ from .option import (
     no_parallel_option,
     version_option,
 )
+
+
+# Undecorate the NvidiaManifestRef download method so it can be pickled.
+def _handler(url: HttpUrl, cleanup: bool, nvidia_manifest_path: FilePath, nvidia_manifest: NvidiaManifest) -> FilePath:
+    """ """
+    feature_manifest_path = nvidia_manifest_path.with_stem(nvidia_manifest_path.stem.replace("redistrib", "feature"))
+    feature_manifest = FeatureManifest.of(url, nvidia_manifest, cleanup)
+    feature_manifest.write(feature_manifest_path)
+    return feature_manifest_path
 
 
 @main.command()
@@ -50,27 +61,27 @@ def process_manifests(
     MANIFEST_DIR should be a directory containing JSON manifest(s).
     """
     # Create the version constraint
-    version_constraint = VersionConstraint(min_version, max_version, version)
+    version_constraint = VersionConstraint(
+        version_min=min_version,
+        version_max=max_version,
+        version=version,
+    )
+
     # Parse and filter
-    refs = NvidiaManifestRef.from_ref(manifest_dir, version_constraint)
-    # Transform into nvidia manifests
-    nvidia_manifests: dict[Path, NvidiaManifest] = {
-        manifest_dir / f"redistrib_{ref.version}.json": ref.parse() for ref in refs
-    }
+    refs: Sequence[NvidiaManifestRef[FilePath]] = NvidiaManifestRef.from_ref(manifest_dir, version_constraint)
 
-    # Transform and write them
+    # Parse references into manifests
+    nvidia_manifests: Mapping[FilePath, NvidiaManifest] = {ref.ref: ref.parse() for ref in refs}
+
+    # Curry
+    func: Callable[[FilePath, NvidiaManifest], FilePath] = partial(_handler, url, cleanup)
+
     if no_parallel:
-        for path, nvidia_manifest in nvidia_manifests.items():
-            feature_manifest = FeatureManifest.of(url, nvidia_manifest, cleanup)
-            feature_manifest.write(path.with_stem(path.stem.replace("redistrib", "feature")))
+        for _ in map(func, *zip(*nvidia_manifests.items())):
+            pass
+        return
 
-    else:
-        # Transform into futures
-        with ProcessPoolExecutor() as executor:
-            features = {
-                path: executor.submit(FeatureManifest.of, url, nvidia_manifest, cleanup)
-                for path, nvidia_manifest in nvidia_manifests.items()
-            }
-            for path, future_feature_manifest in features.items():
-                feature_manifest = future_feature_manifest.result()
-                feature_manifest.write(path.with_stem(path.stem.replace("redistrib", "feature")))
+    with ProcessPoolExecutor() as executor:
+        for _ in executor.map(func, *zip(*nvidia_manifests.items())):
+            pass
+        return
