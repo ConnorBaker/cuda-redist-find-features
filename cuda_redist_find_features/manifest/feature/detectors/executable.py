@@ -18,7 +18,7 @@ class ExecutableDetector(FeatureDetector[Sequence[Path]]):
 
     @staticmethod
     def file_is_unix_executable(file: Path) -> bool:
-        return bool(file.stat().st_mode & 0o111)
+        return bool(file.stat().st_mode | 0o111)
 
     @staticmethod
     def file_is_windows_executable(file: Path) -> bool:
