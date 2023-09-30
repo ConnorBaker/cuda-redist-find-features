@@ -8,10 +8,6 @@ import pydantic
 from pydantic import BaseModel, ConfigDict, DirectoryPath, Field, FilePath, HttpUrl, RootModel, TypeAdapter
 from typing_extensions import TypeAliasType
 
-# Helper for parallel execution
-T = TypeVar("T")
-
-
 model_config = ConfigDict(
     frozen=True,
     populate_by_name=True,
@@ -27,6 +23,7 @@ TA: partial[TypeAdapter[Any]] = partial(TypeAdapter, config=model_config)
 FF = partial(Field, frozen=True)
 SFF = partial(Field, frozen=True, strict=True)
 
+T = TypeVar("T")
 K = TypeVar("K")
 V = TypeVar("V")
 

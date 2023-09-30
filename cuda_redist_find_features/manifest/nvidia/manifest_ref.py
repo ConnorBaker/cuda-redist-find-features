@@ -84,7 +84,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
             s: str = response.read().decode("utf-8")
             logging.debug(f"Searching with regex {regex_str}...")
             for matched in re.finditer(regex_str, s):
-                manifest_version = Version.parse(matched.group(1))
+                manifest_version = Version.model_validate_strings(matched.group(1))
                 if not version_constraint.is_satisfied_by(manifest_version):
                     continue
 
@@ -108,7 +108,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
 
         refs: list[NvidiaManifestRef[FilePath]] = []
         for file in dir.glob(glob_str):
-            manifest_version = Version.parse(file.stem.strip(filename_prefix))
+            manifest_version = Version.model_validate_strings(file.stem.strip(filename_prefix))
             if version_constraint.is_satisfied_by(manifest_version):
                 refs.append(NvidiaManifestRef(ref=file, version=manifest_version))
 

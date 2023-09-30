@@ -15,7 +15,7 @@ class Version(click.ParamType):
 
     def convert(self, value: str, param: None | click.Parameter, ctx: None | click.Context) -> version.Version:
         try:
-            return version.Version.parse(value)
+            return version.Version.model_validate_strings(value)
         except ValueError:
             self.fail(f"{value} is not a valid version string", param, ctx)
 
