@@ -5,7 +5,9 @@
 
 ## Roadmap
 
-- \[ \] Fix debug only working when it is specified before options which take arguments.
+- \[ \] Introduce a command to produce a JSON file containing a map of lib sonames to their corresponding package names.
+  - We can use this to implement a command which automatically generates information required for overrides / dependencies.
+  - It must be a separate command because we want our JSON file to exist independently of the manifests.
 - \[ \] Further documentation.
 - \[ \] Test cases.
 
@@ -61,7 +63,7 @@ nix run .# -- process-manifests --help
 <details><summary>download-manifests</summary>
 
 ```regen-readme
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO
 ```
 
 </details>
@@ -69,7 +71,7 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 <details><summary>download-manifests with --version</summary>
 
 ```regen-readme
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug --version 1.4.0
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --version 1.4.0
 ```
 
 </details>
@@ -77,7 +79,7 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 <details><summary>download-manifests with --min-version and --max-version</summary>
 
 ```regen-readme
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --min-version 1.4.0 --max-version 1.6.2
 ```
 
 </details>
@@ -87,13 +89,13 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 Assuming
 
 ```console
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --min-version 1.4.0 --max-version 1.6.2
 ```
 
 was run previously,
 
 ```regen-readme
-nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --debug
+nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO
 ```
 
 </details>
