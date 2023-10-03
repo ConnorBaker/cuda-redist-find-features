@@ -1,11 +1,9 @@
-import logging
-
 import click
 
 
 def _no_parallel_option_callback(ctx: click.Context, param: click.Parameter, no_parallel: bool) -> bool:
     if no_parallel:
-        logging.debug("Parallel processing disabled.")
+        click.echo("Parallel processing disabled.")
     return no_parallel
 
 

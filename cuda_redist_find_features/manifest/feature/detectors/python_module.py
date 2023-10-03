@@ -1,13 +1,15 @@
-import logging
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
 from typing_extensions import override
 
-from .dir import DirDetector
-from .types import FeatureDetector
-from .utilities import cached_path_rglob
+from cuda_redist_find_features.manifest.feature.detectors.dir import DirDetector
+from cuda_redist_find_features.manifest.feature.detectors.types import FeatureDetector
+from cuda_redist_find_features.manifest.feature.detectors.utilities import cached_path_rglob
+from cuda_redist_find_features.utilities import get_logger
+
+logger = get_logger(__name__)
 
 
 @dataclass
@@ -37,7 +39,7 @@ class PythonModuleDetector(FeatureDetector[Sequence[Path]]):
 
         # If there are no lib subdirs, we can't have python modules.
         if not site_packages_dirs:
-            logging.debug("No site-packages dir found.")
+            logger.debug("No site-packages dir found.")
             return None
 
         # If there are multiple lib subdirs, we can't have python modules.
@@ -54,7 +56,7 @@ class PythonModuleDetector(FeatureDetector[Sequence[Path]]):
         # Get the python modules.
         python_modules = cached_path_rglob(site_packages_dir, "*.py", files_only=True)
         if [] != python_modules:
-            logging.debug(f"Found python modules: {python_modules}")
+            logger.debug("Found python modules: %s.", python_modules)
             return python_modules
 
         return None

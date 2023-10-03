@@ -6,13 +6,13 @@ build-backend = "flit_core.buildapi"
 name = "cuda_redist_find_features"
 version = "0.1.0"
 authors = [{ name = "Connor Baker", email = "connorbaker@tweag.io" }]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "BSD-3-Clause" }
 description = "Find the features of a CUDA redistributable package"
 dependencies = [
     "annotated-types>=0.5.0",
     "click>=8.1.0", 
-    "pydantic>=1.10.8",
+    "pydantic>=2.0.0",
     "rich>=13.3.5",
     "typing-extensions>=4.5.0",
 ]
@@ -38,12 +38,18 @@ select = [
     "FURB",
     "LOG",
     "RUF",
+    "G",
+    "TID",
 ]
 ignore = [
     # Ignore functions with many arguments (I like currying)
     "PLR0913"
 ]
 line-length = 120
+[tool.ruff.flake8-tidy-imports]
+# Disallow all relative imports.
+ban-relative-imports = "all"
+
 
 [tool.pyright]
 include = ["./cuda_redist_find_features"]

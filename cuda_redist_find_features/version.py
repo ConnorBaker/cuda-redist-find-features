@@ -5,7 +5,7 @@ from typing import Annotated, Any
 from pydantic import model_serializer, model_validator
 from typing_extensions import TypeAliasType
 
-from .types import SFBM, SFF
+from cuda_redist_find_features.types import SFBM, SFF
 
 NonNegativeInt = TypeAliasType(
     "NonNegativeInt",

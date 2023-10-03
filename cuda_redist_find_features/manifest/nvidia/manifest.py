@@ -1,6 +1,5 @@
+from cuda_redist_find_features.manifest.nvidia.release import NvidiaRelease
 from cuda_redist_find_features.types import SFBM, SFF, SFMRM, PackageName
-
-from .release import NvidiaRelease
 
 
 class NvidiaManifest(SFBM, extra="allow"):

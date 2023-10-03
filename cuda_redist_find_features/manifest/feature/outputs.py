@@ -3,9 +3,13 @@ from typing import Self
 
 from pydantic.alias_generators import to_camel
 
+from cuda_redist_find_features.manifest.feature.detectors import (
+    DirDetector,
+    DynamicLibraryDetector,
+    ExecutableDetector,
+    StaticLibraryDetector,
+)
 from cuda_redist_find_features.types import SFBM
-
-from .detectors import DirDetector, DynamicLibraryDetector, ExecutableDetector, StaticLibraryDetector
 
 
 class FeatureOutputs(SFBM, alias_generator=to_camel):

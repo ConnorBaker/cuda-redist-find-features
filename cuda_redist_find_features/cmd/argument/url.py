@@ -1,14 +1,12 @@
-import logging
-
 import click
 from pydantic import HttpUrl
 
-from ..types import HTTP_URL_PARAM_TYPE
+from cuda_redist_find_features.cmd.types import HTTP_URL_PARAM_TYPE
 
 
 def _url_argument_callback(ctx: click.Context, param: click.Parameter, url: HttpUrl) -> HttpUrl:
     if url:
-        logging.debug(f"Using URL {url}.")
+        click.echo(f"Using URL {url}.")
     return url
 
 

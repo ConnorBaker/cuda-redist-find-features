@@ -1,21 +1,22 @@
 from __future__ import annotations
 
-from builtins import map as _map
-from collections.abc import Callable, Iterable, Iterator
-from concurrent.futures import ProcessPoolExecutor
-from typing import Any, TypeVar
+import logging
 
-# Helper for parallel execution
-T = TypeVar("T")
+import rich.logging
+
+LOGGING_LEVEL = logging.WARNING
+
+_logger = logging.getLogger(__name__)
 
 
-def map(fn: Callable[..., T], *iterables: Iterable[Any], no_parallel: bool = False) -> Iterator[T]:
-    if no_parallel:
-        return _map(fn, *iterables)
-    else:
-        import pickle
+def get_logger(name: str) -> logging.Logger:
+    logger = logging.getLogger(name)
+    logger.setLevel(LOGGING_LEVEL)
 
-        pickle.DEFAULT_PROTOCOL = pickle.HIGHEST_PROTOCOL
+    handler = rich.logging.RichHandler(rich_tracebacks=True)
+    handler.setFormatter(logging.Formatter("[PID%(process)s] %(message)s", datefmt="%Y-%m-%dT%H:%M:%S%z"))
+    logger.addHandler(handler)
 
-        with ProcessPoolExecutor() as executor:
-            return executor.map(fn, *iterables)
+    _logger.error("Created logger with name %s and level %d", name, LOGGING_LEVEL)
+
+    return logger

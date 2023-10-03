@@ -2,8 +2,8 @@ from typing import Self
 
 from pydantic import model_validator
 
-from .types import SFBM
-from .version import Version
+from cuda_redist_find_features.types import SFBM
+from cuda_redist_find_features.version import Version
 
 
 class VersionConstraint(SFBM):

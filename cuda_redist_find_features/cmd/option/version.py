@@ -1,19 +1,15 @@
-import json
-import logging
-
 import click
 
-from ..types import VERSION_PARAM_TYPE, NoneOrVersion
+from cuda_redist_find_features.cmd.types import VERSION_PARAM_TYPE, NoneOrVersion
 
 
 def _version_option_callback(ctx: click.Context, param: click.Parameter, version: NoneOrVersion) -> NoneOrVersion:
     if version is not None:
-        logging.debug(json.dumps(ctx.params))
         if ctx.params.get("min_version") is not None:
             raise click.BadParameter("Cannot specify both --version and --min-version.")
         if ctx.params.get("max_version") is not None:
             raise click.BadParameter("Cannot specify both --version and --max-version.")
-        logging.debug(f"Version set to {version}.")
+        click.echo(f"Version set to {version}.")
     return version
 
 

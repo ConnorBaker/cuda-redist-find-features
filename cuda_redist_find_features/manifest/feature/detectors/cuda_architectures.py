@@ -1,4 +1,3 @@
-import logging
 import re
 import subprocess
 import time
@@ -8,9 +7,11 @@ from pathlib import Path
 
 from typing_extensions import override
 
+from cuda_redist_find_features.manifest.feature.detectors.groupable_feature_detector import GroupableFeatureDetector
 from cuda_redist_find_features.types import CudaArch, CudaArchTA
+from cuda_redist_find_features.utilities import get_logger
 
-from .groupable_feature_detector import GroupableFeatureDetector
+logger = get_logger(__name__)
 
 
 @dataclass
@@ -39,7 +40,7 @@ class CudaArchitecturesDetector(GroupableFeatureDetector[CudaArch]):
         arch = sm_90
         ```
         """
-        logging.debug(f"Running cuobjdmp on {path}...")
+        logger.debug("Running cuobjdmp on %s...", path)
         start_time = time.time()
         result = subprocess.run(
             ["cuobjdump", path],
@@ -47,13 +48,13 @@ class CudaArchitecturesDetector(GroupableFeatureDetector[CudaArch]):
             check=False,
         )
         end_time = time.time()
-        logging.debug(f"Ran cuobjdump on {path} in {end_time - start_time} seconds.")
+        logger.debug("Ran cuobjdump on %s in %d seconds.", path, end_time - start_time)
 
         # Handle failure and the case where the library is GPU-agnostic.
         if result.returncode != 0:
             err_msg = result.stderr.decode("utf-8")
             if "does not contain device code" in err_msg:
-                logging.debug(f"{path} is GPU-agnostic.")
+                logger.debug("%s is GPU-agnostic.", path)
                 return set()
 
             raise RuntimeError(f"Failed to run cuobjdump on {path}: {err_msg}")
@@ -61,7 +62,7 @@ class CudaArchitecturesDetector(GroupableFeatureDetector[CudaArch]):
         output = result.stdout.decode("utf-8")
         architecture_strs: set[str] = set(re.findall(r"^arch = (.+)$", output, re.MULTILINE))
         architectures: set[CudaArch] = set(map(CudaArchTA.validate_python, architecture_strs))
-        logging.debug(f"Found architectures: {architectures}")
+        logger.debug("Found architectures: %s", architectures)
         return architectures
 
     @staticmethod
@@ -71,9 +72,9 @@ class CudaArchitecturesDetector(GroupableFeatureDetector[CudaArch]):
 
     @override
     def find(self, store_path: Path) -> None | Sequence[CudaArch] | Mapping[str, Sequence[CudaArch]]:
-        logging.debug(f"Getting supported CUDA architectures for {store_path}...")
+        logger.debug("Getting supported CUDA architectures for %s...", store_path)
         start_time = time.time()
         ret = super().find(store_path)
         end_time = time.time()
-        logging.debug(f"Got supported CUDA architectures for {store_path} in {end_time - start_time} seconds: {ret}")
+        logger.debug("Got supported CUDA architectures for %s in %d seconds.", store_path, end_time - start_time)
         return ret

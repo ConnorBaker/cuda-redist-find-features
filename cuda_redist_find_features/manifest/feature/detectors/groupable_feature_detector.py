@@ -1,4 +1,3 @@
-import logging
 from abc import abstractmethod
 from collections.abc import Iterable, Mapping, Sequence, Set
 from dataclasses import dataclass
@@ -6,9 +5,12 @@ from functools import reduce
 from pathlib import Path
 from typing import TYPE_CHECKING, TypeVar, cast
 
-from .dir import DirDetector
-from .types import FeatureDetector
-from .utilities import cached_path_is_dir, cached_path_iterdir
+from cuda_redist_find_features.manifest.feature.detectors.dir import DirDetector
+from cuda_redist_find_features.manifest.feature.detectors.types import FeatureDetector
+from cuda_redist_find_features.manifest.feature.detectors.utilities import cached_path_is_dir, cached_path_iterdir
+from cuda_redist_find_features.utilities import get_logger
+
+logger = get_logger(__name__)
 
 if TYPE_CHECKING:
     from _typeshed import SupportsRichComparison
@@ -70,14 +72,14 @@ class GroupableFeatureDetector(FeatureDetector[Sequence[RichlyComparable] | Mapp
         for item in cached_path_iterdir(absolute_dir):
             if cached_path_is_dir(item):
                 if item in absolute_ignored_dirs:
-                    logging.debug(f"Skipping ignored directory {item}...")
+                    logger.debug("Skipping ignored directory %s...", item)
                 else:
-                    logging.debug(f"Found subdirectory {item}...")
+                    logger.debug("Found subdirectory %s...", item)
                     items.append(item)
             elif not self.path_filter(item):
-                logging.debug(f"Skipping ignored file {item}...")
+                logger.debug("Skipping ignored file %s...", item)
             else:
-                logging.debug(f"Found file {item}...")
+                logger.debug("Found file %s...", item)
                 items.append(item)
 
         # If there are no items, return None.

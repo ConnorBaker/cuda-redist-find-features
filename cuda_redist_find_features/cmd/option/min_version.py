@@ -1,8 +1,6 @@
-import logging
-
 import click
 
-from ..types import VERSION_PARAM_TYPE, NoneOrVersion
+from cuda_redist_find_features.cmd.types import VERSION_PARAM_TYPE, NoneOrVersion
 
 
 def _min_version_option_callback(
@@ -13,7 +11,7 @@ def _min_version_option_callback(
             raise click.BadParameter("Cannot specify both --min-version and --version.")
         if ctx.params.get("max_version") is not None and min_version > ctx.params["max_version"]:
             raise click.BadParameter("--min-version cannot be greater than --max-version.")
-        logging.debug(f"Minimum version set to {min_version}.")
+        click.echo(f"Minimum version set to {min_version}.")
     return min_version
 
 

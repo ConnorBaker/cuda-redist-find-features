@@ -1,12 +1,18 @@
-import logging
 from dataclasses import dataclass
 from itertools import chain
 from pathlib import Path
 
 from typing_extensions import override
 
-from .types import FeatureDetector
-from .utilities import cached_path_exists, cached_path_has_contents, cached_path_is_dir
+from cuda_redist_find_features.manifest.feature.detectors.types import FeatureDetector
+from cuda_redist_find_features.manifest.feature.detectors.utilities import (
+    cached_path_exists,
+    cached_path_has_contents,
+    cached_path_is_dir,
+)
+from cuda_redist_find_features.utilities import get_logger
+
+logger = get_logger(__name__)
 
 
 @dataclass
@@ -31,7 +37,7 @@ class DirDetector(FeatureDetector[Path]):
             if parent.is_relative_to(store_path)
         )
         if satisfied:
-            logging.debug(f"Found non-empty directory {dir_path}.")
+            logger.debug("Found non-empty directory %s.", dir_path)
         else:
-            logging.debug(f"Did not find non-empty directory {dir_path}.")
+            logger.debug("Did not find non-empty directory %s.", dir_path)
         return dir_path if satisfied else None

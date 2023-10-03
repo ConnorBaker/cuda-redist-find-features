@@ -1,4 +1,3 @@
-import logging
 import subprocess
 import time
 from collections.abc import Mapping, Sequence, Set
@@ -7,9 +6,11 @@ from pathlib import Path
 
 from typing_extensions import override
 
+from cuda_redist_find_features.manifest.feature.detectors.groupable_feature_detector import GroupableFeatureDetector
 from cuda_redist_find_features.types import LibSoName, LibSoNameTA
+from cuda_redist_find_features.utilities import get_logger
 
-from .groupable_feature_detector import GroupableFeatureDetector
+logger = get_logger(__name__)
 
 
 @dataclass
@@ -43,7 +44,7 @@ class NeededLibsDetector(GroupableFeatureDetector[LibSoName]):
         ld-linux-x86-64.so.2
         ```
         """
-        logging.debug(f"Running patchelf --print-needed on {path}...")
+        logger.debug("Running patchelf --print-needed on %s...", path)
         start_time = time.time()
         result = subprocess.run(
             ["patchelf", "--print-needed", path],
@@ -51,11 +52,11 @@ class NeededLibsDetector(GroupableFeatureDetector[LibSoName]):
             check=True,
         )
         end_time = time.time()
-        logging.debug(f"Ran patchelf --print-needed on {path} in {end_time - start_time} seconds.")
+        logger.debug("Ran patchelf --print-needed on %s in %s seconds.", path, end_time - start_time)
         libs_needed: set[LibSoName] = {
             LibSoNameTA.validate_python(name) for name in result.stdout.decode("utf-8").splitlines() if name
         }
-        logging.debug(f"Libs needed: {libs_needed}")
+        logger.debug("Libs needed: %s.", libs_needed)
         return libs_needed
 
     @staticmethod
@@ -65,9 +66,9 @@ class NeededLibsDetector(GroupableFeatureDetector[LibSoName]):
 
     @override
     def find(self, store_path: Path) -> None | Sequence[LibSoName] | Mapping[str, Sequence[LibSoName]]:
-        logging.debug(f"Getting needed libs for {store_path}...")
+        logger.debug("Getting needed libs for %s...", store_path)
         start_time = time.time()
         ret = super().find(store_path)
         end_time = time.time()
-        logging.debug(f"Got needed libs for {store_path} in {end_time - start_time} seconds: {ret}.")
+        logger.debug("Got needed libs for %s in %s seconds.", store_path, end_time - start_time)
         return ret

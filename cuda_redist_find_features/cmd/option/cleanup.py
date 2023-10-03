@@ -1,11 +1,9 @@
-import logging
-
 import click
 
 
 def _cleanup_option_callback(ctx: click.Context, param: click.Parameter, cleanup: bool) -> bool:
     if cleanup:
-        logging.debug("Removing files after use.")
+        click.echo("Removing files after use.")
     return cleanup
 
 

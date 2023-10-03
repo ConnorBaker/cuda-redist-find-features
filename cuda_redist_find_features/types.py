@@ -1,12 +1,18 @@
 from __future__ import annotations
 
-from collections.abc import ItemsView, Iterable, KeysView, Mapping, ValuesView
+from collections.abc import Callable, ItemsView, Iterable, KeysView, Mapping, Sequence, ValuesView
+from concurrent.futures import Executor, Future
+from dataclasses import dataclass
+from enum import Enum
 from functools import partial
-from typing import Annotated, Any, Literal, TypeVar, cast, get_args, overload
+from typing import Annotated, Any, Generic, Literal, Self, TypeVar, cast, final, get_args, overload
 
 import pydantic
 from pydantic import BaseModel, ConfigDict, DirectoryPath, Field, FilePath, HttpUrl, RootModel, TypeAdapter
 from typing_extensions import TypeAliasType
+
+LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+LogLevels = cast(Sequence[LogLevel], get_args(LogLevel))
 
 model_config = ConfigDict(
     frozen=True,
@@ -63,6 +69,10 @@ class SFMRM(RootModel[Mapping[K, V]]):
     def values(self):
         "D.values() -> an object providing a view on D's values"
         return ValuesView(self.root)
+
+    @validate_call
+    def __len__(self) -> int:
+        return self.root.__len__()
 
     @validate_call
     def __contains__(self, key: K) -> bool:
@@ -165,3 +175,58 @@ Sha256 = TypeAliasType(
         ),
     ],
 )
+
+
+@final
+class FutureStatus(Enum):
+    WAITING = ":zzz:"
+    RUNNING = ":clock5:"
+    DONE = ":white_check_mark:"
+    CANCELLED = ":x:"
+
+    @classmethod
+    def of(cls, future: Future[Any]) -> Self:
+        if future.cancelled():
+            return cls.CANCELLED
+        elif future.done():
+            return cls.DONE
+        elif future.running():
+            return cls.RUNNING
+        else:
+            return cls.WAITING
+
+
+A = TypeVar("A")
+B = TypeVar("B")
+
+
+@final
+@dataclass(frozen=True, order=True, slots=True)
+class Task(Generic[A, B]):
+    initial: A
+    status: FutureStatus
+    future: Future[B]
+
+    def update_status(self) -> Self:
+        return __class__(
+            initial=self.initial,
+            status=FutureStatus.of(self.future),
+            future=self.future,
+        )
+
+    def is_complete(self) -> bool:
+        return self.status in {FutureStatus.DONE, FutureStatus.CANCELLED}
+
+    def is_waiting(self) -> bool:
+        return self.status == FutureStatus.WAITING
+
+    def is_running(self) -> bool:
+        return self.status == FutureStatus.RUNNING
+
+    @classmethod
+    def submit(cls, executor: Executor, initial: A, fn: Callable[[A], B]) -> Task[A, B]:
+        return cls(
+            initial=initial,
+            status=FutureStatus.WAITING,
+            future=executor.submit(fn, initial),
+        )

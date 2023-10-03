@@ -1,10 +1,16 @@
-import logging
 from collections.abc import Mapping, Sequence
 from typing import Self
 
 from pydantic import HttpUrl
 from pydantic.alias_generators import to_camel
 
+from cuda_redist_find_features.manifest.feature.detectors import (
+    CudaArchitecturesDetector,
+    NeededLibsDetector,
+    ProvidedLibsDetector,
+)
+from cuda_redist_find_features.manifest.feature.outputs import FeatureOutputs
+from cuda_redist_find_features.manifest.nvidia import NvidiaPackage
 from cuda_redist_find_features.nix import (
     NixStoreEntry,
     nix_store_delete,
@@ -12,10 +18,9 @@ from cuda_redist_find_features.nix import (
     nix_store_unpack_archive,
 )
 from cuda_redist_find_features.types import FF, SFBM, SFF, CudaArch, HttpUrlTA, LibSoName
+from cuda_redist_find_features.utilities import get_logger
 
-from ..nvidia import NvidiaPackage
-from .detectors import CudaArchitecturesDetector, NeededLibsDetector, ProvidedLibsDetector
-from .outputs import FeatureOutputs
+logger = get_logger(__name__)
 
 
 class FeaturePackage(SFBM, alias_generator=to_camel):
@@ -58,13 +63,13 @@ class FeaturePackage(SFBM, alias_generator=to_camel):
 
     @classmethod
     def of(cls, url_prefix: HttpUrl, nvidia_package: NvidiaPackage, cleanup: bool = False) -> Self:
-        logging.debug(f"Relative path: {nvidia_package.relative_path}")
-        logging.debug(f"SHA256: {nvidia_package.sha256}")
-        logging.debug(f"MD5: {nvidia_package.md5}")
-        logging.debug(f"Size: {nvidia_package.size}")
+        logger.debug("Relative path: %s", nvidia_package.relative_path)
+        logger.debug("SHA256: %s", nvidia_package.sha256)
+        logger.debug("MD5: %s", nvidia_package.md5)
+        logger.debug("Size: %s", nvidia_package.size)
 
         # Get the store path for the package.
-        url = HttpUrlTA.validate_python(f"{url_prefix}/{nvidia_package.relative_path}")
+        url = HttpUrlTA.validate_strings(f"{url_prefix}/{nvidia_package.relative_path}")
         archive: NixStoreEntry = nix_store_prefetch_file(url, nvidia_package.sha256)
         unpacked: NixStoreEntry = nix_store_unpack_archive(archive.store_path)
         unpacked_root = unpacked.store_path
@@ -76,7 +81,7 @@ class FeaturePackage(SFBM, alias_generator=to_camel):
         provided_libs = ProvidedLibsDetector().find(unpacked_root) or []
 
         if cleanup:
-            logging.debug(f"Cleaning up {archive.store_path} and {unpacked.store_path}...")
+            logger.debug("Cleaning up %s and %s...", archive.store_path, unpacked.store_path)
             nix_store_delete([archive.store_path, unpacked.store_path])
 
         return cls(

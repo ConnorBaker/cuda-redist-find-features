@@ -2,10 +2,9 @@ from typing import Self
 
 from pydantic import HttpUrl
 
+from cuda_redist_find_features.manifest.feature.package import FeaturePackage
+from cuda_redist_find_features.manifest.nvidia import NvidiaRelease
 from cuda_redist_find_features.types import SFMRM, Platform
-
-from ..nvidia import NvidiaRelease
-from .package import FeaturePackage
 
 
 class FeatureRelease(SFMRM[Platform, FeaturePackage]):

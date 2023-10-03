@@ -1,6 +1,9 @@
-import logging
 from functools import lru_cache
 from pathlib import Path
+
+from cuda_redist_find_features.utilities import get_logger
+
+logger = get_logger(__name__)
 
 
 def cache_hit_ratio(hits: int, misses: int, _maxsize: None | int, _currsize: int) -> float:
@@ -56,9 +59,7 @@ def exists(path: Path) -> bool:
     Returns whether the given path exists.
     """
     path_exists = _exists(path)
-    logging.debug(f"Path {path} {'exists' if path_exists else 'does not exist'}")
-    logging.debug(f"cache info: {_exists.cache_info()}")
-    logging.debug(f"cache hit ratio: {cache_hit_ratio(*_exists.cache_info())}")
+    logger.debug("Path %s %s exist.", path, "does" if path_exists else "does not")
     return path_exists
 
 
@@ -67,9 +68,7 @@ def is_dir(path: Path) -> bool:
     Returns whether the given path is a directory.
     """
     path_is_dir = _is_dir(path)
-    logging.debug(f"Path {path} {'is' if path_is_dir else 'is not'} a directory")
-    logging.debug(f"cache info: {_is_dir.cache_info()}")
-    logging.debug(f"cache hit ratio: {cache_hit_ratio(*_exists.cache_info())}")
+    logger.debug("Path %s %s a directory.", path, "is" if path_is_dir else "is not")
     return path_is_dir
 
 
@@ -78,9 +77,7 @@ def iterdir(path: Path) -> list[Path]:
     Returns the contents of the given path.
     """
     path_iterdir = _iterdir(path)
-    logging.debug(f"Path {path} has {len(path_iterdir)} contents")
-    logging.debug(f"cache info: {_iterdir.cache_info()}")
-    logging.debug(f"cache hit ratio: {cache_hit_ratio(*_iterdir.cache_info())}")
+    logger.debug("Path %s has %s contents.", path, len(path_iterdir))
     return path_iterdir
 
 
@@ -89,9 +86,7 @@ def has_contents(path: Path) -> bool:
     Returns whether the given path has contents.
     """
     path_has_contents = _has_contents(path)
-    logging.debug(f"Path {path} {'has' if path_has_contents else 'does not have'} contents")
-    logging.debug(f"cache info: {_has_contents.cache_info()}")
-    logging.debug(f"cache hit ratio: {cache_hit_ratio(*_has_contents.cache_info())}")
+    logger.debug("Path %s %s contents.", path, "has" if path_has_contents else "does not have")
     return path_has_contents
 
 
@@ -100,7 +95,5 @@ def rglob(path: Path, pattern: str, files_only: bool = False) -> list[Path]:
     Returns a list of paths matching the given patterns.
     """
     matched = _rglob(path, pattern, files_only)
-    logging.debug(f"Path {path} has {len(matched)} matches for pattern {pattern}")
-    logging.debug(f"cache info: {_rglob.cache_info()}")
-    logging.debug(f"cache hit ratio: {cache_hit_ratio(*_rglob.cache_info())}")
+    logger.debug("Path %s has %s matches for pattern %s.", path, len(matched), pattern)
     return matched

@@ -1,4 +1,3 @@
-import logging
 import subprocess
 import time
 from collections.abc import Iterable
@@ -9,7 +8,10 @@ from annotated_types import Predicate
 from pydantic import FilePath, HttpUrl
 from pydantic.alias_generators import to_camel
 
-from .types import SFBM, Sha256, validate_call
+from cuda_redist_find_features.types import SFBM, Sha256, validate_call
+from cuda_redist_find_features.utilities import get_logger
+
+logger = get_logger(__name__)
 
 
 class NixStoreEntry(SFBM, alias_generator=to_camel):
@@ -24,7 +26,7 @@ def nix_store_prefetch_file(url: HttpUrl, sha256: Sha256) -> NixStoreEntry:
 
     NOTE: By specifying the hash type and expected hash, we avoid redownloading.
     """
-    logging.info(f"Adding {url} to the Nix store...")
+    logger.info("Adding %s to the Nix store...", url)
     start_time = time.time()
     result = subprocess.run(
         [
@@ -42,7 +44,7 @@ def nix_store_prefetch_file(url: HttpUrl, sha256: Sha256) -> NixStoreEntry:
         check=True,
     )
     end_time = time.time()
-    logging.info(f"Added {url} to the Nix store in {end_time - start_time} seconds.")
+    logger.info("Added %s to the Nix store in %d seconds.", url, end_time - start_time)
     return NixStoreEntry.model_validate_json(result.stdout, strict=False)
 
 
@@ -55,7 +57,7 @@ def nix_store_unpack_archive(store_path: FilePath) -> NixStoreEntry:
     NOTE: This command is smart enough to not re-unpack archives.
     """
     uri: str = store_path.as_uri()
-    logging.info(f"Unpacking {store_path}...")
+    logger.info("Unpacking %s...", uri)
     start_time = time.time()
     result = subprocess.run(
         ["nix", "flake", "prefetch", "--json", uri],
@@ -63,7 +65,7 @@ def nix_store_unpack_archive(store_path: FilePath) -> NixStoreEntry:
         check=True,
     )
     end_time = time.time()
-    logging.info(f"Unpacked {store_path} in {end_time - start_time} seconds.")
+    logger.info("Unpacked %s in %d seconds.", uri, end_time - start_time)
     return NixStoreEntry.model_validate_json(result.stdout)
 
 
@@ -74,7 +76,7 @@ def nix_store_delete(store_paths: Iterable[Path]) -> None:
     """
     posix_paths = [path.as_posix() for path in store_paths]
     formatted_paths = ", ".join(posix_paths)
-    logging.info(f"Deleting {formatted_paths} from the Nix store...")
+    logger.info("Deleting %s from the Nix store...", formatted_paths)
     start_time = time.time()
     subprocess.run(
         ["nix", "store", "delete", *posix_paths],
@@ -82,4 +84,4 @@ def nix_store_delete(store_paths: Iterable[Path]) -> None:
         check=True,
     )
     end_time = time.time()
-    logging.info(f"Deleted {formatted_paths} from the Nix store in {end_time - start_time} seconds.")
+    logger.info("Deleted %s from the Nix store in %d seconds.", formatted_paths, end_time - start_time)

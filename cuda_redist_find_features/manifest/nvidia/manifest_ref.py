@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 import re
 import time
 from collections.abc import Sequence
@@ -11,11 +10,14 @@ from urllib import request
 from pydantic import BaseModel, DirectoryPath, FilePath, HttpUrl
 from pydantic_core import Url
 
+from cuda_redist_find_features.manifest.nvidia.manifest import NvidiaManifest
 from cuda_redist_find_features.types import FF, SFF, HttpUrlTA, validate_call
+from cuda_redist_find_features.utilities import get_logger
 from cuda_redist_find_features.version import Version
 from cuda_redist_find_features.version_constraint import VersionConstraint
 
-from .manifest import NvidiaManifest
+logger = get_logger(__name__)
+
 
 _T = TypeVar("_T", FilePath, HttpUrl)
 
@@ -35,7 +37,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
 
     @validate_call
     def retrieve(self) -> bytes:
-        logging.info(f"Reading manifest from {self.ref}...")
+        logger.info("Reading manifest from %s...", self.ref)
         match self.ref:
             case Url():
                 with request.urlopen(str(self.ref)) as response:
@@ -49,10 +51,10 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
     def parse(self) -> NvidiaManifest:
         content_bytes: bytes = self.retrieve()
         manifest = NvidiaManifest.model_validate_json(content_bytes)
-        logging.info(f"Manifest version: {self.version}")
-        logging.info(f"Manifest date: {manifest.release_date or 'unknown'}")
-        logging.info(f"Manifest label: {manifest.release_label or 'unknown'}")
-        logging.info(f"Manifest product: {manifest.release_product or 'unknown'}")
+        logger.info("Manifest version: %s", self.version)
+        logger.info("Manifest date: %s", manifest.release_date or "unknown")
+        logger.info("Manifest label: %s", manifest.release_label or "unknown")
+        logger.info("Manifest product: %s", manifest.release_product or "unknown")
         return manifest
 
     def download(self, dir: DirectoryPath) -> NvidiaManifestRef[FilePath]:
@@ -62,10 +64,10 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
         filename: str = f"redistrib_{self.version}.json"
         dest_path: Path = dir / filename
         if dest_path.exists():
-            logging.warning(f"Manifest {dest_path} already exists, overwriting")
+            logger.info("Manifest %s already exists, overwriting...", dest_path)
         content_bytes: bytes = self.retrieve()
         dest_path.write_bytes(content_bytes)
-        logging.info(f"Wrote manifest to {dest_path}.")
+        logger.info("Wrote manifest to %s.", dest_path)
         return NvidiaManifestRef(ref=dest_path, version=self.version)
 
     @staticmethod
@@ -82,7 +84,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
                 raise RuntimeError(f"Failed to fetch url {url}: {response.status} {response.reason}")
 
             s: str = response.read().decode("utf-8")
-            logging.debug(f"Searching with regex {regex_str}...")
+            logger.debug("Searching with regex %s...", regex_str)
             for matched in re.finditer(regex_str, s):
                 manifest_version = Version.model_validate_strings(matched.group(1))
                 if not version_constraint.is_satisfied_by(manifest_version):
@@ -112,12 +114,12 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
             if version_constraint.is_satisfied_by(manifest_version):
                 refs.append(NvidiaManifestRef(ref=file, version=manifest_version))
 
-        logging.debug(f"Globbing for {glob_str}...")
+        logger.debug("Globbing for %s in %s.", glob_str, dir)
         return refs
 
     @staticmethod
     def from_ref(ref: _T, version_constraint: VersionConstraint) -> Sequence[NvidiaManifestRef[_T]]:
-        logging.debug(f"Fetching manifests from {ref}...")
+        logger.debug("Fetching manifests from %s...", ref)
         start_time = time.time()
         # NOTE: If we move the return statement outside the match, pyright complains that the return type is not
         # compatible with the type annotation.
@@ -125,10 +127,10 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
             case Url():
                 refs = NvidiaManifestRef._from_url(ref, version_constraint)
                 end_time = time.time()
-                logging.debug(f"Found {len(refs)} manifests in {end_time - start_time} seconds.")
+                logger.debug("Found %d manifests in %d seconds.", len(refs), end_time - start_time)
                 return refs
             case Path():
                 refs = NvidiaManifestRef._from_dir(ref, version_constraint)
                 end_time = time.time()
-                logging.debug(f"Found {len(refs)} manifests in {end_time - start_time} seconds.")
+                logger.debug("Found %d manifests in %d seconds.", len(refs), end_time - start_time)
                 return refs
