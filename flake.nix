@@ -6,7 +6,7 @@
       url = "github:hercules-ci/flake-parts";
     };
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     pre-commit-hooks-nix = {
       inputs = {
         flake-utils.follows = "flake-utils";
@@ -50,7 +50,6 @@
             statix.enable = true;
 
             # Python checks
-            mypy.enable = true;
             pyright.enable = true;
             ruff.enable = true; # Ruff both lints and checks sorted imports
           };
@@ -69,7 +68,6 @@
             treefmt.package = config.treefmt.build.wrapper;
 
             # Python
-            mypy.binPath = "${wrapper "mypy"}";
             pyright.binPath = "${wrapper "pyright"}";
           };
         };

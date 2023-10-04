@@ -5,15 +5,13 @@
 
 ## Roadmap
 
+- \[ \] Improve dependency resolution by being less strict with versions.
 - \[ \] Further documentation.
-- \[ \] Support extracting information about supported capabilities from libraries.
-  - This can be used to determine whether a library contains device code.
-  - In particular, such information enables determining whether a `linux-sbsa` (Linux ARM server) package can be used as a fallback for `linux-aarch64` (NVIDIA Jetson device) in the case there is no `linux-aarch64` package available.
 - \[ \] Test cases.
 
 ## Overview
 
-This package provides a script which finds the outputs of the redistributable packages NVIDIA provides for CUDA. It does this by using `redistrib_*.json` manifests from <https://developer.download.nvidia.com/compute/cuda/redist/> (and similar) and doing the following for each package:
+This package provides a script which finds the "features" of the redistributable packages NVIDIA provides for CUDA. It does this by using `redistrib_*.json` manifests from <https://developer.download.nvidia.com/compute/cuda/redist/> (and similar) and doing the following for each package:
 
 1. Use `nix store prefetch-file` to download a package archive to the Nix store.
 
@@ -25,11 +23,24 @@ This package provides a script which finds the outputs of the redistributable pa
    - Though an abuse of the command, it does effectively serve as a way to unpack archives into the nix store.
    - It also allows us to avoid unpacking archives multiple times by short-circuiting to the store path if it already exists.
 
-1. Evaluate the contents of the unpacked archive to decide what outputs it provides.
+1. Evaluate the contents of the unpacked archive to decide what "features" it provides.
 
    - Implemented with heuristics. For example, if a directory contains a `lib` directory with a `libfoo.a` file, we assume that the package should have an output named `static` containing all its static libraries.
 
-1. Write a complementary JSON file containing the outputs each package should have next to the manifest passed as argument to the script.
+1. Write a complementary JSON file containing the "features" each package should have next to the manifest passed as argument to the script.
+
+### Implemented Feature Detectors
+
+These live in [detectors](./cuda_redist_find_features/manifest/feature/detectors).
+
+- `cuda_architectures.py`: Runs `cuobjdump` on the unpacked archive to find the CUDA architectures it supports.
+- `dynamic_library.py`: Checks if the unpacked archive contains a `lib` directory with dynamic libraries.
+- `executable.py`: Checks if the unpacked archive contains executables in `bin`.
+- `header.py`: Checks if the unpacked archive contains a `include` directory with headers.
+- `needed_libs.py`: Runs `patchelf --print-needed` on the unpacked archive to find the libraries it needs.
+- `provided_libs.py`: Runs `patchelf --print-soname` on the unpacked archive to find the libraries it provides.
+- `python_module.py`: Checks if the unpacked archive contains a `site-packages` directory with Python modules.
+- `static_library.py`: Checks if the unpacked archive contains a `lib` directory with static libraries.
 
 ## Usage
 
@@ -38,19 +49,22 @@ The script is meant to be used as part of the process of updating the manifests 
 There are two commands:
 
 - `download-manifests`: Download manifests from NVIDIA's website.
-- `process-manifests`: Process manifests and write JSON files containing the outputs each package should have.
+- `process-manifests`: Process manifests and write JSON files containing "features" each package should have.
+- `print-feature-schema`: Print the JSON schema a "feature" manifest will have.
+- `print-manifest-schema`: Print the JSON schema used to parse NVIDIA manifests.
 
 ```console
 $ nix run .# -- --help
 Usage: cuda-redist-find-features [OPTIONS] COMMAND [ARGS]...
 
 Options:
-  --debug / --no-debug  Enable debug logging.  [default: no-debug]
-  --help                Show this message and exit.
+  --help  Show this message and exit.
 
 Commands:
-  download-manifests  Downloads manifest files found at URL to MANIFEST_DIR.
-  process-manifests   Retrieves all manifests matching `redistrib_*.json`...
+  download-manifests
+  print-feature-schema
+  print-manifest-schema
+  process-manifests
 ```
 
 ### `download-manifests`
@@ -59,28 +73,19 @@ Commands:
 $ nix run .# -- download-manifests --help
 Usage: cuda-redist-find-features download-manifests [OPTIONS] URL MANIFEST_DIR
 
-  Downloads manifest files found at URL to MANIFEST_DIR.
-
-  URL should not include a trailing slash.
-
-  Neither MANIFEST_DIR nor its parent directory need to exist.
-
-  Example:     download_manifests
-  https://developer.download.nvidia.com/compute/cutensor/redist
-  /tmp/cutensor_manifests
-
 Options:
-  --debug / --no-debug        Enable debug logging.  [default: no-debug]
-  --no-parallel / --parallel  Disable parallel processing.  [default:
-                              parallel]
-  --min-version VERSION       Minimum version to accept. Exclusive with
-                              --version.
-  --max-version VERSION       Maximum version to accept. Exclusive with
-                              --version.
-  --version VERSION           Version to accept. If not specified, operates on
-                              all versions. Exclusive with --min-version and
-                              --max-version.
-  --help                      Show this message and exit.
+  --log-level [DEBUG|INFO|WARNING|ERROR|CRITICAL]
+                                  Set the logging level.  [default: WARNING]
+  --no-parallel / --parallel      Disable parallel processing.  [default:
+                                  parallel]
+  --min-version VERSION           Minimum version to accept. Exclusive with
+                                  --version.
+  --max-version VERSION           Maximum version to accept. Exclusive with
+                                  --version.
+  --version VERSION               Version to accept. If not specified,
+                                  operates on all versions. Exclusive with
+                                  --min-version and --max-version.
+  --help                          Show this message and exit.
 ```
 
 ### `process-manifests`
@@ -88,32 +93,331 @@ Options:
 ```console
 $ nix run .# -- process-manifests --help
 Usage: cuda-redist-find-features process-manifests [OPTIONS] URL MANIFEST_DIR
-
-  Retrieves all manifests matching `redistrib_*.json` in MANIFEST_DIR and
-  processes them, using URL as the base of for the relative paths in the
-  manifest.
-
-  Downloads all packages in the manifest, checks them to see what features
-  they provide, and writes a new manifest with this information to
-  MANIFEST_DIR.
-
-  URL should not include a trailing slash.
-
-  MANIFEST_DIR should be a directory containing JSON manifest(s).
+                                                   OVERRIDES_JSON
 
 Options:
-  --cleanup / --no-cleanup    Remove files after use.  [default: no-cleanup]
-  --debug / --no-debug        Enable debug logging.  [default: no-debug]
-  --no-parallel / --parallel  Disable parallel processing.  [default:
-                              parallel]
-  --min-version VERSION       Minimum version to accept. Exclusive with
-                              --version.
-  --max-version VERSION       Maximum version to accept. Exclusive with
-                              --version.
-  --version VERSION           Version to accept. If not specified, operates on
-                              all versions. Exclusive with --min-version and
-                              --max-version.
-  --help                      Show this message and exit.
+  --log-level [DEBUG|INFO|WARNING|ERROR|CRITICAL]
+                                  Set the logging level.  [default: WARNING]
+  --cleanup / --no-cleanup        Remove files after use.  [default: no-
+                                  cleanup]
+  --no-parallel / --parallel      Disable parallel processing.  [default:
+                                  parallel]
+  --min-version VERSION           Minimum version to accept. Exclusive with
+                                  --version.
+  --max-version VERSION           Maximum version to accept. Exclusive with
+                                  --version.
+  --version VERSION               Version to accept. If not specified,
+                                  operates on all versions. Exclusive with
+                                  --min-version and --max-version.
+  --help                          Show this message and exit.
+```
+
+### `print-feature-schema`
+
+```console
+$ nix run .# -- print-feature-schema
+{
+  "$defs": {
+    "CudaArch": {
+      "pattern": "^sm_\\d+[a-z]?$",
+      "type": "string"
+    },
+    "FeatureOutputs": {
+      "description": "Describes the different outputs a release can have.\n\nA number of these checks are taken from\nhttps://github.com/NixOS/nixpkgs/blob/d4d822f526f1f72a450da88bf35abe132181170f/pkgs/build-support/setup-hooks/multiple-outputs.sh.",
+      "properties": {
+        "hasBin": {
+          "title": "Hasbin",
+          "type": "boolean"
+        },
+        "hasDev": {
+          "title": "Hasdev",
+          "type": "boolean"
+        },
+        "hasDoc": {
+          "title": "Hasdoc",
+          "type": "boolean"
+        },
+        "hasLib": {
+          "title": "Haslib",
+          "type": "boolean"
+        },
+        "hasStatic": {
+          "title": "Hasstatic",
+          "type": "boolean"
+        },
+        "hasSample": {
+          "title": "Hassample",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "hasBin",
+        "hasDev",
+        "hasDoc",
+        "hasLib",
+        "hasStatic",
+        "hasSample"
+      ],
+      "title": "FeatureOutputs",
+      "type": "object"
+    },
+    "FeaturePackage": {
+      "description": "Describes the different features a package can have.\n\nA package is a release for a specific architecture.",
+      "properties": {
+        "outputs": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/FeatureOutputs"
+            }
+          ],
+          "description": "The Nix outputs of the package.",
+          "examples": [
+            "lib",
+            "dev",
+            "static"
+          ]
+        },
+        "cudaArchitectures": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/CudaArch"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "items": {
+                  "$ref": "#/$defs/CudaArch"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            }
+          ],
+          "description": "\n            The CUDA architectures supported by the package.\n            This is either a list of architectures or a mapping from subdirectory name to list of architectures.\n            ",
+          "title": "Cudaarchitectures"
+        },
+        "providedLibs": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/LibSoName"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "items": {
+                  "$ref": "#/$defs/LibSoName"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            }
+          ],
+          "description": "\n            The libraries provided by the package.\n            This is either a list of libraries or a mapping from subdirectory name to list of libraries.\n            ",
+          "title": "Providedlibs"
+        },
+        "neededLibs": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/LibSoName"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "items": {
+                  "$ref": "#/$defs/LibSoName"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            }
+          ],
+          "description": "\n            The libraries needed by the package.\n            This is either a list of libraries or a mapping from subdirectory name to list of libraries.\n            ",
+          "title": "Neededlibs"
+        }
+      },
+      "required": [
+        "outputs",
+        "cudaArchitectures",
+        "providedLibs",
+        "neededLibs"
+      ],
+      "title": "FeaturePackage",
+      "type": "object"
+    },
+    "FeatureRelease": {
+      "additionalProperties": {
+        "$ref": "#/$defs/FeaturePackage"
+      },
+      "description": "Represents a release in the manifest.\n\nA release is a collection of packages of the same library for different architectures.",
+      "title": "FeatureRelease",
+      "type": "object"
+    },
+    "LibSoName": {
+      "pattern": "\\.so(?:\\.\\d+)*$",
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "$ref": "#/$defs/FeatureRelease"
+  },
+  "description": "Represents the manifest file containing releases.",
+  "title": "FeatureManifest",
+  "type": "object"
+}
+```
+
+### `print-manifest-schema`
+
+```console
+$ nix run .# -- print-manifest-schema
+{
+  "$defs": {
+    "Md5": {
+      "pattern": "[0-9a-f]{32}",
+      "type": "string"
+    },
+    "NvidiaPackage": {
+      "description": "Represents a single package in the manifest.\n\nA package is a release for a specific architecture.",
+      "properties": {
+        "relative_path": {
+          "description": "The path to the package relative to the release.",
+          "format": "path",
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "sha256": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Sha256"
+            }
+          ],
+          "description": "The SHA256 hash of the package."
+        },
+        "md5": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Md5"
+            }
+          ],
+          "description": "The MD5 hash of the package."
+        },
+        "size": {
+          "description": "The size of the package in bytes, as a string.",
+          "title": "Size",
+          "type": "string"
+        }
+      },
+      "required": [
+        "relative_path",
+        "sha256",
+        "md5",
+        "size"
+      ],
+      "title": "NvidiaPackage",
+      "type": "object"
+    },
+    "NvidiaRelease": {
+      "additionalProperties": {
+        "$ref": "#/$defs/NvidiaPackage"
+      },
+      "description": "Represents a release in the manifest.\n\nA release is a collection of packages of the same library for different architectures.",
+      "properties": {
+        "name": {
+          "description": "The name of the release.",
+          "title": "Name",
+          "type": "string"
+        },
+        "license": {
+          "description": "The license of the release.",
+          "title": "License",
+          "type": "string"
+        },
+        "version": {
+          "description": "The version of the release.",
+          "title": "Version",
+          "type": "string"
+        },
+        "license_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The path to the license file.",
+          "title": "License Path"
+        }
+      },
+      "required": [
+        "name",
+        "license",
+        "version"
+      ],
+      "title": "NvidiaRelease",
+      "type": "object"
+    },
+    "Sha256": {
+      "pattern": "[0-9a-f]{64}",
+      "type": "string"
+    }
+  },
+  "additionalProperties": {
+    "$ref": "#/$defs/NvidiaRelease"
+  },
+  "description": "Represents the manifest file containing releases.",
+  "properties": {
+    "release_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The date of the release.",
+      "title": "Release Date"
+    },
+    "release_label": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The label of the release.",
+      "title": "Release Label"
+    },
+    "release_product": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The product of the release.",
+      "title": "Release Product"
+    }
+  },
+  "title": "NvidiaManifest",
+  "type": "object"
+}
 ```
 
 ## Examples
@@ -123,30 +427,34 @@ Options:
 <details><summary>download-manifests</summary>
 
 ```console
-$ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests
-[2023-09-23T14:38:26+0000][PID403858][_debug_callback][INFO] Debug logging enabled.
-[2023-09-23T14:38:26+0000][PID403858][_url_callback][INFO] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
-[2023-09-23T14:38:26+0000][PID403858][_manifest_dir_callback][INFO] Using dir cutensor_manifests.
-[2023-09-23T14:38:26+0000][PID403858][from_ref][DEBUG] Fetching manifests from https://developer.download.nvidia.com/compute/cutensor/redist...
-[2023-09-23T14:38:26+0000][PID403858][_from_url][DEBUG] Fetched https://developer.download.nvidia.com/compute/cutensor/redist successfully.
-[2023-09-23T14:38:26+0000][PID403858][_from_url][DEBUG] Searching with regex href=[\'"]redistrib_(\d+\.\d+\.\d+(?:.\d+)?)\.json[\'"]...
-[2023-09-23T14:38:26+0000][PID403858][from_ref][DEBUG] Found 8 manifests in 0.40728306770324707 seconds.
-[2023-09-23T14:38:26+0000][PID405471][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.2.json...
-[2023-09-23T14:38:26+0000][PID405472][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.3.json...
-[2023-09-23T14:38:26+0000][PID405473][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...
-[2023-09-23T14:38:26+0000][PID405474][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json...
-[2023-09-23T14:38:26+0000][PID405475][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json...
-[2023-09-23T14:38:26+0000][PID405476][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json...
-[2023-09-23T14:38:26+0000][PID405477][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json...
-[2023-09-23T14:38:26+0000][PID405478][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json...
-[2023-09-23T14:38:26+0000][PID405471][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.2.json in 0.051905155181884766 seconds.
-[2023-09-23T14:38:26+0000][PID405478][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json in 0.0527493953704834 seconds.
-[2023-09-23T14:38:26+0000][PID405476][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json in 0.0547490119934082 seconds.
-[2023-09-23T14:38:26+0000][PID405474][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json in 0.05528616905212402 seconds.
-[2023-09-23T14:38:26+0000][PID405477][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json in 0.05582094192504883 seconds.
-[2023-09-23T14:38:26+0000][PID405472][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.3.json in 0.0560910701751709 seconds.
-[2023-09-23T14:38:26+0000][PID405475][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json in 0.06090688705444336 seconds.
-[2023-09-23T14:38:26+0000][PID405473][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json in 0.06360530853271484 seconds.
+$ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO
+Set logging level to INFO.
+Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
+Using dir cutensor_manifests
+2023-10-04T06:24:56 INFO     Manifest cutensor_manifests/redistrib_1.3.2.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Manifest cutensor_manifests/redistrib_1.3.3.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.2.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Manifest cutensor_manifests/redistrib_1.4.0.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.3.3.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Manifest cutensor_manifests/redistrib_1.5.0.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Manifest cutensor_manifests/redistrib_1.6.0.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Manifest cutensor_manifests/redistrib_1.6.1.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Manifest cutensor_manifests/redistrib_1.6.2.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Manifest cutensor_manifests/redistrib_1.7.0.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.6.0.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.6.2.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.3.2.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.5.0.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.6.1.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.4.0.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.3.3.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.7.0.json.                                                                                                                                                                                 _manifest_ref.py:73
 ```
 
 </details>
@@ -154,18 +462,14 @@ $ nix run .# -- --debug download-manifests https://developer.download.nvidia.com
 <details><summary>download-manifests with --version</summary>
 
 ```console
-$ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --version 1.4.0
-[2023-09-23T14:38:27+0000][PID405508][_debug_callback][INFO] Debug logging enabled.
-[2023-09-23T14:38:27+0000][PID405508][_version_callback][INFO] {}
-[2023-09-23T14:38:27+0000][PID405508][_version_callback][INFO] Version set to 1.4.0.
-[2023-09-23T14:38:27+0000][PID405508][_url_callback][INFO] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
-[2023-09-23T14:38:27+0000][PID405508][_manifest_dir_callback][INFO] Using dir cutensor_manifests.
-[2023-09-23T14:38:27+0000][PID405508][from_ref][DEBUG] Fetching manifests from https://developer.download.nvidia.com/compute/cutensor/redist...
-[2023-09-23T14:38:27+0000][PID405508][_from_url][DEBUG] Fetched https://developer.download.nvidia.com/compute/cutensor/redist successfully.
-[2023-09-23T14:38:27+0000][PID405508][_from_url][DEBUG] Searching with regex href=['"]redistrib_(1\.4\.0)\.json['"]...
-[2023-09-23T14:38:27+0000][PID405508][from_ref][DEBUG] Found 1 manifests in 0.23412132263183594 seconds.
-[2023-09-23T14:38:27+0000][PID407121][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...
-[2023-09-23T14:38:27+0000][PID407121][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json in 0.047360897064208984 seconds.
+$ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --version 1.4.0
+Set logging level to INFO.
+Version set to 1.4.0.
+Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
+Using dir cutensor_manifests
+2023-10-04T06:24:58 INFO     Manifest cutensor_manifests/redistrib_1.4.0.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.4.0.json.                                                                                                                                                                                 _manifest_ref.py:73
 ```
 
 </details>
@@ -173,29 +477,27 @@ $ nix run .# -- --debug download-manifests https://developer.download.nvidia.com
 <details><summary>download-manifests with --min-version and --max-version</summary>
 
 ```console
-$ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2
-[2023-09-23T14:38:28+0000][PID407158][_debug_callback][INFO] Debug logging enabled.
-[2023-09-23T14:38:28+0000][PID407158][_min_version_callback][INFO] Minimum version set to 1.4.0.
-[2023-09-23T14:38:28+0000][PID407158][_max_version_callback][INFO] Maximum version set to 1.6.2.
-[2023-09-23T14:38:28+0000][PID407158][_url_callback][INFO] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
-[2023-09-23T14:38:28+0000][PID407158][_manifest_dir_callback][INFO] Using dir cutensor_manifests.
-[2023-09-23T14:38:28+0000][PID407158][from_ref][DEBUG] Fetching manifests from https://developer.download.nvidia.com/compute/cutensor/redist...
-[2023-09-23T14:38:28+0000][PID407158][_from_url][DEBUG] Fetched https://developer.download.nvidia.com/compute/cutensor/redist successfully.
-[2023-09-23T14:38:28+0000][PID407158][_from_url][DEBUG] Searching with regex href=[\'"]redistrib_(\d+\.\d+\.\d+(?:.\d+)?)\.json[\'"]...
-[2023-09-23T14:38:28+0000][PID407158][_from_url][DEBUG] Skipping 1.3.2 because version 1.3.2 is not between 1.4.0 and 1.6.2
-[2023-09-23T14:38:28+0000][PID407158][_from_url][DEBUG] Skipping 1.3.3 because version 1.3.3 is not between 1.4.0 and 1.6.2
-[2023-09-23T14:38:28+0000][PID407158][_from_url][DEBUG] Skipping 1.7.0 because version 1.7.0 is not between 1.4.0 and 1.6.2
-[2023-09-23T14:38:28+0000][PID407158][from_ref][DEBUG] Found 5 manifests in 0.22657322883605957 seconds.
-[2023-09-23T14:38:28+0000][PID408777][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...
-[2023-09-23T14:38:28+0000][PID408778][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json...
-[2023-09-23T14:38:28+0000][PID408779][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json...
-[2023-09-23T14:38:28+0000][PID408780][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json...
-[2023-09-23T14:38:28+0000][PID408781][read_bytes][DEBUG] Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json...
-[2023-09-23T14:38:28+0000][PID408781][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json in 0.043427228927612305 seconds.
-[2023-09-23T14:38:28+0000][PID408780][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json in 0.047516822814941406 seconds.
-[2023-09-23T14:38:28+0000][PID408777][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json in 0.047690629959106445 seconds.
-[2023-09-23T14:38:28+0000][PID408779][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json in 0.04995465278625488 seconds.
-[2023-09-23T14:38:28+0000][PID408778][read_bytes][DEBUG] Read https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json in 0.058901071548461914 seconds.
+$ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --min-version 1.4.0 --max-version 1.6.2
+Set logging level to INFO.
+Minimum version set to 1.4.0.
+Maximum version set to 1.6.2.
+Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
+Using dir cutensor_manifests
+2023-10-04T06:24:59 INFO     Manifest cutensor_manifests/redistrib_1.4.0.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Manifest cutensor_manifests/redistrib_1.5.0.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.4.0.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Manifest cutensor_manifests/redistrib_1.6.0.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.5.0.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Manifest cutensor_manifests/redistrib_1.6.1.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.0.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Manifest cutensor_manifests/redistrib_1.6.2.json already exists, overwriting...                                                                                                                                                            _manifest_ref.py:70
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.1.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Reading manifest from https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.6.2.json...                                                                                                                                _manifest_ref.py:44
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.6.2.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.6.0.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.5.0.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.6.1.json.                                                                                                                                                                                 _manifest_ref.py:73
+                    INFO     Wrote manifest to cutensor_manifests/redistrib_1.4.0.json.                                                                                                                                                                                 _manifest_ref.py:73
 ```
 
 </details>
@@ -205,635 +507,1555 @@ $ nix run .# -- --debug download-manifests https://developer.download.nvidia.com
 Assuming
 
 ```console
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --min-version 1.4.0 --max-version 1.6.2
 ```
 
 was run previously,
 
 ```console
-$ nix run .# -- --debug process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests
-[2023-09-23T14:38:28+0000][PID408814][_debug_callback][INFO] Debug logging enabled.
-[2023-09-23T14:38:28+0000][PID408814][_url_callback][INFO] Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
-[2023-09-23T14:38:28+0000][PID408814][_manifest_dir_callback][INFO] Using dir cutensor_manifests.
-[2023-09-23T14:38:28+0000][PID408814][from_ref][DEBUG] Fetching manifests from cutensor_manifests...
-[2023-09-23T14:38:28+0000][PID408814][_from_dir][DEBUG] Globbing for redistrib_[0123456789]*.json...
-[2023-09-23T14:38:28+0000][PID408814][from_ref][DEBUG] Found 8 manifests in 0.0003292560577392578 seconds.
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.3.2.json...
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Read cutensor_manifests/redistrib_1.3.2.json in 1.8358230590820312e-05 seconds.
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Loaded manifest: cutensor_manifests/redistrib_1.3.2.json
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Version: 1.3.2
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Release date: 2021-09-22
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.3.3.json...
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Read cutensor_manifests/redistrib_1.3.3.json in 1.811981201171875e-05 seconds.
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Loaded manifest: cutensor_manifests/redistrib_1.3.3.json
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Version: 1.3.3
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Release date: 2021-09-22
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.6.2.json...
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Read cutensor_manifests/redistrib_1.6.2.json in 1.049041748046875e-05 seconds.
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Loaded manifest: cutensor_manifests/redistrib_1.6.2.json
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Version: 1.6.2
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Release date: 2022-12-12
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.4.0.json...
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Read cutensor_manifests/redistrib_1.4.0.json in 9.059906005859375e-06 seconds.
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Loaded manifest: cutensor_manifests/redistrib_1.4.0.json
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Version: 1.4.0
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Release date: 2021-11-19
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.6.0.json...
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Read cutensor_manifests/redistrib_1.6.0.json in 1.0251998901367188e-05 seconds.
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Loaded manifest: cutensor_manifests/redistrib_1.6.0.json
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Version: 1.6.0
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Release date: 2022-06-24
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.5.0.json...
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Read cutensor_manifests/redistrib_1.5.0.json in 8.821487426757812e-06 seconds.
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Loaded manifest: cutensor_manifests/redistrib_1.5.0.json
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Version: 1.5.0
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Release date: 2022-03-08
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.6.1.json...
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Read cutensor_manifests/redistrib_1.6.1.json in 8.58306884765625e-06 seconds.
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Loaded manifest: cutensor_manifests/redistrib_1.6.1.json
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Version: 1.6.1
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Release date: 2022-10-05
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Reading manifest from cutensor_manifests/redistrib_1.7.0.json...
-[2023-09-23T14:38:28+0000][PID408814][read_bytes][DEBUG] Read cutensor_manifests/redistrib_1.7.0.json in 8.106231689453125e-06 seconds.
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Loaded manifest: cutensor_manifests/redistrib_1.7.0.json
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Version: 1.7.0
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][INFO] Release date: 2023-03-16
-[2023-09-23T14:38:28+0000][PID408814][parse_manifest][DEBUG] Manifest keys: dict_keys(['libcutensor'])
-[2023-09-23T14:38:28+0000][PID410427][process_package][INFO] Package: NVIDIA cuTENSOR
-[2023-09-23T14:38:28+0000][PID410427][process_package][DEBUG] License: cuTensor
-[2023-09-23T14:38:28+0000][PID410427][process_package][INFO] Version: 1.3.2.3
-[2023-09-23T14:38:28+0000][PID410427][process_package][INFO] Architecture: linux-ppc64le
-[2023-09-23T14:38:28+0000][PID410427][process_package][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz
-[2023-09-23T14:38:28+0000][PID410427][process_package][DEBUG] SHA256: 8a219f0bbbebabc9ad3ea70a77a84012fb4e3bc9da2808b1eca82b02e01d5113
-[2023-09-23T14:38:28+0000][PID410427][process_package][DEBUG] MD5: 9a70cf2abd0ba85ea4b5ec9da619900f
-[2023-09-23T14:38:28+0000][PID410428][process_package][INFO] Package: NVIDIA cuTENSOR
-[2023-09-23T14:38:28+0000][PID410427][process_package][DEBUG] Size: 202534904
-[2023-09-23T14:38:28+0000][PID410427][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:28+0000][PID410428][process_package][DEBUG] License: cuTensor
-[2023-09-23T14:38:28+0000][PID410429][process_package][INFO] Package: NVIDIA cuTENSOR
-[2023-09-23T14:38:28+0000][PID410428][process_package][INFO] Version: 1.3.3.2
-[2023-09-23T14:38:28+0000][PID410429][process_package][DEBUG] License: cuTensor
-[2023-09-23T14:38:28+0000][PID410429][process_package][INFO] Version: 1.6.2.3
-[2023-09-23T14:38:28+0000][PID410430][process_package][INFO] Package: NVIDIA cuTENSOR
-[2023-09-23T14:38:28+0000][PID410428][process_package][INFO] Architecture: linux-ppc64le
-[2023-09-23T14:38:28+0000][PID410430][process_package][DEBUG] License: cuTensor
-[2023-09-23T14:38:28+0000][PID410431][process_package][INFO] Package: NVIDIA cuTENSOR
-[2023-09-23T14:38:28+0000][PID410428][process_package][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz
-[2023-09-23T14:38:28+0000][PID410430][process_package][INFO] Version: 1.4.0.6
-[2023-09-23T14:38:28+0000][PID410428][process_package][DEBUG] SHA256: 79f294c4a7933e5acee5f150145c526d6cd4df16eefb63f2d65df1dbc683cd68
-[2023-09-23T14:38:28+0000][PID410429][process_package][INFO] Architecture: linux-ppc64le
-[2023-09-23T14:38:28+0000][PID410428][process_package][DEBUG] MD5: 1f632c9d33ffef9c819e10c95d69a134
-[2023-09-23T14:38:28+0000][PID410431][process_package][DEBUG] License: cuTensor
-[2023-09-23T14:38:28+0000][PID410428][process_package][DEBUG] Size: 202541908
-[2023-09-23T14:38:28+0000][PID410429][process_package][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz
-[2023-09-23T14:38:28+0000][PID410431][process_package][INFO] Version: 1.6.0.3
-[2023-09-23T14:38:28+0000][PID410432][process_package][INFO] Package: NVIDIA cuTENSOR
-[2023-09-23T14:38:28+0000][PID410429][process_package][DEBUG] SHA256: 558329fa05409f914ebbe218a1cf7c9ccffdb7aa2642b96db85fd78b5ad534d1
-[2023-09-23T14:38:28+0000][PID410428][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:28+0000][PID410430][process_package][INFO] Architecture: linux-ppc64le
-[2023-09-23T14:38:28+0000][PID410429][process_package][DEBUG] MD5: 8d5d129aa7863312a95084ab5a27b7e7
-[2023-09-23T14:38:28+0000][PID410429][process_package][DEBUG] Size: 535585612
-[2023-09-23T14:38:28+0000][PID410432][process_package][DEBUG] License: cuTensor
-[2023-09-23T14:38:28+0000][PID410430][process_package][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz
-[2023-09-23T14:38:28+0000][PID410433][process_package][INFO] Package: NVIDIA cuTENSOR
-[2023-09-23T14:38:28+0000][PID410429][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:28+0000][PID410432][process_package][INFO] Version: 1.5.0.3
-[2023-09-23T14:38:28+0000][PID410430][process_package][DEBUG] SHA256: 5da44ff2562ab7b9286122653e54f28d2222c8aab4bb02e9bdd4cf7e4b7809be
-[2023-09-23T14:38:28+0000][PID410430][process_package][DEBUG] MD5: 6058c728485072c980f652c2de38b016
-[2023-09-23T14:38:28+0000][PID410431][process_package][INFO] Architecture: linux-ppc64le
-[2023-09-23T14:38:28+0000][PID410433][process_package][DEBUG] License: cuTensor
-[2023-09-23T14:38:28+0000][PID410430][process_package][DEBUG] Size: 218951992
-[2023-09-23T14:38:28+0000][PID410431][process_package][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz
-[2023-09-23T14:38:28+0000][PID410433][process_package][INFO] Version: 1.6.1.5
-[2023-09-23T14:38:28+0000][PID410431][process_package][DEBUG] SHA256: 6af9563a3581e1879dd17e9bae79ceae1b4084f45e735780125aab86056646eb
-[2023-09-23T14:38:28+0000][PID410430][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:28+0000][PID410431][process_package][DEBUG] MD5: 38e3cd74fb7c0fa9c0836a9d172b9737
-[2023-09-23T14:38:28+0000][PID410432][process_package][INFO] Architecture: linux-ppc64le
-[2023-09-23T14:38:28+0000][PID410431][process_package][DEBUG] Size: 332890432
-[2023-09-23T14:38:28+0000][PID410432][process_package][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz
-[2023-09-23T14:38:28+0000][PID410431][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:28+0000][PID410432][process_package][DEBUG] SHA256: ad736acc94e88673b04a3156d7d3a408937cac32d083acdfbd8435582cbe15db
-[2023-09-23T14:38:28+0000][PID410433][process_package][INFO] Architecture: linux-ppc64le
-[2023-09-23T14:38:28+0000][PID410432][process_package][DEBUG] MD5: bcdafb6d493aceebfb9a420880f1486c
-[2023-09-23T14:38:28+0000][PID410433][process_package][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz
-[2023-09-23T14:38:28+0000][PID410432][process_package][DEBUG] Size: 208384668
-[2023-09-23T14:38:28+0000][PID410433][process_package][DEBUG] SHA256: e895476ab13c4a28bdf018f23299746968564024783c066a2602bc0f09b86e47
-[2023-09-23T14:38:28+0000][PID410432][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:28+0000][PID410433][process_package][DEBUG] MD5: c44194d2067ce296f9a2c51ddbd6eb7b
-[2023-09-23T14:38:28+0000][PID410433][process_package][DEBUG] Size: 365411216
-[2023-09-23T14:38:28+0000][PID410433][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:28+0000][PID410434][process_package][INFO] Package: NVIDIA cuTENSOR
-[2023-09-23T14:38:28+0000][PID410434][process_package][DEBUG] License: cuTensor
-[2023-09-23T14:38:28+0000][PID410434][process_package][INFO] Version: 1.7.0.1
-[2023-09-23T14:38:28+0000][PID410434][process_package][INFO] Architecture: linux-ppc64le
-[2023-09-23T14:38:28+0000][PID410434][process_package][DEBUG] Relative path: libcutensor/linux-ppc64le/libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz
-[2023-09-23T14:38:28+0000][PID410434][process_package][DEBUG] SHA256: af4ad5e29dcb636f1bf941ed1fd7fc8053eeec4813fbc0b41581e114438e84c8
-[2023-09-23T14:38:28+0000][PID410434][process_package][DEBUG] MD5: 30739decf9f5267f2a5f28c7c1a1dc3d
-[2023-09-23T14:38:28+0000][PID410434][process_package][DEBUG] Size: 538487672
-[2023-09-23T14:38:28+0000][PID410434][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410434][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz to the Nix store in 0.01241612434387207 seconds.
-[2023-09-23T14:38:29+0000][PID410434][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/7la6i8zid632wsmimn2n0bya7kz0j5hm-libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410433][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz to the Nix store in 0.0133056640625 seconds.
-[2023-09-23T14:38:29+0000][PID410433][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/mcdm0ifn6lwnbrqskki5jnvrzs07vkpb-libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410427][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz to the Nix store in 0.014259815216064453 seconds.
-[2023-09-23T14:38:29+0000][PID410427][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/1x3z7yz7w8i30i6y6ijbn2klyzw1aij0-libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410431][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz to the Nix store in 0.015129566192626953 seconds.
-[2023-09-23T14:38:29+0000][PID410431][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/897fvwmby7nc9ii3adshfn7f2f671bbs-libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410430][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz to the Nix store in 0.01585531234741211 seconds.
-[2023-09-23T14:38:29+0000][PID410430][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/5b7bmhi1l35i6kqx6rwxq2hxiicshkh4-libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410432][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz to the Nix store in 0.016965627670288086 seconds.
-[2023-09-23T14:38:29+0000][PID410432][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/9fy3afhldjlgigyc09348nc50ccr7kq1-libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410428][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz to the Nix store in 0.018223047256469727 seconds.
-[2023-09-23T14:38:29+0000][PID410428][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/rr9mzpij9lb6ayzni2haf0vakl8jvgdf-libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410429][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz to the Nix store in 0.019194364547729492 seconds.
-[2023-09-23T14:38:29+0000][PID410429][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/8gvv8lyz2qcjasxvxbq6mi3na8j4ncf1-libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410434][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/7la6i8zid632wsmimn2n0bya7kz0j5hm-libcutensor-linux-ppc64le-1.7.0.1-archive.tar.xz in 0.013664960861206055 seconds.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410433][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/mcdm0ifn6lwnbrqskki5jnvrzs07vkpb-libcutensor-linux-ppc64le-1.6.1.5-archive.tar.xz in 0.014369487762451172 seconds.
-[2023-09-23T14:38:29+0000][PID410427][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/1x3z7yz7w8i30i6y6ijbn2klyzw1aij0-libcutensor-linux-ppc64le-1.3.2.3-archive.tar.xz in 0.014228343963623047 seconds.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410431][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/897fvwmby7nc9ii3adshfn7f2f671bbs-libcutensor-linux-ppc64le-1.6.0.3-archive.tar.xz in 0.014273881912231445 seconds.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410433][process_package][INFO] Architecture: linux-sbsa
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] SHA256: f0644bbdca81b890056a7b92714e787333b06a4bd384e4dfbdc3938fbd132e65
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] MD5: a1c841dd532e7aef6963452439042f09
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] Size: 288691268
-[2023-09-23T14:38:29+0000][PID410433][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 headers.
-[2023-09-23T14:38:29+0000][PID410430][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/5b7bmhi1l35i6kqx6rwxq2hxiicshkh4-libcutensor-linux-ppc64le-1.4.0.6-archive.tar.xz in 0.015062093734741211 seconds.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 24 shared libraries.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 4 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410431][process_package][INFO] Architecture: linux-sbsa
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] SHA256: 802f030de069e7eeec2e72f151471fc9776f0272a81804690c749373505dcb70
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] MD5: 38436011c8375ba78e2cd8c47182c6de
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] Size: 253328216
-[2023-09-23T14:38:29+0000][PID410431][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 8 static libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 9 shared libraries.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 4 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410434][process_package][INFO] Architecture: linux-sbsa
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] SHA256: c31f8e4386539434a5d1643ebfed74572011783b4e21b62be52003e3a9de3720
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] MD5: 3185c17e8f32c9c54f591006b917365e
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] Size: 454324456
-[2023-09-23T14:38:29+0000][PID410434][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410428][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/rr9mzpij9lb6ayzni2haf0vakl8jvgdf-libcutensor-linux-ppc64le-1.3.3.2-archive.tar.xz in 0.014059066772460938 seconds.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 static libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410427][process_package][INFO] Architecture: linux-sbsa
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] SHA256: 6e92fee6a192f9fc19876df99544893f7b4cfb8b5ff1ce6d172474c6e13154ea
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] MD5: 2fa78066ec2d5a734e4fb2732b87756e
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] Size: 149057692
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410427][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410432][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/9fy3afhldjlgigyc09348nc50ccr7kq1-libcutensor-linux-ppc64le-1.5.0.3-archive.tar.xz in 0.015926837921142578 seconds.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410430][process_package][INFO] Architecture: linux-sbsa
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] SHA256: 6b06d63a5bc49c1660be8c307795f8a901c93dcde7b064455a6c81333c7327f4
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] MD5: a6f3fd515c052df43fbee9508ea87e1e
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] Size: 163596044
-[2023-09-23T14:38:29+0000][PID410430][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410429][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/8gvv8lyz2qcjasxvxbq6mi3na8j4ncf1-libcutensor-linux-ppc64le-1.6.2.3-archive.tar.xz in 0.01468038558959961 seconds.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 headers.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 9 shared libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 static libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410428][process_package][INFO] Architecture: linux-sbsa
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] SHA256: 0b62d5305abfdfca4776290f16a1796c78c1fa83b203680c012f37d44706fcdb
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] MD5: e476675490aff0b154f2f38063f0c10b
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] Size: 149059520
-[2023-09-23T14:38:29+0000][PID410428][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410432][process_package][INFO] Architecture: linux-sbsa
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] SHA256: 5b9ac479b1dadaf40464ff3076e45f2ec92581c07df1258a155b5bcd142f6090
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] MD5: 62149d726480d12c9a953d27edc208dc
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] Size: 156512748
-[2023-09-23T14:38:29+0000][PID410432][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 24 shared libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 4 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 8 static libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 4 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410429][process_package][INFO] Architecture: linux-sbsa
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] Relative path: libcutensor/linux-sbsa/libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] SHA256: 7d4d9088c892bb692ffd70750b49625d1ccbb85390f6eb7c70d6cf582df6d935
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] MD5: f6e0cce3a3b38ced736e55a19da587a3
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] Size: 450705724
-[2023-09-23T14:38:29+0000][PID410429][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410433][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz to the Nix store in 0.012975454330444336 seconds.
-[2023-09-23T14:38:29+0000][PID410433][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/qz1hpcq6nxv0z0n0p1rjdg2ag2kyi7g1-libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410431][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz to the Nix store in 0.012773513793945312 seconds.
-[2023-09-23T14:38:29+0000][PID410431][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/0fldgjlk64r6yfs383ra9kmqqhydjyxx-libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410434][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz to the Nix store in 0.013252973556518555 seconds.
-[2023-09-23T14:38:29+0000][PID410434][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/spqx52qx2g7g7gr805870j9csvg6f3h0-libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410427][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz to the Nix store in 0.013489961624145508 seconds.
-[2023-09-23T14:38:29+0000][PID410427][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/vbq8b32vzarri6x3scvp9prgff7szspx-libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410428][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz to the Nix store in 0.012516260147094727 seconds.
-[2023-09-23T14:38:29+0000][PID410428][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/syxzdnwk6bik6kc2p559lga3wbs9wr0n-libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410430][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz to the Nix store in 0.01655101776123047 seconds.
-[2023-09-23T14:38:29+0000][PID410430][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/jkzvn343kkanvldzp0apz0570zi766xg-libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410432][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz to the Nix store in 0.013344526290893555 seconds.
-[2023-09-23T14:38:29+0000][PID410432][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/5vb91ij9n4rbc0zj6118flzbx1dp3n8j-libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410429][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz to the Nix store in 0.01285862922668457 seconds.
-[2023-09-23T14:38:29+0000][PID410429][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/gj9hgzj57jvnbh9h2rvqd957366d00k8-libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410433][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/qz1hpcq6nxv0z0n0p1rjdg2ag2kyi7g1-libcutensor-linux-sbsa-1.6.1.5-archive.tar.xz in 0.01387166976928711 seconds.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410431][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/0fldgjlk64r6yfs383ra9kmqqhydjyxx-libcutensor-linux-sbsa-1.6.0.3-archive.tar.xz in 0.013256072998046875 seconds.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410434][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/spqx52qx2g7g7gr805870j9csvg6f3h0-libcutensor-linux-sbsa-1.7.0.1-archive.tar.xz in 0.013371467590332031 seconds.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 12 shared libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 2 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 4 static libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 2 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410427][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/vbq8b32vzarri6x3scvp9prgff7szspx-libcutensor-linux-sbsa-1.3.2.3-archive.tar.xz in 0.013766765594482422 seconds.
-[2023-09-23T14:38:29+0000][PID410433][process_package][INFO] Architecture: linux-x86_64
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] SHA256: 793b425c30ffd423c4f3a2e94acaf4fcb6752264aa73b74695a002dd2fe94b1a
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] MD5: 055271e1e237beb102394a5431684a37
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] Size: 365956196
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410433][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 12 shared libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 2 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 headers.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 4 static libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 2 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410431][process_package][INFO] Architecture: linux-x86_64
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 6 shared libraries.
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] SHA256: b07e32a37eee1df7d9330e6d7faf9baf7fffd58007e2544164ea30aec49a5281
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] MD5: 80ffc765748952385d3dbbaef262d72e
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] Size: 333834656
-[2023-09-23T14:38:29+0000][PID410431][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 static libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410427][process_package][INFO] Architecture: linux-x86_64
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] SHA256: cf2b8f1f220cdc90aaec577bde144509f805739e00a857ef161f6a5e8b769697
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] MD5: 0c73c3918dd893a8bdfec48de9e5c312
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] Size: 201844004
-[2023-09-23T14:38:29+0000][PID410427][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410434][process_package][INFO] Architecture: linux-x86_64
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] SHA256: dd3557891371a19e73e7c955efe5383b0bee954aba6a30e4892b0e7acb9deb26
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] MD5: 7c7e655e2ef1c57ede351f5f5c7c59be
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] Size: 542970468
-[2023-09-23T14:38:29+0000][PID410434][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410428][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/syxzdnwk6bik6kc2p559lga3wbs9wr0n-libcutensor-linux-sbsa-1.3.3.2-archive.tar.xz in 0.013948202133178711 seconds.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 headers.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410430][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/jkzvn343kkanvldzp0apz0570zi766xg-libcutensor-linux-sbsa-1.4.0.6-archive.tar.xz in 0.014547348022460938 seconds.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 6 shared libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 static libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410432][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/5vb91ij9n4rbc0zj6118flzbx1dp3n8j-libcutensor-linux-sbsa-1.5.0.3-archive.tar.xz in 0.014406442642211914 seconds.
-[2023-09-23T14:38:29+0000][PID410428][process_package][INFO] Architecture: linux-x86_64
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] SHA256: 2e9517f31305872a7e496b6aa8ea329acda6b947b0c1eb1250790eaa2d4e2ecc
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] MD5: 977699555cfcc8d2ffeff018a0f975b0
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] Size: 201849628
-[2023-09-23T14:38:29+0000][PID410428][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 12 shared libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 2 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 4 static libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 2 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410430][process_package][INFO] Architecture: linux-x86_64
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] SHA256: 467ba189195fcc4b868334fc16a0ae1e51574139605975cc8004cedebf595964
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] MD5: 5d4009390be0226fc3ee75d225053123
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] Size: 218277136
-[2023-09-23T14:38:29+0000][PID410430][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410429][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/gj9hgzj57jvnbh9h2rvqd957366d00k8-libcutensor-linux-sbsa-1.6.2.3-archive.tar.xz in 0.014606475830078125 seconds.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 12 shared libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 2 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 4 static libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 2 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410432][process_package][INFO] Architecture: linux-x86_64
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] SHA256: 4fdebe94f0ba3933a422cff3dd05a0ef7a18552ca274dd12564056993f55471d
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] MD5: 7e1b1a613b819d6cf6ee7fbc70f16105
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] Size: 208925360
-[2023-09-23T14:38:29+0000][PID410432][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11')}
-[2023-09-23T14:38:29+0000][PID410429][process_package][INFO] Architecture: linux-x86_64
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] Relative path: libcutensor/linux-x86_64/libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] SHA256: 0f2745681b1d0556f9f46ff6af4937662793498d7367b5f8f6b8625ac051629e
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] MD5: b84a2f6712e39314f6c54b429152339f
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] Size: 538838404
-[2023-09-23T14:38:29+0000][PID410429][nix_store_prefetch_file][DEBUG] Adding libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz to the Nix store...
-[2023-09-23T14:38:29+0000][PID410433][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz to the Nix store in 0.012841939926147461 seconds.
-[2023-09-23T14:38:29+0000][PID410433][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/53hp68861qra26fcb8gac7g18lswwbrg-libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410431][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz to the Nix store in 0.013032197952270508 seconds.
-[2023-09-23T14:38:29+0000][PID410431][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/gyzp5pspbipp9nmn0sqdl05b01br1rl2-libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410427][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz to the Nix store in 0.014005422592163086 seconds.
-[2023-09-23T14:38:29+0000][PID410427][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/0ss5gzdi3g7bmha52pqla9l29i2gmv2x-libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410434][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz to the Nix store in 0.013878822326660156 seconds.
-[2023-09-23T14:38:29+0000][PID410434][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/wzffa3ih9157qvp25i1awmw9x7zwqgfg-libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410430][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz to the Nix store in 0.012259483337402344 seconds.
-[2023-09-23T14:38:29+0000][PID410430][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/q7jcksly352yawl1l7yzzf7l376ziwa3-libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410428][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz to the Nix store in 0.013487577438354492 seconds.
-[2023-09-23T14:38:29+0000][PID410428][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/hqihs0z31dmd76ld4j7rlw3d77wmyd9m-libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410432][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz to the Nix store in 0.013075113296508789 seconds.
-[2023-09-23T14:38:29+0000][PID410432][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/k5xq37i1j3w710ppy8v0qqg91pkdxflc-libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410429][nix_store_prefetch_file][DEBUG] Added libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz to the Nix store in 0.012532949447631836 seconds.
-[2023-09-23T14:38:29+0000][PID410429][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/yxam1ah0h3lp7y15kjmj7mghnik2s799-libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz...
-[2023-09-23T14:38:29+0000][PID410433][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/53hp68861qra26fcb8gac7g18lswwbrg-libcutensor-linux-x86_64-1.6.1.5-archive.tar.xz in 0.013630867004394531 seconds.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410431][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/gyzp5pspbipp9nmn0sqdl05b01br1rl2-libcutensor-linux-x86_64-1.6.0.3-archive.tar.xz in 0.013672590255737305 seconds.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410433][process_package][INFO] Architecture: windows-x86_64
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.1.5-archive.zip
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] SHA256: 36eac790df7b2c7bb4578cb355f1df65d17965ffc9b4f6218d1cdb82f87ab866
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] MD5: 1d5f775c2bbf8e68827a23913e2896bd
-[2023-09-23T14:38:29+0000][PID410433][process_package][DEBUG] Size: 690592392
-[2023-09-23T14:38:29+0000][PID410433][nix_store_prefetch_file][DEBUG] Adding libcutensor-windows-x86_64-1.6.1.5-archive.zip to the Nix store...
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410431][process_package][INFO] Architecture: windows-x86_64
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.0.3-archive.zip
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] SHA256: e8875e43d8c4169dc65095cb81c5d1e4120f664b4e2288658d73a4a2c2558f3c
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] MD5: 4c76fb8d24296d644033bc992e4159e4
-[2023-09-23T14:38:29+0000][PID410431][process_package][DEBUG] Size: 624418613
-[2023-09-23T14:38:29+0000][PID410431][nix_store_prefetch_file][DEBUG] Adding libcutensor-windows-x86_64-1.6.0.3-archive.zip to the Nix store...
-[2023-09-23T14:38:29+0000][PID410427][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/0ss5gzdi3g7bmha52pqla9l29i2gmv2x-libcutensor-linux-x86_64-1.3.2.3-archive.tar.xz in 0.01428985595703125 seconds.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410434][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/wzffa3ih9157qvp25i1awmw9x7zwqgfg-libcutensor-linux-x86_64-1.7.0.1-archive.tar.xz in 0.013653278350830078 seconds.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 headers.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 9 shared libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 static libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410427][process_package][INFO] Architecture: windows-x86_64
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.2.3-archive.zip
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] SHA256: 7c7880de9c15db1d45cc24ce5758fcf9d1cd596139cfb57c97c2f764d86794b7
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] MD5: b1a15df717b9aee125583150dda30150
-[2023-09-23T14:38:29+0000][PID410427][process_package][DEBUG] Size: 374934832
-[2023-09-23T14:38:29+0000][PID410427][nix_store_prefetch_file][DEBUG] Adding libcutensor-windows-x86_64-1.3.2.3-archive.zip to the Nix store...
-[2023-09-23T14:38:29+0000][PID410428][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/hqihs0z31dmd76ld4j7rlw3d77wmyd9m-libcutensor-linux-x86_64-1.3.3.2-archive.tar.xz in 0.01304006576538086 seconds.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 24 shared libraries.
-[2023-09-23T14:38:29+0000][PID410430][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/q7jcksly352yawl1l7yzzf7l376ziwa3-libcutensor-linux-x86_64-1.4.0.6-archive.tar.xz in 0.013835668563842773 seconds.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 4 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 8 static libraries.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 4 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410434][process_package][INFO] Architecture: windows-x86_64
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.7.0.1-archive.zip
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] SHA256: cdbb53bcc1c7b20ee0aa2dee781644a324d2d5e8065944039024fe22d6b822ab
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] MD5: 7d20a5823e94074e273525b0713f812b
-[2023-09-23T14:38:29+0000][PID410434][process_package][DEBUG] Size: 1070143817
-[2023-09-23T14:38:29+0000][PID410434][nix_store_prefetch_file][DEBUG] Adding libcutensor-windows-x86_64-1.7.0.1-archive.zip to the Nix store...
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 headers.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 9 shared libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 static libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410432][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/k5xq37i1j3w710ppy8v0qqg91pkdxflc-libcutensor-linux-x86_64-1.5.0.3-archive.tar.xz in 0.013166189193725586 seconds.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410428][process_package][INFO] Architecture: windows-x86_64
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.3.3.2-archive.zip
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] SHA256: 3abeacbe7085af7026ca1399a77c681c219c10a1448a062964e97aaac2b05851
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] MD5: fe75f031c53260c00ad5f7c5d69d31e5
-[2023-09-23T14:38:29+0000][PID410428][process_package][DEBUG] Size: 374926147
-[2023-09-23T14:38:29+0000][PID410428][nix_store_prefetch_file][DEBUG] Adding libcutensor-windows-x86_64-1.3.3.2-archive.zip to the Nix store...
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410430][process_package][INFO] Architecture: windows-x86_64
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.4.0.6-archive.zip
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] SHA256: 4f01a8aac2c25177e928c63381a80e3342f214ec86ad66965dcbfe81fc5c901d
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] MD5: d21e0d5f2bd8c29251ffacaa85f0d733
-[2023-09-23T14:38:29+0000][PID410430][process_package][DEBUG] Size: 431385567
-[2023-09-23T14:38:29+0000][PID410430][nix_store_prefetch_file][DEBUG] Adding libcutensor-windows-x86_64-1.4.0.6-archive.zip to the Nix store...
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410429][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/yxam1ah0h3lp7y15kjmj7mghnik2s799-libcutensor-linux-x86_64-1.6.2.3-archive.tar.xz in 0.01317596435546875 seconds.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 18 shared libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 24 shared libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 4 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 8 static libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 4 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410429][process_package][INFO] Architecture: windows-x86_64
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.6.2.3-archive.zip
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] SHA256: 07cb312d7cafc7bb2f33d775e1ef5fffd1703d5c6656e785a7a8f0f01939907e
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] MD5: 5ae1c56bf4d457933dc1acb58a4ac995
-[2023-09-23T14:38:29+0000][PID410429][process_package][DEBUG] Size: 1063805254
-[2023-09-23T14:38:29+0000][PID410429][nix_store_prefetch_file][DEBUG] Adding libcutensor-windows-x86_64-1.6.2.3-archive.zip to the Nix store...
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410432][process_package][INFO] Architecture: windows-x86_64
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] Relative path: libcutensor/windows-x86_64/libcutensor-windows-x86_64-1.5.0.3-archive.zip
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] SHA256: de76f7d92600dda87a14ac756e9d0b5733cbceb88bcd20b3935a82c99342e6cd
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] MD5: 66feef08de8c7fccf7269383e663fd06
-[2023-09-23T14:38:29+0000][PID410432][process_package][DEBUG] Size: 421810766
-[2023-09-23T14:38:29+0000][PID410432][nix_store_prefetch_file][DEBUG] Adding libcutensor-windows-x86_64-1.5.0.3-archive.zip to the Nix store...
-[2023-09-23T14:38:29+0000][PID410433][nix_store_prefetch_file][DEBUG] Added libcutensor-windows-x86_64-1.6.1.5-archive.zip to the Nix store in 0.013797998428344727 seconds.
-[2023-09-23T14:38:29+0000][PID410433][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/z7dfb3ydp8c280yqgbk3shxs6adanqi3-libcutensor-windows-x86_64-1.6.1.5-archive.zip...
-[2023-09-23T14:38:29+0000][PID410431][nix_store_prefetch_file][DEBUG] Added libcutensor-windows-x86_64-1.6.0.3-archive.zip to the Nix store in 0.013615846633911133 seconds.
-[2023-09-23T14:38:29+0000][PID410431][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/ccl9i73nxn1vp47wq8a5mpnp68khdz2z-libcutensor-windows-x86_64-1.6.0.3-archive.zip...
-[2023-09-23T14:38:29+0000][PID410427][nix_store_prefetch_file][DEBUG] Added libcutensor-windows-x86_64-1.3.2.3-archive.zip to the Nix store in 0.012776851654052734 seconds.
-[2023-09-23T14:38:29+0000][PID410427][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/1n8xrchy7im8v746vqjjj4s6jqhciv8g-libcutensor-windows-x86_64-1.3.2.3-archive.zip...
-[2023-09-23T14:38:29+0000][PID410434][nix_store_prefetch_file][DEBUG] Added libcutensor-windows-x86_64-1.7.0.1-archive.zip to the Nix store in 0.012438774108886719 seconds.
-[2023-09-23T14:38:29+0000][PID410434][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/j01j34lbnzj7pgg1prbavxm9l1zrpb42-libcutensor-windows-x86_64-1.7.0.1-archive.zip...
-[2023-09-23T14:38:29+0000][PID410428][nix_store_prefetch_file][DEBUG] Added libcutensor-windows-x86_64-1.3.3.2-archive.zip to the Nix store in 0.012305259704589844 seconds.
-[2023-09-23T14:38:29+0000][PID410428][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/jbs6pjc4z4mn5pa392s84dad5nskysh0-libcutensor-windows-x86_64-1.3.3.2-archive.zip...
-[2023-09-23T14:38:29+0000][PID410430][nix_store_prefetch_file][DEBUG] Added libcutensor-windows-x86_64-1.4.0.6-archive.zip to the Nix store in 0.01313018798828125 seconds.
-[2023-09-23T14:38:29+0000][PID410430][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/7j2jppzd7fi00m0hhq7b2jjp363y8i7v-libcutensor-windows-x86_64-1.4.0.6-archive.zip...
-[2023-09-23T14:38:29+0000][PID410429][nix_store_prefetch_file][DEBUG] Added libcutensor-windows-x86_64-1.6.2.3-archive.zip to the Nix store in 0.012560606002807617 seconds.
-[2023-09-23T14:38:29+0000][PID410429][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/kd1n6npcraidqj8yjpyr7iavjchdpgvw-libcutensor-windows-x86_64-1.6.2.3-archive.zip...
-[2023-09-23T14:38:29+0000][PID410432][nix_store_prefetch_file][DEBUG] Added libcutensor-windows-x86_64-1.5.0.3-archive.zip to the Nix store in 0.012925386428833008 seconds.
-[2023-09-23T14:38:29+0000][PID410432][nix_store_unpack_archive][DEBUG] Unpacking /nix/store/66s6g8dx81akm36p1fh8vz4r3m2dqjjm-libcutensor-windows-x86_64-1.5.0.3-archive.zip...
-[2023-09-23T14:38:29+0000][PID410433][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/z7dfb3ydp8c280yqgbk3shxs6adanqi3-libcutensor-windows-x86_64-1.6.1.5-archive.zip in 0.013840198516845703 seconds.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410431][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/ccl9i73nxn1vp47wq8a5mpnp68khdz2z-libcutensor-windows-x86_64-1.6.0.3-archive.zip in 0.01368260383605957 seconds.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 6 shared libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 12 static libraries.
-[2023-09-23T14:38:29+0000][PID410431][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 6 shared libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 12 static libraries.
-[2023-09-23T14:38:29+0000][PID410433][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410427][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/1n8xrchy7im8v746vqjjj4s6jqhciv8g-libcutensor-windows-x86_64-1.3.2.3-archive.zip in 0.013842344284057617 seconds.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410434][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/j01j34lbnzj7pgg1prbavxm9l1zrpb42-libcutensor-windows-x86_64-1.7.0.1-archive.zip in 0.01343393325805664 seconds.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 headers.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410428][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/jbs6pjc4z4mn5pa392s84dad5nskysh0-libcutensor-windows-x86_64-1.3.3.2-archive.zip in 0.013250112533569336 seconds.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 shared libraries.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410430][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/7j2jppzd7fi00m0hhq7b2jjp363y8i7v-libcutensor-windows-x86_64-1.4.0.6-archive.zip in 0.013097524642944336 seconds.
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410427][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 headers.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 8 shared libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 4 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 6 shared libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 shared libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 16 static libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 12 static libraries.
-[2023-09-23T14:38:29+0000][PID410430][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410434][get_release_features][DEBUG] Found 4 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 6 static libraries.
-[2023-09-23T14:38:29+0000][PID410428][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410429][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/kd1n6npcraidqj8yjpyr7iavjchdpgvw-libcutensor-windows-x86_64-1.6.2.3-archive.zip in 0.012778759002685547 seconds.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 8 shared libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 4 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410432][nix_store_unpack_archive][DEBUG] Unpacked /nix/store/66s6g8dx81akm36p1fh8vz4r3m2dqjjm-libcutensor-windows-x86_64-1.5.0.3-archive.zip in 0.013349056243896484 seconds.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 16 static libraries.
-[2023-09-23T14:38:29+0000][PID410429][get_release_features][DEBUG] Found 4 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/12'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found roots: ['include', 'lib']
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found lib directory, checking for libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 headers.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 2 header directories: {PosixPath('include/cutensor'), PosixPath('include')}
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 6 shared libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 shared library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 12 static libraries.
-[2023-09-23T14:38:29+0000][PID410432][get_release_features][DEBUG] Found 3 static library directories: {PosixPath('lib/11.0'), PosixPath('lib/11'), PosixPath('lib/10.2')}
+$ nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests lookup_db.json --log-level INFO
+Set logging level to INFO.
+Using URL https://developer.download.nvidia.com/compute/cutensor/redist.
+Using dir cutensor_manifests
+Using overrides JSON file /home/connorbaker/cuda-redist-find-features/lookup_db.json
+2023-10-04T06:25:00 INFO     Reading manifest from cutensor_manifests/redistrib_1.3.2.json...                                                                                                                                                                           _manifest_ref.py:44
+                    INFO     Manifest version: 1.3.2                                                                                                                                                                                                                    _manifest_ref.py:57
+                    INFO     Manifest date: 2021-09-22                                                                                                                                                                                                                  _manifest_ref.py:58
+                    INFO     Manifest label: unknown                                                                                                                                                                                                                    _manifest_ref.py:59
+                    INFO     Manifest product: unknown                                                                                                                                                                                                                  _manifest_ref.py:60
+                    INFO     Reading manifest from cutensor_manifests/redistrib_1.3.3.json...                                                                                                                                                                           _manifest_ref.py:44
+                    INFO     Manifest version: 1.3.3                                                                                                                                                                                                                    _manifest_ref.py:57
+                    INFO     Manifest date: 2021-09-22                                                                                                                                                                                                                  _manifest_ref.py:58
+                    INFO     Manifest label: unknown                                                                                                                                                                                                                    _manifest_ref.py:59
+                    INFO     Manifest product: unknown                                                                                                                                                                                                                  _manifest_ref.py:60
+                    INFO     Reading manifest from cutensor_manifests/redistrib_1.6.2.json...                                                                                                                                                                           _manifest_ref.py:44
+                    INFO     Manifest version: 1.6.2                                                                                                                                                                                                                    _manifest_ref.py:57
+                    INFO     Manifest date: 2022-12-12                                                                                                                                                                                                                  _manifest_ref.py:58
+                    INFO     Manifest label: unknown                                                                                                                                                                                                                    _manifest_ref.py:59
+                    INFO     Manifest product: unknown                                                                                                                                                                                                                  _manifest_ref.py:60
+                    INFO     Reading manifest from cutensor_manifests/redistrib_1.4.0.json...                                                                                                                                                                           _manifest_ref.py:44
+                    INFO     Manifest version: 1.4.0                                                                                                                                                                                                                    _manifest_ref.py:57
+                    INFO     Manifest date: 2021-11-19                                                                                                                                                                                                                  _manifest_ref.py:58
+                    INFO     Manifest label: unknown                                                                                                                                                                                                                    _manifest_ref.py:59
+                    INFO     Manifest product: unknown                                                                                                                                                                                                                  _manifest_ref.py:60
+                    INFO     Reading manifest from cutensor_manifests/redistrib_1.6.0.json...                                                                                                                                                                           _manifest_ref.py:44
+                    INFO     Manifest version: 1.6.0                                                                                                                                                                                                                    _manifest_ref.py:57
+                    INFO     Manifest date: 2022-06-24                                                                                                                                                                                                                  _manifest_ref.py:58
+                    INFO     Manifest label: unknown                                                                                                                                                                                                                    _manifest_ref.py:59
+                    INFO     Manifest product: unknown                                                                                                                                                                                                                  _manifest_ref.py:60
+                    INFO     Reading manifest from cutensor_manifests/redistrib_1.5.0.json...                                                                                                                                                                           _manifest_ref.py:44
+                    INFO     Manifest version: 1.5.0                                                                                                                                                                                                                    _manifest_ref.py:57
+                    INFO     Manifest date: 2022-03-08                                                                                                                                                                                                                  _manifest_ref.py:58
+                    INFO     Manifest label: unknown                                                                                                                                                                                                                    _manifest_ref.py:59
+                    INFO     Manifest product: unknown                                                                                                                                                                                                                  _manifest_ref.py:60
+                    INFO     Reading manifest from cutensor_manifests/redistrib_1.6.1.json...                                                                                                                                                                           _manifest_ref.py:44
+                    INFO     Manifest version: 1.6.1                                                                                                                                                                                                                    _manifest_ref.py:57
+                    INFO     Manifest date: 2022-10-05                                                                                                                                                                                                                  _manifest_ref.py:58
+                    INFO     Manifest label: unknown                                                                                                                                                                                                                    _manifest_ref.py:59
+                    INFO     Manifest product: unknown                                                                                                                                                                                                                  _manifest_ref.py:60
+                    INFO     Reading manifest from cutensor_manifests/redistrib_1.7.0.json...                                                                                                                                                                           _manifest_ref.py:44
+                    INFO     Manifest version: 1.7.0                                                                                                                                                                                                                    _manifest_ref.py:57
+                    INFO     Manifest date: 2023-03-16                                                                                                                                                                                                                  _manifest_ref.py:58
+                    INFO     Manifest label: unknown                                                                                                                                                                                                                    _manifest_ref.py:59
+                    INFO     Manifest product: unknown                                                                                                                                                                                                                  _manifest_ref.py:60
+/nix/store/zvk7c2miws0q9nwsvld7ydv6jbdwa34p-python3.11-pydantic-2.4.2/lib/python3.11/site-packages/pydantic/main.py:308: UserWarning: Pydantic serializer warnings:
+  Expected `definition-ref` but got `str` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `str` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `str` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `str` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `Version` - serialized value may not be as expected
+  Expected `definition-ref` but got `str` - serialized value may not be as expected
+  return self.__pydantic_serializer__.to_python(
+2023-10-04T06:25:03 WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.3.2                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.3.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.3.2                                                                                                                                                                 package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.3.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.3.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.3.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.3.2                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.3.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.3.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.3.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.3.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.3.2                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.3.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.3.2                                                                                                                                                                 package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.3.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.3.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.3.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.3.2                                                                                                                                                                package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.3.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.3.2                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.3.2                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.3.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.3.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.3.2                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.3.2                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.3.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.3.2                                                                                                                                                                package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.3.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.3.2                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.3.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.3.2                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.3.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.3.2                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.3.2                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.3.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.3.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.3.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.3.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.3.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.3.2                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.3.2                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.3.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.3.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.3.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.3.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.3.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.3.3                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.3.3                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.3.3                                                                                                                                                                 package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.3.3                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.3.3                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.3.3                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.3.3                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.3.3                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.3.3                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.3.3                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.3.3                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.3.3                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.3.3                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.3.3                                                                                                                                                                 package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.3.3                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.3.3                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.3.3                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.3.3                                                                                                                                                                package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.3.3                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.3.3                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.3.3                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.3.3                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.3.3                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.3.3                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.3.3                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.3.3                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.3.3                                                                                                                                                                package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.3.3                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.3.3                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.3.3                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.3.3                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.3.3                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.3.3                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.3.3                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.3.3                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.3.3                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.3.3                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.3.3                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.3.3                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.3.3                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.3.3                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.3.3                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.3.3                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.3.3                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.3.3                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.3.3                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.2                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.6.2                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.2                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.2                                                                                                                                                                         package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.2                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.12 -> 1.6.2                                                                                                                                                                 package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcuda.so.1 -> 1.6.2                                                                                                                                                                      package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.2                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.6.2                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.2                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.2                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.6.2                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.2                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.2                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.12 -> 1.6.2                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.2                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.6.2                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.2                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.2                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.6.2                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.6.2                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.6.2                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.6.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.6.2                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.6.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.6.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.6.2                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.6.2                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.12 -> 1.6.2                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.6.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.6.2                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.6.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.6.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.6.2                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.6.2                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.6.2                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.6.2 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=6, patch=2, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.6.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.6.2                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.6.2                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.6.2                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.6.2                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.4.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.4.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.4.0                                                                                                                                                                 package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcudart.so.11.0 -> 1.4.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.4.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=4, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.4.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.4.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.4.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.4.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.4.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcudart.so.10.2 -> 1.4.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.4.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=4, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.4.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.4.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.4.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.4.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.4.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.4.0                                                                                                                                                                 package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcudart.so.11.0 -> 1.4.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.4.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=4, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.4.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.4.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.4.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.4.0                                                                                                                                                                package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcudart.so.11.0 -> 1.4.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.4.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=4, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.4.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.4.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.4.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.4.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcudart.so.10.2 -> 1.4.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.4.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=4, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.4.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.4.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.4.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.4.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.4.0                                                                                                                                                                package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcudart.so.11.0 -> 1.4.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.4.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=4, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.4.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.4.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.4.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.4.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.4.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.4.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.4.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.4.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcudart.so.11.0 -> 1.4.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.4.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=4, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.4.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.4.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.4.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.4.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.4.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.4.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.4.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcudart.so.11.0 -> 1.4.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.4.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=4, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.4.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.4.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.4.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.4.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.6.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.0                                                                                                                                                                         package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.6.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.6.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.6.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.6.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.6.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.6.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.6.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=6, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.6.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.6.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.6.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.6.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.6.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.6.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.6.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.6.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.6.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=6, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.6.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.6.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.6.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.6.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.6.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.5.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.5.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.5.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.5.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=5, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.5.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.5.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.5.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.5.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.5.0                                                                                                                                                                         package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.5.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=5, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.5.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.5.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.5.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.5.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.5.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.5.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.5.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=5, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.5.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.5.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.5.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.5.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.5.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=5, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.5.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.5.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.5.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.5.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.5.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=5, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.5.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.5.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.5.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.5.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.5.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.5.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=5, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.5.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.5.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.5.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.5.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.5.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.5.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.5.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.5.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.5.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=5, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.5.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.5.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.5.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.5.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.5.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.5.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.5.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.5.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.5.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=5, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.5.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.5.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.5.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.5.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.5.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.1                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.1                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.6.1                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.1 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=1, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.1                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.1                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.1                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.1                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.1                                                                                                                                                                         package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.1 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=1, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.1                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.1                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.1                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.6.1                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.6.1                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.6.1                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.6.1 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=6, patch=1, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.6.1                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.6.1                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.6.1                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.6.1                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.1 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=1, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.1                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.1                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.1                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.1                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.1 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=1, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.1                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.1                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.1                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.1                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.6.1                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.6.1 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=6, patch=1, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.6.1                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.6.1                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.6.1                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.6.1                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.6.1                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.6.1                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.6.1                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.6.1                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.6.1 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=6, patch=1, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.6.1                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.6.1                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.6.1                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.6.1                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.6.1                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.6.1                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.6.1                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.6.1                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.6.1 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=6, patch=1, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.6.1                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.6.1                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.6.1                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.6.1                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.6.1                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.7.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.7.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.7.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.7.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.7.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.7.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.7.0                                                                                                                                                                         package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.7.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.7.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.7.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.7.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.12 -> 1.7.0                                                                                                                                                                 package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcuda.so.1 -> 1.7.0                                                                                                                                                                      package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.7.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.7.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> ld-linux-x86-64.so.2 -> 1.7.0                                                                                                                                                              package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libc.so.6 -> 1.7.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libcublasLt.so.11 -> 1.7.0                                                                                                                                                                 package_deps_resolver.py:70
+                    INFO     Found dependency linux-x86_64 -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-x86_64', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                               package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-x86_64 -> libdl.so.2 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libm.so.6 -> 1.7.0                                                                                                                                                                         package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> libpthread.so.0 -> 1.7.0                                                                                                                                                                   package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-x86_64 -> librt.so.1 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.7.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.7.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.7.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.12 -> 1.7.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.7.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> ld64.so.2 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libc.so.6 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libcublasLt.so.11 -> 1.7.0                                                                                                                                                                package_deps_resolver.py:70
+                    INFO     Found dependency linux-ppc64le -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-ppc64le', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                             package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-ppc64le -> libdl.so.2 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                    package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libm.so.6 -> 1.7.0                                                                                                                                                                        package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> libpthread.so.0 -> 1.7.0                                                                                                                                                                  package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-ppc64le -> librt.so.1 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.7.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.7.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.7.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.7.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.7.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.7.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.7.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.7.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.7.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.12 -> 1.7.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.7.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.7.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.7.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.7.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> ld-linux-aarch64.so.1 -> 1.7.0                                                                                                                                                               package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libc.so.6 -> 1.7.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libcublasLt.so.11 -> 1.7.0                                                                                                                                                                   package_deps_resolver.py:70
+                    INFO     Found dependency linux-sbsa -> libcutensor.so.1 -> 1.7.0 -> PackageId(platform='linux-sbsa', package_name='libcutensor', version=Version(major=1, minor=7, patch=0, build=None))                                                   package_deps_resolver.py:66
+                    WARNING  No dependency found for linux-sbsa -> libdl.so.2 -> 1.7.0                                                                                                                                                                          package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libgcc_s.so.1 -> 1.7.0                                                                                                                                                                       package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libm.so.6 -> 1.7.0                                                                                                                                                                           package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> libpthread.so.0 -> 1.7.0                                                                                                                                                                     package_deps_resolver.py:70
+                    WARNING  No dependency found for linux-sbsa -> librt.so.1 -> 1.7.0                                                                                                                                                                          package_deps_resolver.py:70
+/nix/store/zvk7c2miws0q9nwsvld7ydv6jbdwa34p-python3.11-pydantic-2.4.2/lib/python3.11/site-packages/pydantic/main.py:308: UserWarning: Pydantic serializer warnings:
+  Expected `definition-ref` but got `str` - serialized value may not be as expected
+  return self.__pydantic_serializer__.to_python(
 ```
 
 </details>

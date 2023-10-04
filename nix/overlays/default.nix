@@ -6,6 +6,8 @@
       ++ [
         (pythonFinal: _: {
           cuda-redist-find-features = pythonFinal.callPackage ../packages/cuda-redist-find-features.nix {};
+          pydantic_v2 = pythonFinal.callPackage ../packages/pydantic_v2 {};
+          pydantic-core = pythonFinal.callPackage ../packages/pydantic-core {};
         })
       ];
   };

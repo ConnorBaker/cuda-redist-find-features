@@ -1,4 +1,4 @@
-from ._http_url import HTTP_URL_OPTION
-from ._version import VERSION_OPTION, NoneOrVersion
+from ._http_url import HTTP_URL_PARAM_TYPE
+from ._version import VERSION_PARAM_TYPE, NoneOrVersion
 
-__all__ = ["HTTP_URL_OPTION", "VERSION_OPTION", "NoneOrVersion"]
+__all__ = ["HTTP_URL_PARAM_TYPE", "VERSION_PARAM_TYPE", "NoneOrVersion"]

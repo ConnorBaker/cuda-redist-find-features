@@ -5,15 +5,13 @@
 
 ## Roadmap
 
+- \[ \] Improve dependency resolution by being less strict with versions.
 - \[ \] Further documentation.
-- \[ \] Support extracting information about supported capabilities from libraries.
-  - This can be used to determine whether a library contains device code.
-  - In particular, such information enables determining whether a `linux-sbsa` (Linux ARM server) package can be used as a fallback for `linux-aarch64` (NVIDIA Jetson device) in the case there is no `linux-aarch64` package available.
 - \[ \] Test cases.
 
 ## Overview
 
-This package provides a script which finds the outputs of the redistributable packages NVIDIA provides for CUDA. It does this by using `redistrib_*.json` manifests from <https://developer.download.nvidia.com/compute/cuda/redist/> (and similar) and doing the following for each package:
+This package provides a script which finds the "features" of the redistributable packages NVIDIA provides for CUDA. It does this by using `redistrib_*.json` manifests from <https://developer.download.nvidia.com/compute/cuda/redist/> (and similar) and doing the following for each package:
 
 1. Use `nix store prefetch-file` to download a package archive to the Nix store.
 
@@ -25,11 +23,24 @@ This package provides a script which finds the outputs of the redistributable pa
    - Though an abuse of the command, it does effectively serve as a way to unpack archives into the nix store.
    - It also allows us to avoid unpacking archives multiple times by short-circuiting to the store path if it already exists.
 
-1. Evaluate the contents of the unpacked archive to decide what outputs it provides.
+1. Evaluate the contents of the unpacked archive to decide what "features" it provides.
 
    - Implemented with heuristics. For example, if a directory contains a `lib` directory with a `libfoo.a` file, we assume that the package should have an output named `static` containing all its static libraries.
 
-1. Write a complementary JSON file containing the outputs each package should have next to the manifest passed as argument to the script.
+1. Write a complementary JSON file containing the "features" each package should have next to the manifest passed as argument to the script.
+
+### Implemented Feature Detectors
+
+These live in [detectors](./cuda_redist_find_features/manifest/feature/detectors).
+
+- `cuda_architectures.py`: Runs `cuobjdump` on the unpacked archive to find the CUDA architectures it supports.
+- `dynamic_library.py`: Checks if the unpacked archive contains a `lib` directory with dynamic libraries.
+- `executable.py`: Checks if the unpacked archive contains executables in `bin`.
+- `header.py`: Checks if the unpacked archive contains a `include` directory with headers.
+- `needed_libs.py`: Runs `patchelf --print-needed` on the unpacked archive to find the libraries it needs.
+- `provided_libs.py`: Runs `patchelf --print-soname` on the unpacked archive to find the libraries it provides.
+- `python_module.py`: Checks if the unpacked archive contains a `site-packages` directory with Python modules.
+- `static_library.py`: Checks if the unpacked archive contains a `lib` directory with static libraries.
 
 ## Usage
 
@@ -38,7 +49,9 @@ The script is meant to be used as part of the process of updating the manifests 
 There are two commands:
 
 - `download-manifests`: Download manifests from NVIDIA's website.
-- `process-manifests`: Process manifests and write JSON files containing the outputs each package should have.
+- `process-manifests`: Process manifests and write JSON files containing "features" each package should have.
+- `print-feature-schema`: Print the JSON schema a "feature" manifest will have.
+- `print-manifest-schema`: Print the JSON schema used to parse NVIDIA manifests.
 
 ```regen-readme
 nix run .# -- --help
@@ -56,6 +69,18 @@ nix run .# -- download-manifests --help
 nix run .# -- process-manifests --help
 ```
 
+### `print-feature-schema`
+
+```regen-readme
+nix run .# -- print-feature-schema
+```
+
+### `print-manifest-schema`
+
+```regen-readme
+nix run .# -- print-manifest-schema
+```
+
 ## Examples
 
 ### cuTensor
@@ -63,7 +88,7 @@ nix run .# -- process-manifests --help
 <details><summary>download-manifests</summary>
 
 ```regen-readme
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO
 ```
 
 </details>
@@ -71,7 +96,7 @@ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/c
 <details><summary>download-manifests with --version</summary>
 
 ```regen-readme
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --version 1.4.0
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --version 1.4.0
 ```
 
 </details>
@@ -79,7 +104,7 @@ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/c
 <details><summary>download-manifests with --min-version and --max-version</summary>
 
 ```regen-readme
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --min-version 1.4.0 --max-version 1.6.2
 ```
 
 </details>
@@ -89,13 +114,13 @@ nix run .# -- --debug download-manifests https://developer.download.nvidia.com/c
 Assuming
 
 ```console
-nix run .# -- --debug download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --min-version 1.4.0 --max-version 1.6.2
 ```
 
 was run previously,
 
 ```regen-readme
-nix run .# -- --debug process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests
+nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests lookup_db.json --log-level INFO
 ```
 
 </details>

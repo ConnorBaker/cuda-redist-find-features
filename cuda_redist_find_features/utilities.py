@@ -1,16 +1,18 @@
-from pathlib import Path
-from typing import Any, Iterable, Iterator
+from __future__ import annotations
+
+import logging
+
+import rich.logging
+
+LOGGING_LEVEL = logging.WARNING
 
 
-def is_nonempty(it: Iterable[Any]) -> bool:
-    """
-    Returns True if the iterable is nonempty.
-    """
-    return any(True for _ in it)
+def get_logger(name: str) -> logging.Logger:
+    logger = logging.getLogger(name)
+    logger.setLevel(LOGGING_LEVEL)
 
+    handler = rich.logging.RichHandler(rich_tracebacks=True)
+    handler.setFormatter(logging.Formatter("%(message)s", datefmt="%Y-%m-%dT%H:%M:%S%z"))
+    logger.addHandler(handler)
 
-def file_paths_matching(path: Path, globs: Iterable[str]) -> Iterator[Path]:
-    """
-    Returns a list of files matching the given globs in the directory tree of the given path.
-    """
-    return (entry for glob in globs for entry in path.rglob(glob) if entry.is_file())
+    return logger
