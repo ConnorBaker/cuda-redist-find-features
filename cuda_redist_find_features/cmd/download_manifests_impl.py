@@ -13,8 +13,7 @@ from rich.table import Table
 
 from cuda_redist_find_features import utilities
 from cuda_redist_find_features.manifest.nvidia import NvidiaManifestRef
-from cuda_redist_find_features.types import Task
-from cuda_redist_find_features.version_constraint import VersionConstraint
+from cuda_redist_find_features.types import Task, VersionConstraint
 
 MyTask = Task[NvidiaManifestRef[HttpUrl], NvidiaManifestRef[FilePath]]
 

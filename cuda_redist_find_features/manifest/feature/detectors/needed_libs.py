@@ -6,9 +6,10 @@ from pathlib import Path
 
 from typing_extensions import override
 
-from cuda_redist_find_features.manifest.feature.detectors.groupable_feature_detector import GroupableFeatureDetector
 from cuda_redist_find_features.types import LibSoName, LibSoNameTA
 from cuda_redist_find_features.utilities import get_logger
+
+from .groupable_feature_detector import GroupableFeatureDetector
 
 logger = get_logger(__name__)
 

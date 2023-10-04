@@ -10,11 +10,16 @@ from urllib import request
 from pydantic import BaseModel, DirectoryPath, FilePath, HttpUrl
 from pydantic_core import Url
 
-from cuda_redist_find_features.manifest.nvidia.manifest import NvidiaManifest
-from cuda_redist_find_features.types import FF, SFF, HttpUrlTA, validate_call
+from cuda_redist_find_features.types import (
+    HttpUrlTA,
+    PydanticFrozenField,
+    Version,
+    VersionConstraint,
+    VersionTA,
+)
 from cuda_redist_find_features.utilities import get_logger
-from cuda_redist_find_features.version import Version
-from cuda_redist_find_features.version_constraint import VersionConstraint
+
+from ._manifest import NvidiaManifest
 
 logger = get_logger(__name__)
 
@@ -23,19 +28,18 @@ _T = TypeVar("_T", FilePath, HttpUrl)
 
 
 class NvidiaManifestRef(BaseModel, Generic[_T]):
-    ref: _T = FF(
+    ref: _T = PydanticFrozenField(
         description="A reference to a manifest at a local file or a URL.",
         examples=[
             "https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json",
             "cutensor_manifests/redistrib_1.7.0.json",
         ],
     )
-    version: Version = SFF(
+    version: Version = PydanticFrozenField(
         description="The version of the manifest.",
         examples=["1.7.0"],
     )
 
-    @validate_call
     def retrieve(self) -> bytes:
         logger.info("Reading manifest from %s...", self.ref)
         match self.ref:
@@ -47,7 +51,6 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
             case Path():
                 return self.ref.read_bytes()
 
-    @validate_call
     def parse(self) -> NvidiaManifest:
         content_bytes: bytes = self.retrieve()
         manifest = NvidiaManifest.model_validate_json(content_bytes)
@@ -86,7 +89,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
             s: str = response.read().decode("utf-8")
             logger.debug("Searching with regex %s...", regex_str)
             for matched in re.finditer(regex_str, s):
-                manifest_version = Version.model_validate_strings(matched.group(1))
+                manifest_version = VersionTA.validate_strings(matched.group(1))
                 if not version_constraint.is_satisfied_by(manifest_version):
                     continue
 
@@ -110,7 +113,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
 
         refs: list[NvidiaManifestRef[FilePath]] = []
         for file in dir.glob(glob_str):
-            manifest_version = Version.model_validate_strings(file.stem.strip(filename_prefix))
+            manifest_version = VersionTA.validate_strings(file.stem.strip(filename_prefix))
             if version_constraint.is_satisfied_by(manifest_version):
                 refs.append(NvidiaManifestRef(ref=file, version=manifest_version))
 

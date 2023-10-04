@@ -3,16 +3,17 @@ from typing import Self
 
 from pydantic.alias_generators import to_camel
 
-from cuda_redist_find_features.manifest.feature.detectors import (
+from cuda_redist_find_features.types import PydanticObject
+
+from .detectors import (
     DirDetector,
     DynamicLibraryDetector,
     ExecutableDetector,
     StaticLibraryDetector,
 )
-from cuda_redist_find_features.types import SFBM
 
 
-class FeatureOutputs(SFBM, alias_generator=to_camel):
+class FeatureOutputs(PydanticObject, alias_generator=to_camel):
     """
     Describes the different outputs a release can have.
 

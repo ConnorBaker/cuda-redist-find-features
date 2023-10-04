@@ -2,11 +2,11 @@ from typing import Self
 
 from pydantic import model_validator
 
-from cuda_redist_find_features.types import SFBM
-from cuda_redist_find_features.version import Version
+from ._pydantic import PydanticObject
+from ._version import Version
 
 
-class VersionConstraint(SFBM):
+class VersionConstraint(PydanticObject):
     version_min: None | Version = None
     version_max: None | Version = None
     version: None | Version = None

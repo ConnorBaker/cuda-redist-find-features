@@ -2,43 +2,37 @@ import logging
 import time
 from collections.abc import Iterable, Mapping, Sequence
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
 from functools import partial
 from pathlib import Path
-from typing import final
 
 from pydantic import FilePath, HttpUrl
 from rich.live import Live
 from rich.table import Table
 
 from cuda_redist_find_features import utilities
-from cuda_redist_find_features.manifest.feature import FeatureManifest, FeaturePackage, FeatureRelease
+from cuda_redist_find_features.manifest.feature import (
+    FeatureManifest,
+    FeaturePackageDepsResolved,
+    FeaturePackageDepsResolver,
+    FeaturePackageDepsUnresolved,
+    FeatureRelease,
+)
 from cuda_redist_find_features.manifest.nvidia import NvidiaManifest, NvidiaManifestRef, NvidiaPackage
-from cuda_redist_find_features.types import PackageName, Platform, Task
-from cuda_redist_find_features.version import Version
-from cuda_redist_find_features.version_constraint import VersionConstraint
+from cuda_redist_find_features.types import PackageId, Task, Version, VersionConstraint
+
+logger = utilities.get_logger(__name__)
+
+MyTask = Task[NvidiaPackage, FeaturePackageDepsUnresolved]
 
 
-# Create wrapper class to help track the status of the task
-@final
-@dataclass(frozen=True, order=True, slots=True)
-class TaskKey:
-    package_name: PackageName
-    platform: Platform
-    version: Version
-
-
-MyTask = Task[NvidiaPackage, FeaturePackage]
-
-
-def make_grid(height: int, tasks: Iterable[tuple[TaskKey, MyTask]]) -> Table:
+def make_grid(height: int, tasks: Iterable[tuple[PackageId, MyTask]]) -> Table:
     grid = Table(box=None, pad_edge=False, expand=True, width=80, min_width=80)
     grid.add_column("Progress", width=10, min_width=10, max_width=10)
     grid.add_column("Name", width=70, min_width=70, max_width=70)
 
     # Print tasks which are in progress before those that are waiting.
     # Group the tasks by status
-    incomplete_tasks: Iterable[tuple[TaskKey, MyTask]] = [
+    incomplete_tasks: Iterable[tuple[PackageId, MyTask]] = [
         (key, task) for key, task in tasks if MyTask.is_running(task)
     ] + [(key, task) for key, task in tasks if MyTask.is_waiting(task)]
 
@@ -54,6 +48,7 @@ def make_grid(height: int, tasks: Iterable[tuple[TaskKey, MyTask]]) -> Table:
 def process_manifests_impl(
     url: HttpUrl,
     manifest_dir: Path,
+    overrides_json: Path,
     cleanup: bool,
     no_parallel: bool,
     version_constraint: VersionConstraint,
@@ -77,8 +72,14 @@ def process_manifests_impl(
         ref.ref: (ref.version, ref.parse()) for ref in refs
     }
 
+    # Load dependencies resolver
+    if overrides_json.exists():
+        dep_resolver = FeaturePackageDepsResolver.model_validate_json(overrides_json.read_bytes())
+    else:
+        dep_resolver = FeaturePackageDepsResolver.model_validate({})
+
     # Curry
-    fn = partial(FeaturePackage.of, url, cleanup=cleanup)
+    fn = partial(FeaturePackageDepsUnresolved.of, url, cleanup=cleanup)
 
     # If logging level is less than or equal to warning severity, display the table.
     display_table = utilities.LOGGING_LEVEL >= logging.WARNING
@@ -88,13 +89,13 @@ def process_manifests_impl(
         ThreadPoolExecutor(max_workers=1 if no_parallel else None) as executor,
     ):
         # Initial tasks
-        tasks: Mapping[TaskKey, MyTask] = {
-            TaskKey(package_name, platform, version): Task.submit(
+        tasks: Mapping[PackageId, MyTask] = {
+            PackageId(platform, package_name, version): Task.submit(
                 executor,
                 package,
                 fn,
             )
-            for _file_path, (version, manifest) in nvidia_manifests.items()
+            for _, (version, manifest) in nvidia_manifests.items()
             for package_name, release in manifest.releases.items()
             for platform, package in release.packages.items()
         }
@@ -113,13 +114,30 @@ def process_manifests_impl(
             # Wait a bit
             time.sleep(0.1)
 
+    flattened_unresolved_tree: Mapping[PackageId, FeaturePackageDepsUnresolved] = {
+        package_id: task.future.result() for package_id, task in tasks.items()
+    }
+
+    # Update DependenciesResolver with the content of dependencies (that is, the new feature manifest we are in
+    # the process of constructing)
+    dep_resolver = dep_resolver.bulk_add_lib_provider(flattened_unresolved_tree)
+
+    # Dump DependenciesResolver to overrides_json
+    dep_resolver.write(overrides_json)
+
+    # Resolve dependencies
+    flattened_resolved_tree: Mapping[PackageId, FeaturePackageDepsResolved] = {
+        package_id: FeaturePackageDepsResolved.of(package_id, feature_package, dep_resolver)
+        for package_id, feature_package in flattened_unresolved_tree.items()
+    }
+
     # Organize the results
-    feature_manifests: Mapping[FilePath, FeatureManifest] = {
-        file_path: FeatureManifest.model_validate(
+    feature_manifests: Mapping[FilePath, FeatureManifest[FeaturePackageDepsResolved]] = {
+        file_path: FeatureManifest[FeaturePackageDepsResolved].model_validate(
             {
-                package_name: FeatureRelease.model_validate(
+                package_name: FeatureRelease[FeaturePackageDepsResolved].model_validate(
                     {
-                        platform: tasks[TaskKey(package_name, platform, version)].future.result()
+                        platform: flattened_resolved_tree[PackageId(platform, package_name, version)]
                         for platform in release.packages.keys()
                     }
                 )

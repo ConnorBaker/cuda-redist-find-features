@@ -7,8 +7,7 @@ import click
 def _manifest_dir_argument_callback(
     ctx: click.Context, param: click.Parameter, manifest_dir: pathlib.Path
 ) -> pathlib.Path:
-    if manifest_dir:
-        click.echo(f"Using dir {manifest_dir}")
+    click.echo(f"Using dir {manifest_dir}")
     return manifest_dir
 
 

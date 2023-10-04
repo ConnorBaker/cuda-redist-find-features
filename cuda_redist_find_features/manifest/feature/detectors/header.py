@@ -4,10 +4,11 @@ from pathlib import Path
 
 from typing_extensions import override
 
-from cuda_redist_find_features.manifest.feature.detectors.dir import DirDetector
-from cuda_redist_find_features.manifest.feature.detectors.types import FeatureDetector
-from cuda_redist_find_features.manifest.feature.detectors.utilities import cached_path_rglob
 from cuda_redist_find_features.utilities import get_logger
+
+from .dir import DirDetector
+from .types import FeatureDetector
+from .utilities import cached_path_rglob
 
 logger = get_logger(__name__)
 

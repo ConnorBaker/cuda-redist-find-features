@@ -46,9 +46,6 @@ ignore = [
     "PLR0913"
 ]
 line-length = 120
-[tool.ruff.flake8-tidy-imports]
-# Disallow all relative imports.
-ban-relative-imports = "all"
 
 
 [tool.pyright]

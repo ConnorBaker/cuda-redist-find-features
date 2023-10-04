@@ -1,10 +1,12 @@
 from pathlib import Path
 
-from cuda_redist_find_features.manifest.feature.release import FeatureRelease
-from cuda_redist_find_features.types import SFMRM, PackageName
+from cuda_redist_find_features.types import PackageName, PydanticMapping
+
+from .package import FeaturePackageTy
+from .release import FeatureRelease
 
 
-class FeatureManifest(SFMRM[PackageName, FeatureRelease]):
+class FeatureManifest(PydanticMapping[PackageName, FeatureRelease[FeaturePackageTy]]):
     """
     Represents the manifest file containing releases.
     """
@@ -13,7 +15,8 @@ class FeatureManifest(SFMRM[PackageName, FeatureRelease]):
         """
         Writes the manifest to the given path.
         """
+        import json
+
         with path.open("w") as f:
-            f.write(self.model_dump_json(by_alias=True, exclude_none=True, indent=2))
+            json.dump(self.model_dump(mode="json", by_alias=True), f, indent=2, sort_keys=True)
             f.write("\n")
-            f.flush()

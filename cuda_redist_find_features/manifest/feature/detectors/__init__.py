@@ -1,12 +1,12 @@
-from cuda_redist_find_features.manifest.feature.detectors.cuda_architectures import CudaArchitecturesDetector
-from cuda_redist_find_features.manifest.feature.detectors.dir import DirDetector
-from cuda_redist_find_features.manifest.feature.detectors.dynamic_library import DynamicLibraryDetector
-from cuda_redist_find_features.manifest.feature.detectors.executable import ExecutableDetector
-from cuda_redist_find_features.manifest.feature.detectors.header import HeaderDetector
-from cuda_redist_find_features.manifest.feature.detectors.needed_libs import NeededLibsDetector
-from cuda_redist_find_features.manifest.feature.detectors.provided_libs import ProvidedLibsDetector
-from cuda_redist_find_features.manifest.feature.detectors.python_module import PythonModuleDetector
-from cuda_redist_find_features.manifest.feature.detectors.static_library import StaticLibraryDetector
+from .cuda_architectures import CudaArchitecturesDetector
+from .dir import DirDetector
+from .dynamic_library import DynamicLibraryDetector
+from .executable import ExecutableDetector
+from .header import HeaderDetector
+from .needed_libs import NeededLibsDetector
+from .provided_libs import ProvidedLibsDetector
+from .python_module import PythonModuleDetector
+from .static_library import StaticLibraryDetector
 
 __all__ = [
     "DirDetector",
