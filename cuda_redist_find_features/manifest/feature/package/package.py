@@ -26,6 +26,9 @@ class FeaturePackage(PydanticObject, alias_generator=to_camel):
         description="The Nix outputs of the package.",
         examples=["lib", "dev", "static"],
     )
+
+    # TODO(@connorbaker): Excluded for now because they are not used downstream.
+    # No need to bloat the feature manifests.
     cuda_architectures: Sequence[CudaArch] | Mapping[str, Sequence[CudaArch]] = PydanticFrozenField(
         description=(
             """
@@ -33,7 +36,11 @@ class FeaturePackage(PydanticObject, alias_generator=to_camel):
             This is either a list of architectures or a mapping from subdirectory name to list of architectures.
             """
         ),
+        exclude=True,
     )
+
+    # TODO(@connorbaker): Excluded for now because they are not used downstream.
+    # No need to bloat the feature manifests.
     provided_libs: Sequence[LibSoName] | Mapping[str, Sequence[LibSoName]] = PydanticFrozenField(
         description=(
             """
@@ -41,7 +48,11 @@ class FeaturePackage(PydanticObject, alias_generator=to_camel):
             This is either a list of libraries or a mapping from subdirectory name to list of libraries.
             """
         ),
+        exclude=True,
     )
+
+    # TODO(@connorbaker): Excluded for now because they are not used downstream.
+    # No need to bloat the feature manifests.
     needed_libs: Sequence[LibSoName] | Mapping[str, Sequence[LibSoName]] = PydanticFrozenField(
         description=(
             """
@@ -49,6 +60,7 @@ class FeaturePackage(PydanticObject, alias_generator=to_camel):
             This is either a list of libraries or a mapping from subdirectory name to list of libraries.
             """
         ),
+        exclude=True,
     )
 
 

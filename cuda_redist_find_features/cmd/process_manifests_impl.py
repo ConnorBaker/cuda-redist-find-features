@@ -12,8 +12,6 @@ from rich.table import Table
 from cuda_redist_find_features import utilities
 from cuda_redist_find_features.manifest.feature import (
     FeatureManifest,
-    FeaturePackageDepsResolved,
-    FeaturePackageDepsResolver,
     FeaturePackageDepsUnresolved,
     FeatureRelease,
 )
@@ -48,7 +46,7 @@ def make_grid(height: int, tasks: Iterable[tuple[PackageId, MyTask]]) -> Table:
 def process_manifests_impl(
     url: HttpUrl,
     manifest_dir: Path,
-    overrides_json: Path,
+    # overrides_json: Path,
     cleanup: bool,
     no_parallel: bool,
     version_constraint: VersionConstraint,
@@ -72,11 +70,14 @@ def process_manifests_impl(
         ref.ref: (ref.version, ref.parse()) for ref in refs
     }
 
+    # TODO(@connorbaker): Dependency resolution is excluded for now because it is not used downstream.
+    # No need to bloat the feature manifests.
+
     # Load dependencies resolver
-    if overrides_json.exists():
-        dep_resolver = FeaturePackageDepsResolver.model_validate_json(overrides_json.read_bytes())
-    else:
-        dep_resolver = FeaturePackageDepsResolver.model_validate({})
+    # if overrides_json.exists():
+    #     dep_resolver = FeaturePackageDepsResolver.model_validate_json(overrides_json.read_bytes())
+    # else:
+    #     dep_resolver = FeaturePackageDepsResolver.model_validate({})
 
     # Curry
     fn = partial(FeaturePackageDepsUnresolved.of, url, cleanup=cleanup)
@@ -120,24 +121,24 @@ def process_manifests_impl(
 
     # Update DependenciesResolver with the content of dependencies (that is, the new feature manifest we are in
     # the process of constructing)
-    dep_resolver = dep_resolver.bulk_add_lib_provider(flattened_unresolved_tree)
+    # dep_resolver = dep_resolver.bulk_add_lib_provider(flattened_unresolved_tree)
 
     # Dump DependenciesResolver to overrides_json
-    dep_resolver.write(overrides_json)
+    # dep_resolver.write(overrides_json)
 
     # Resolve dependencies
-    flattened_resolved_tree: Mapping[PackageId, FeaturePackageDepsResolved] = {
-        package_id: FeaturePackageDepsResolved.of(package_id, feature_package, dep_resolver)
-        for package_id, feature_package in flattened_unresolved_tree.items()
-    }
+    # flattened_resolved_tree: Mapping[PackageId, FeaturePackageDepsResolved] = {
+    #     package_id: FeaturePackageDepsResolved.of(package_id, feature_package, dep_resolver)
+    #     for package_id, feature_package in flattened_unresolved_tree.items()
+    # }
 
     # Organize the results
-    feature_manifests: Mapping[FilePath, FeatureManifest[FeaturePackageDepsResolved]] = {
-        file_path: FeatureManifest[FeaturePackageDepsResolved].model_validate(
+    feature_manifests: Mapping[FilePath, FeatureManifest[FeaturePackageDepsUnresolved]] = {
+        file_path: FeatureManifest[FeaturePackageDepsUnresolved].model_validate(
             {
-                package_name: FeatureRelease[FeaturePackageDepsResolved].model_validate(
+                package_name: FeatureRelease[FeaturePackageDepsUnresolved].model_validate(
                     {
-                        platform: flattened_resolved_tree[PackageId(platform, package_name, version)]
+                        platform: flattened_unresolved_tree[PackageId(platform, package_name, version)]
                         for platform in release.packages.keys()
                     }
                 )

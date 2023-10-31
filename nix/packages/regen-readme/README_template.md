@@ -120,7 +120,7 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 was run previously,
 
 ```regen-readme
-nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests lookup_db.json --log-level INFO
+nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO
 ```
 
 </details>

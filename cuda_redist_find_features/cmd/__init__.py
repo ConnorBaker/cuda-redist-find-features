@@ -5,7 +5,7 @@ from pydantic import HttpUrl
 
 from cuda_redist_find_features.types import LogLevel, Version, VersionConstraint
 
-from .argument import manifest_dir_argument, overrides_json_argument, url_argument
+from .argument import manifest_dir_argument, url_argument
 from .option import (
     cleanup_option,
     log_level_option,
@@ -58,7 +58,7 @@ def download_manifests(
 @main.command()
 @url_argument
 @manifest_dir_argument(file_okay=False, dir_okay=True)
-@overrides_json_argument
+# @overrides_json_argument
 @log_level_option
 @cleanup_option
 @no_parallel_option
@@ -68,7 +68,7 @@ def download_manifests(
 def process_manifests(
     url: HttpUrl,
     manifest_dir: Path,
-    overrides_json: Path,
+    # overrides_json: Path,
     log_level: LogLevel,
     cleanup: bool,
     no_parallel: bool,
@@ -88,7 +88,7 @@ def process_manifests(
     process_manifests_impl(
         url=url,
         manifest_dir=manifest_dir,
-        overrides_json=overrides_json,
+        # overrides_json=overrides_json,
         cleanup=cleanup,
         no_parallel=no_parallel,
         version_constraint=version_constraint,

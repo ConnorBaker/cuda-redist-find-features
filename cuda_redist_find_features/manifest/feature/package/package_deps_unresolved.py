@@ -2,11 +2,6 @@ from typing import Self
 
 from pydantic import HttpUrl
 
-from cuda_redist_find_features.manifest.feature.detectors import (
-    CudaArchitecturesDetector,
-    NeededLibsDetector,
-    ProvidedLibsDetector,
-)
 from cuda_redist_find_features.manifest.feature.outputs import FeatureOutputs
 from cuda_redist_find_features.manifest.nvidia import NvidiaPackage
 from cuda_redist_find_features.types import (
@@ -36,9 +31,14 @@ class FeaturePackageDepsUnresolved(FeaturePackage):
 
         # Get the features
         outputs = FeatureOutputs.of(unpacked_root)
-        cuda_architectures = CudaArchitecturesDetector().find(unpacked_root) or []
-        needed_libs = NeededLibsDetector().find(unpacked_root) or []
-        provided_libs = ProvidedLibsDetector().find(unpacked_root) or []
+        # cuda_architectures = CudaArchitecturesDetector().find(unpacked_root) or []
+        # needed_libs = NeededLibsDetector().find(unpacked_root) or []
+        # provided_libs = ProvidedLibsDetector().find(unpacked_root) or []
+        # TODO(@connorbaker): Excluded for now because they are not used downstream.
+        # No need to bloat the feature manifests.
+        cuda_architectures = []
+        needed_libs = []
+        provided_libs = []
 
         if cleanup:
             logger.debug("Cleaning up %s and %s...", archive.store_path, unpacked.store_path)
