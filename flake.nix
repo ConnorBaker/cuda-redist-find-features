@@ -51,7 +51,7 @@
 
             # Python checks
             pyright.enable = true;
-            ruff.enable = true; # Ruff both lints and checks sorted imports
+            ruff.enable = true;
           };
           settings = let
             # We need to provide wrapped version of mypy and pyright which can find our imports.
@@ -94,8 +94,7 @@
             alejandra.enable = true;
 
             # Python
-            black.enable = true;
-            ruff.enable = true; # Ruff both lints and checks sorted imports
+            ruff.enable = true;
 
             # Shell
             shellcheck.enable = true;

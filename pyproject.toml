@@ -18,14 +18,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["black>=21.9b0", "ruff>=0.3.0"]
+dev = ["ruff>=0.3.0"]
 
 [project.scripts]
 cuda-redist-find-features = "cuda_redist_find_features.cmd:main"
-
-[tool.black]
-line-length = 120
-target-version = ['py311']
 
 [tool.ruff]
 preview = true

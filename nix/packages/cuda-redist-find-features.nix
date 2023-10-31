@@ -12,12 +12,11 @@
   rich,
   typing-extensions,
   # passthru.optional-dependencies.dev
-  black,
   pyright,
   ruff,
 }: let
   toModuleName = builtins.replaceStrings ["-"] ["_"];
-  moduleName = toModuleName attrs.pname;
+  moduleName = toModuleName finalAttrs.pname;
   pythonPropagatedBuildInputs = [
     annotated-types
     click
@@ -25,7 +24,7 @@
     rich
     typing-extensions
   ];
-  attrs = {
+  finalAttrs = {
     pname = "cuda-redist-find-features";
     version = "0.1.0";
     format = "pyproject";
@@ -46,17 +45,16 @@
       builtins.map
       (drv: toModuleName drv.pname)
       # Check all python propagated build inputs and the package itself
-      (pythonPropagatedBuildInputs ++ [attrs]);
+      (pythonPropagatedBuildInputs ++ [finalAttrs]);
     passthru.optional-dependencies.dev = [
-      black
       pyright
       ruff
     ];
     meta = with lib; {
       description = "Find features provided by a CUDA redistributable";
-      homepage = "https://github.com/ConnorBaker/${attrs.pname}";
+      homepage = "https://github.com/ConnorBaker/${finalAttrs.pname}";
       maintainers = with maintainers; [connorbaker];
     };
   };
 in
-  buildPythonPackage attrs
+  buildPythonPackage finalAttrs
