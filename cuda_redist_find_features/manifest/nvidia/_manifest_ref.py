@@ -107,7 +107,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
             version_glob_str = str(version_constraint.version)
         else:
             # Use the numbers 0-9 to match any version number and avoid matching redistrib_features_*.json
-            version_glob_str = f"[{''.join(map(str,range(0,10)))}]*"
+            version_glob_str = f"[{''.join(map(str, range(0, 10)))}]*"
 
         glob_str = filename_prefix + version_glob_str + filename_suffix
 
