@@ -68,7 +68,7 @@
             treefmt.package = config.treefmt.build.wrapper;
 
             # Python
-            pyright.binPath = "${wrapper "pyright"}";
+            pyright.binPath = builtins.toString (wrapper "pyright");
           };
         };
 
@@ -91,7 +91,10 @@
             };
 
             # Nix
-            alejandra.enable = true;
+            nixfmt = {
+              enable = true;
+              package = pkgs.nixfmt-rfc-style;
+            };
 
             # Python
             ruff.enable = true;

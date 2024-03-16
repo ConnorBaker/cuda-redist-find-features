@@ -8,7 +8,7 @@
   click,
   cudaPackages,
   patchelf,
-  pydantic_v2,
+  pydantic,
   rich,
   typing-extensions,
   # passthru.optional-dependencies.dev
@@ -20,7 +20,7 @@
   pythonPropagatedBuildInputs = [
     annotated-types
     click
-    pydantic_v2
+    pydantic
     rich
     typing-extensions
   ];
