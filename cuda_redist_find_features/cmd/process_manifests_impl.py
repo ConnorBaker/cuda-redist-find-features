@@ -134,17 +134,13 @@ def process_manifests_impl(
 
     # Organize the results
     feature_manifests: Mapping[FilePath, FeatureManifest[FeaturePackageDepsUnresolved]] = {
-        file_path: FeatureManifest[FeaturePackageDepsUnresolved].model_validate(
-            {
-                package_name: FeatureRelease[FeaturePackageDepsUnresolved].model_validate(
-                    {
-                        platform: flattened_unresolved_tree[PackageId(platform, package_name, version)]
-                        for platform in release.packages.keys()
-                    }
-                )
-                for package_name, release in manifest.releases.items()
-            }
-        )
+        file_path: FeatureManifest[FeaturePackageDepsUnresolved].model_validate({
+            package_name: FeatureRelease[FeaturePackageDepsUnresolved].model_validate({
+                platform: flattened_unresolved_tree[PackageId(platform, package_name, version)]
+                for platform in release.packages.keys()
+            })
+            for package_name, release in manifest.releases.items()
+        })
         for file_path, (version, manifest) in nvidia_manifests.items()
     }
 

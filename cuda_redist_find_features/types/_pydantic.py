@@ -39,16 +39,13 @@ class PydanticMapping(RootModel[Mapping[K, V]], Generic[K, V]):
     root: Mapping[K, V]
 
     @overload
-    def get(self, __key: K) -> V | None:
-        ...
+    def get(self, __key: K) -> V | None: ...
 
     @overload
-    def get(self, __key: K, __default: V) -> V:
-        ...
+    def get(self, __key: K, __default: V) -> V: ...
 
     @overload
-    def get(self, __key: K, __default: T) -> V | T:
-        ...
+    def get(self, __key: K, __default: T) -> V | T: ...
 
     def get(self, key: K, default: T = None) -> V | T:
         "D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None."

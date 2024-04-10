@@ -14,8 +14,9 @@
   # passthru.optional-dependencies.dev
   pyright,
   ruff,
-}: let
-  toModuleName = builtins.replaceStrings ["-"] ["_"];
+}:
+let
+  toModuleName = builtins.replaceStrings [ "-" ] [ "_" ];
   moduleName = toModuleName finalAttrs.pname;
   pythonPropagatedBuildInputs = [
     annotated-types
@@ -32,20 +33,15 @@
       "${moduleName}(:?/.*)?"
       "pyproject.toml"
     ];
-    nativeBuildInputs = [
-      flit-core
-    ];
-    propagatedBuildInputs =
-      [
-        cudaPackages.cuda_cuobjdump
-        patchelf
-      ]
-      ++ pythonPropagatedBuildInputs;
+    nativeBuildInputs = [ flit-core ];
+    propagatedBuildInputs = [
+      cudaPackages.cuda_cuobjdump
+      patchelf
+    ] ++ pythonPropagatedBuildInputs;
     pythonImportsCheck =
-      builtins.map
-      (drv: toModuleName drv.pname)
-      # Check all python propagated build inputs and the package itself
-      (pythonPropagatedBuildInputs ++ [finalAttrs]);
+      builtins.map (drv: toModuleName drv.pname)
+        # Check all python propagated build inputs and the package itself
+        (pythonPropagatedBuildInputs ++ [ finalAttrs ]);
     passthru.optional-dependencies.dev = [
       pyright
       ruff
@@ -53,8 +49,8 @@
     meta = with lib; {
       description = "Find features provided by a CUDA redistributable";
       homepage = "https://github.com/ConnorBaker/${finalAttrs.pname}";
-      maintainers = with maintainers; [connorbaker];
+      maintainers = with maintainers; [ connorbaker ];
     };
   };
 in
-  buildPythonPackage finalAttrs
+buildPythonPackage finalAttrs

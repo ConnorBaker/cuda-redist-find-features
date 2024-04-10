@@ -17,12 +17,10 @@ version_option = click.option(
     "--version",
     type=VERSION_PARAM_TYPE,
     default=None,
-    help=" ".join(
-        [
-            "Version to accept.",
-            "If not specified, operates on all versions.",
-            "Exclusive with --min-version and --max-version.",
-        ]
-    ),
+    help=" ".join([
+        "Version to accept.",
+        "If not specified, operates on all versions.",
+        "Exclusive with --min-version and --max-version.",
+    ]),
     callback=_version_option_callback,
 )

@@ -24,6 +24,12 @@ dev = ["ruff>=0.3.0"]
 cuda-redist-find-features = "cuda_redist_find_features.cmd:main"
 
 [tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+preview = true
+
+[tool.ruff.lint]
 preview = true
 select = [
     "F",
@@ -41,8 +47,6 @@ ignore = [
     # Ignore functions with many arguments (I like currying)
     "PLR0913"
 ]
-line-length = 120
-
 
 [tool.pyright]
 include = ["./cuda_redist_find_features"]

@@ -5,8 +5,8 @@ from .package_deps_unresolved import FeaturePackageDepsUnresolved
 
 __all__ = [
     "FeaturePackage",
-    "FeaturePackageTy",
-    "FeaturePackageDepsResolver",
     "FeaturePackageDepsResolved",
+    "FeaturePackageDepsResolver",
     "FeaturePackageDepsUnresolved",
+    "FeaturePackageTy",
 ]
