@@ -1,9 +1,9 @@
 from collections.abc import Iterable
 from typing import Annotated, Literal, cast, get_args
 
-from pydantic import TypeAdapter
+from pydantic import Field, TypeAdapter
 
-from ._pydantic import PydanticFrozenField, PydanticTypeAdapter
+from ._pydantic import PydanticTypeAdapter
 
 _Platform = Literal[
     "linux-aarch64",
@@ -15,7 +15,7 @@ _Platform = Literal[
 type Platform = Annotated[
     _Platform,
     # NOTE: Cannot use strict with literals/unions.
-    PydanticFrozenField(description="A platform name."),
+    Field(description="A platform name."),
 ]
 Platforms = cast(Iterable[Platform], get_args(_Platform))
 PlatformTA: TypeAdapter[Platform] = PydanticTypeAdapter(Platform)

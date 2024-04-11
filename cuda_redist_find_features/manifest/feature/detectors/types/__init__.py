@@ -1,11 +1,8 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Generic, TypeVar
-
-T = TypeVar("T")
 
 
-class FeatureDetector(ABC, Generic[T]):
+class FeatureDetector[T](ABC):
     """
     A generic feature detector which can detect the presence of a type `T` within a Nix store path.
 

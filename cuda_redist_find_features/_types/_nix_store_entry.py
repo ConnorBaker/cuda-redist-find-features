@@ -11,12 +11,13 @@ from cuda_redist_find_features.utilities import get_logger
 
 from ._pydantic import PydanticObject
 from ._sha256 import Sha256
+from ._sri_hash import SriHash
 
 logger = get_logger(__name__)
 
 
 class NixStoreEntry(PydanticObject, alias_generator=to_camel):
-    hash: str
+    hash: SriHash
     store_path: Annotated[Path, Predicate(Path.exists)]
 
     @classmethod
@@ -49,7 +50,7 @@ class NixStoreEntry(PydanticObject, alias_generator=to_camel):
 
     def unpack_archive(self) -> Self:
         """
-        Uses nix flake prefetch to unpack an archive.
+        Uses nix flake prefetch to unpack an archive and return the recursive NAR hash.
 
         NOTE: Only operate in the Nix store to avoid redownloading the archive.
         NOTE: This command is smart enough to not re-unpack archives.

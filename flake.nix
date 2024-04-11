@@ -38,6 +38,7 @@
       perSystem =
         { config, pkgs, ... }:
         {
+          legacyPackages = pkgs;
           pre-commit.settings.hooks = {
             # Formatter checks
             treefmt = {
@@ -73,13 +74,17 @@
           treefmt = {
             projectRootFile = "flake.nix";
             programs = {
-              # Markdown, YAML, JSON
+              # JSON, Markdown, YAML
               prettier = {
                 enable = true;
                 includes = [
                   "*.json"
                   "*.md"
                   "*.yaml"
+                ];
+                excludes = [
+                  "feature_manifests/*.json"
+                  "redistrib_manifests/*.json"
                 ];
                 settings = {
                   embeddedLanguageFormatting = "auto";
@@ -102,6 +107,9 @@
               # Shell
               shellcheck.enable = true;
               shfmt.enable = true;
+
+              # TOML
+              taplo.enable = true;
             };
           };
           packages.default = config.packages.cuda-redist-find-features;

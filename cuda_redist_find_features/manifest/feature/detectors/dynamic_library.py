@@ -1,8 +1,7 @@
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
-
-from typing_extensions import override
+from typing import override
 
 from cuda_redist_find_features.utilities import get_logger
 

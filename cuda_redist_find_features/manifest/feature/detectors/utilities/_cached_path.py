@@ -32,7 +32,7 @@ def _iterdir(path: Path) -> list[Path]:
     """
     Returns the contents of the given path.
     """
-    return list(path.iterdir())
+    return sorted(path.iterdir())
 
 
 @lru_cache

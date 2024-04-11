@@ -1,13 +1,13 @@
 from typing import Annotated
 
-from pydantic import TypeAdapter
+from pydantic import Field, TypeAdapter
 
-from ._pydantic import PydanticFrozenField, PydanticTypeAdapter
+from ._pydantic import PydanticTypeAdapter
 
 type NonNegativeIntStr = Annotated[
     str,
-    PydanticFrozenField(
-        description="An MD5 hash.",
+    Field(
+        description="An non-negative integer stored as a string.",
         examples=["512", "024", "0"],
         pattern=r"[0-9]+",
     ),

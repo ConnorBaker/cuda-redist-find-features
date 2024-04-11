@@ -1,17 +1,14 @@
-from pathlib import Path
-
 import click
-from pydantic import HttpUrl
 
-from cuda_redist_find_features._types import LogLevel, Version, VersionConstraint
+from cuda_redist_find_features._types import LogLevel, RedistName, Version, VersionConstraint
 
-from .argument import manifest_dir_argument, url_argument
 from .option import (
     cleanup_option,
     log_level_option,
     max_version_option,
     min_version_option,
     no_parallel_option,
+    redist_option,
     version_option,
 )
 
@@ -22,24 +19,26 @@ def main() -> None:
 
 
 @main.command()
-@url_argument
-@manifest_dir_argument(file_okay=False, dir_okay=True)
+@redist_option
 @log_level_option
 @no_parallel_option
 @min_version_option
 @max_version_option
 @version_option
-def download_manifests(
-    url: HttpUrl,
-    manifest_dir: Path,
+def download_manifests(  # noqa: PLR0917
+    redist: RedistName,
     log_level: LogLevel,
     no_parallel: bool,
     min_version: None | Version,
     max_version: None | Version,
     version: None | Version,
 ) -> None:
+    """
+    Downloads manifest files belonging to REDIST to ./redistrib_manifests/REDIST.
+    """
+
     # Lazily import so our callback on log_level sets the logging level first.
-    from .download_manifests_impl import download_manifests_impl
+    from .download_manifests_impl import download_manifests_impl  # noqa: PLC0415
 
     # Create the version constraint
     version_constraint = VersionConstraint(
@@ -48,27 +47,22 @@ def download_manifests(
         version=version,
     )
     download_manifests_impl(
-        url=url,
-        manifest_dir=manifest_dir,
+        redist=redist,
         no_parallel=no_parallel,
         version_constraint=version_constraint,
     )
 
 
 @main.command()
-@url_argument
-@manifest_dir_argument(file_okay=False, dir_okay=True)
-# @overrides_json_argument
+@redist_option
 @log_level_option
 @cleanup_option
 @no_parallel_option
 @min_version_option
 @max_version_option
 @version_option
-def process_manifests(
-    url: HttpUrl,
-    manifest_dir: Path,
-    # overrides_json: Path,
+def process_manifests(  # noqa: PLR0917
+    redist: RedistName,
     log_level: LogLevel,
     cleanup: bool,
     no_parallel: bool,
@@ -76,8 +70,13 @@ def process_manifests(
     max_version: None | Version,
     version: None | Version,
 ) -> None:
+    """
+    Processes manifest files belonging to REDIST in ./redistrib_manifests/REDIST, writing the results to
+    ./feature_manifests/REDIST.
+    """
+
     # Lazily import so our callback on log_level sets the logging level first.
-    from .process_manifests_impl import process_manifests_impl
+    from .process_manifests_impl import process_manifests_impl  # noqa: PLC0415
 
     # Create the version constraint
     version_constraint = VersionConstraint(
@@ -86,9 +85,7 @@ def process_manifests(
         version=version,
     )
     process_manifests_impl(
-        url=url,
-        manifest_dir=manifest_dir,
-        # overrides_json=overrides_json,
+        redist=redist,
         cleanup=cleanup,
         no_parallel=no_parallel,
         version_constraint=version_constraint,
@@ -97,17 +94,17 @@ def process_manifests(
 
 @main.command()
 def print_manifest_schema() -> None:
-    import json
+    import json  # noqa: PLC0415
 
-    from cuda_redist_find_features.manifest.nvidia import NvidiaManifest
+    from cuda_redist_find_features.manifest.nvidia import NvidiaManifestTA  # noqa: PLC0415
 
-    print(json.dumps(NvidiaManifest.model_json_schema(), indent=2))
+    print(json.dumps(NvidiaManifestTA.json_schema(), indent=2))
 
 
 @main.command()
 def print_feature_schema() -> None:
-    import json
+    import json  # noqa: PLC0415
 
-    from cuda_redist_find_features.manifest.feature import FeatureManifest
+    from cuda_redist_find_features.manifest.feature.manifest import FeatureManifest  # noqa: PLC0415
 
     print(json.dumps(FeatureManifest.model_json_schema(), indent=2))

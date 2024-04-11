@@ -3,8 +3,7 @@ import time
 from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass, field
 from pathlib import Path
-
-from typing_extensions import override
+from typing import override
 
 from cuda_redist_find_features._types import LibSoName, LibSoNameTA
 from cuda_redist_find_features.utilities import get_logger

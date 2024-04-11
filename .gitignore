@@ -11,8 +11,8 @@ __pycache__
 .direnv
 
 # Used in generating the readme
-cutensor_manifests
-cuda_manifests
+feature_manifests
+redistrib_manifests
 
 # Nix
 result

@@ -11,7 +11,7 @@ from ._pydantic import model_config
 class Version:
     major: NonNegativeIntStr
     minor: NonNegativeIntStr
-    patch: NonNegativeIntStr
+    patch: None | NonNegativeIntStr = None
     build: None | NonNegativeIntStr = None
 
     @model_validator(mode="before")
@@ -25,16 +25,15 @@ class Version:
 
         components = value.split(".")
         num_components = len(components)
-        min_num_components = 3
+        min_num_components = 2
         max_num_components = 4
-        if num_components < min_num_components or max_num_components < num_components:
-            raise ValueError(f"Invalid version string: {value}")
-        return {
-            "major": components[0],
-            "minor": components[1],
-            "patch": components[2],
-            "build": components[3] if num_components == max_num_components else None,
-        }
+        if min_num_components <= num_components <= max_num_components:
+            return dict(zip(("major", "minor", "patch", "build"), components))
+
+        raise ValueError(
+            f"Version string {value} must have between {min_num_components} and {max_num_components} components (has"
+            + f" {num_components})."
+        )
 
     @model_serializer(mode="plain")
     def __str__(self) -> str:

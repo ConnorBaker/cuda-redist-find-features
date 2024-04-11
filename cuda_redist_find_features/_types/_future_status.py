@@ -1,6 +1,6 @@
 from concurrent.futures import Future
 from enum import Enum
-from typing import Any, Self, final
+from typing import Any, final
 
 
 @final
@@ -11,7 +11,7 @@ class FutureStatus(Enum):
     CANCELLED = ":x:"
 
     @classmethod
-    def of(cls, future: Future[Any]) -> Self:
+    def of(cls, future: Future[Any]) -> "FutureStatus":
         if future.cancelled():
             return cls.CANCELLED
         elif future.done():

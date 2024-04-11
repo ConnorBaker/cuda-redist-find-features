@@ -27,7 +27,7 @@ This package provides a script which finds the "features" of the redistributable
 
    - Implemented with heuristics. For example, if a directory contains a `lib` directory with a `libfoo.a` file, we assume that the package should have an output named `static` containing all its static libraries.
 
-1. Write a complementary JSON file containing the "features" each package should have next to the manifest passed as argument to the script.
+1. Write a complementary JSON file containing the "features" each package should have.
 
 ### Implemented Feature Detectors
 
@@ -46,7 +46,7 @@ These live in [detectors](./cuda_redist_find_features/manifest/feature/detectors
 
 The script is meant to be used as part of the process of updating the manifests or supported CUDA versions in Nixpkgs. It is not meant to be used directly by users.
 
-There are two commands:
+There are four commands:
 
 - `download-manifests`: Download manifests from NVIDIA's website.
 - `process-manifests`: Process manifests and write JSON files containing "features" each package should have.
@@ -71,15 +71,23 @@ nix run .# -- process-manifests --help
 
 ### `print-feature-schema`
 
+<details>
+
 ```regen-readme
 nix run .# -- print-feature-schema
 ```
 
+</details>
+
 ### `print-manifest-schema`
+
+<details>
 
 ```regen-readme
 nix run .# -- print-manifest-schema
 ```
+
+</details>
 
 ## Examples
 
@@ -88,7 +96,7 @@ nix run .# -- print-manifest-schema
 <details><summary>download-manifests</summary>
 
 ```regen-readme
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO
+nix run .# -- download-manifests --redist cutensor --log-level INFO
 ```
 
 </details>
@@ -96,7 +104,7 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 <details><summary>download-manifests with --version</summary>
 
 ```regen-readme
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --version 1.4.0
+nix run .# -- download-manifests --redist cutensor --log-level INFO --version 1.4.0
 ```
 
 </details>
@@ -104,7 +112,7 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 <details><summary>download-manifests with --min-version and --max-version</summary>
 
 ```regen-readme
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests --redist cutensor --log-level INFO --min-version 1.4.0 --max-version 1.6.2
 ```
 
 </details>
@@ -114,13 +122,13 @@ nix run .# -- download-manifests https://developer.download.nvidia.com/compute/c
 Assuming
 
 ```console
-nix run .# -- download-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO --min-version 1.4.0 --max-version 1.6.2
+nix run .# -- download-manifests --redist cutensor --log-level INFO --min-version 1.4.0 --max-version 1.6.2
 ```
 
 was run previously,
 
 ```regen-readme
-nix run .# -- process-manifests https://developer.download.nvidia.com/compute/cutensor/redist cutensor_manifests --log-level INFO
+nix run .# -- process-manifests --redist cutensor --log-level INFO
 ```
 
 </details>

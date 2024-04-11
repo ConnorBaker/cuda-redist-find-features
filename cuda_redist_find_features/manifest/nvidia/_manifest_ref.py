@@ -2,38 +2,33 @@ import re
 import time
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Generic, TypeVar
 from urllib import request
 
-from pydantic import BaseModel, DirectoryPath, FilePath, HttpUrl
+from pydantic import BaseModel, DirectoryPath, Field, FilePath, HttpUrl
 from pydantic_core import Url
 
 from cuda_redist_find_features._types import (
     HttpUrlTA,
-    PydanticFrozenField,
     Version,
     VersionConstraint,
     VersionTA,
 )
 from cuda_redist_find_features.utilities import get_logger
 
-from ._manifest import NvidiaManifest
+from ._manifest import NvidiaManifest, NvidiaManifestTA
 
 logger = get_logger(__name__)
 
 
-_T = TypeVar("_T", FilePath, HttpUrl)
-
-
-class NvidiaManifestRef(BaseModel, Generic[_T]):
-    ref: _T = PydanticFrozenField(
+class NvidiaManifestRef[_T: (FilePath, HttpUrl)](BaseModel):
+    ref: _T = Field(
         description="A reference to a manifest at a local file or a URL.",
         examples=[
             "https://developer.download.nvidia.com/compute/cutensor/redist/redistrib_1.7.0.json",
             "cutensor_manifests/redistrib_1.7.0.json",
         ],
     )
-    version: Version = PydanticFrozenField(
+    version: Version = Field(
         description="The version of the manifest.",
         examples=["1.7.0"],
     )
@@ -56,7 +51,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
 
     def parse(self) -> NvidiaManifest:
         content_bytes: bytes = self.retrieve()
-        manifest = NvidiaManifest.model_validate_json(content_bytes)
+        manifest = NvidiaManifestTA.validate_json(content_bytes)
         logger.info("Manifest version: %s", self.version)
         logger.info("Manifest date: %s", manifest.release_date or "unknown")
         logger.info("Manifest label: %s", manifest.release_label or "unknown")
@@ -80,10 +75,16 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
     def _from_url(url: HttpUrl, version_constraint: VersionConstraint) -> "Sequence[NvidiaManifestRef[HttpUrl]]":
         refs: list[NvidiaManifestRef[HttpUrl]] = []
 
+        regex_str = r"""
+            href=                # Match 'href='
+            ('|")                # Capture a single or double quote
+            redistrib_           # Match 'redistrib_'
+            (\d+(?:\.\d+){1,3})  # Capture a version number with 1-3 dots (e.g. 1.2, 1.2.3, 1.2.3.4)
+            \.json               # Match '.json'
+            \1                   # Match the same quote as the first capture group
+        """
         if version_constraint.version is not None:
-            regex_str = f"href=['\"]redistrib_({version_constraint.version}).json['\"]".replace(".", "\\.")
-        else:
-            regex_str = r'href=[\'"]redistrib_(\d+\.\d+\.\d+(?:.\d+)?)\.json[\'"]'
+            regex_str = regex_str.replace(r"\d+(?:\.\d+){1,3}", str(version_constraint.version).replace(".", r"\."))
 
         with request.urlopen(str(url)) as response:
             if response.status != 200:  # noqa: PLR2004
@@ -91,8 +92,8 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
 
             s: str = response.read().decode("utf-8")
             logger.debug("Searching with regex %s...", regex_str)
-            for matched in re.finditer(regex_str, s):
-                manifest_version = VersionTA.validate_strings(matched.group(1))
+            for matched in re.finditer(regex_str, s, flags=re.VERBOSE):
+                manifest_version = VersionTA.validate_strings(matched.group(2))
                 if not version_constraint.is_satisfied_by(manifest_version):
                     continue
 
