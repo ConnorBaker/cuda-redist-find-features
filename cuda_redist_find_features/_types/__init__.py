@@ -4,7 +4,7 @@ from ._lib_so_name import LibSoName, LibSoNameTA
 from ._log_level import LogLevel, LogLevels
 from ._md5 import Md5, Md5TA
 from ._nix import NixStoreEntry
-from ._non_negative_int import NonNegativeInt, NonNegativeIntTA
+from ._non_negative_int_str import NonNegativeIntStr, NonNegativeIntStrTA
 from ._package_id import PackageId
 from ._package_name import PackageName, PackageNameTA
 from ._platform import Platform, Platforms, PlatformTA
@@ -37,8 +37,8 @@ __all__ = [
     "Md5",
     "Md5TA",
     "NixStoreEntry",
-    "NonNegativeInt",
-    "NonNegativeIntTA",
+    "NonNegativeIntStr",
+    "NonNegativeIntStrTA",
     "PackageId",
     "PackageName",
     "PackageNameTA",

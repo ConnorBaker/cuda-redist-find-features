@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Self
 
-from cuda_redist_find_features.types import PydanticObject
+from cuda_redist_find_features._types import PydanticObject
 
 from .detectors import (
     DirDetector,

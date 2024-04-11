@@ -7,7 +7,7 @@ from pathlib import Path
 
 from typing_extensions import override
 
-from cuda_redist_find_features.types import CudaArch, CudaArchTA
+from cuda_redist_find_features._types import CudaArch, CudaArchTA
 from cuda_redist_find_features.utilities import get_logger
 
 from .groupable_feature_detector import GroupableFeatureDetector

@@ -1,7 +1,7 @@
 import click
 import pydantic
 
-from cuda_redist_find_features.types import HttpUrlTA
+from cuda_redist_find_features._types import HttpUrlTA
 
 
 class HttpUrl(click.ParamType):

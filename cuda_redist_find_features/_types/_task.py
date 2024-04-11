@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from collections.abc import Callable
 from concurrent.futures import Executor, Future
 from dataclasses import dataclass
@@ -35,7 +33,7 @@ class Task(Generic[A, B]):
         return self.status == FutureStatus.RUNNING
 
     @classmethod
-    def submit(cls, executor: Executor, initial: A, fn: Callable[[A], B]) -> Task[A, B]:
+    def submit(cls, executor: Executor, initial: A, fn: Callable[[A], B]) -> "Task[A, B]":
         return cls(
             initial=initial,
             status=FutureStatus.WAITING,

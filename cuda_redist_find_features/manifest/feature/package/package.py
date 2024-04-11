@@ -3,13 +3,13 @@ from typing import TypeVar
 
 from pydantic.alias_generators import to_camel
 
-from cuda_redist_find_features.manifest.feature.outputs import FeatureOutputs
-from cuda_redist_find_features.types import (
+from cuda_redist_find_features._types import (
     CudaArch,
     LibSoName,
     PydanticFrozenField,
     PydanticObject,
 )
+from cuda_redist_find_features.manifest.feature.outputs import FeatureOutputs
 from cuda_redist_find_features.utilities import get_logger
 
 logger = get_logger(__name__)

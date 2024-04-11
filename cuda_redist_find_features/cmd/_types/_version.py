@@ -2,8 +2,8 @@ from typing import TypeVar
 
 import click
 
-from cuda_redist_find_features.types import Version as _Version
-from cuda_redist_find_features.types import VersionTA
+from cuda_redist_find_features._types import Version as _Version
+from cuda_redist_find_features._types import VersionTA
 
 # Type variable to denote that the value is whatever it was when it was passed in.
 # We shouldn't use (None | version.Version) -> (None | version.Version) because that would allow us to return a

@@ -3,7 +3,7 @@ import logging
 import click
 
 from cuda_redist_find_features import utilities
-from cuda_redist_find_features.types import LogLevel, LogLevels
+from cuda_redist_find_features._types import LogLevel, LogLevels
 
 
 def _log_level_callback(ctx: click.Context, param: click.Parameter, log_level: LogLevel) -> LogLevel:

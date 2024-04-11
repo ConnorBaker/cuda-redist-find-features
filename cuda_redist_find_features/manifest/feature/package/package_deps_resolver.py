@@ -9,7 +9,7 @@ from itertools import chain
 from pathlib import Path
 from typing import Self, TypeAlias
 
-from cuda_redist_find_features.types import LibSoName, PackageId, Platform, PydanticMapping, Version
+from cuda_redist_find_features._types import LibSoName, PackageId, Platform, PydanticMapping, Version
 from cuda_redist_find_features.utilities import get_logger
 
 from .package import FeaturePackage

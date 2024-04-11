@@ -1,7 +1,7 @@
 from collections.abc import Mapping, Sequence
 from typing import Self
 
-from cuda_redist_find_features.types import PackageId, PackageName, PydanticFrozenField
+from cuda_redist_find_features._types import PackageId, PackageName, PydanticFrozenField
 from cuda_redist_find_features.utilities import get_logger
 
 from .package import FeaturePackage

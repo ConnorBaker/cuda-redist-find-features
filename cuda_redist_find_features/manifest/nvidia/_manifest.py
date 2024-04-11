@@ -1,4 +1,4 @@
-from cuda_redist_find_features.types import PackageName, PydanticFrozenField, PydanticMapping, PydanticObject
+from cuda_redist_find_features._types import PackageName, PydanticFrozenField, PydanticMapping, PydanticObject
 
 from ._release import NvidiaRelease
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from cuda_redist_find_features.types import Md5, PydanticFrozenField, PydanticObject, Sha256
+from cuda_redist_find_features._types import Md5, PydanticFrozenField, PydanticObject, Sha256
 
 
 class NvidiaPackage(PydanticObject):

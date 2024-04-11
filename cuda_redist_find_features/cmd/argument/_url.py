@@ -1,7 +1,7 @@
 import click
 from pydantic import HttpUrl
 
-from cuda_redist_find_features.cmd.types import HTTP_URL_PARAM_TYPE
+from cuda_redist_find_features.cmd._types import HTTP_URL_PARAM_TYPE
 
 
 def _url_argument_callback(ctx: click.Context, param: click.Parameter, url: HttpUrl) -> HttpUrl:

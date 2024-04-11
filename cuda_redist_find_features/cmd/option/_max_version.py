@@ -1,6 +1,6 @@
 import click
 
-from cuda_redist_find_features.cmd.types import VERSION_PARAM_TYPE, NoneOrVersion
+from cuda_redist_find_features.cmd._types import VERSION_PARAM_TYPE, NoneOrVersion
 
 
 def _max_version_option_callback(

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from cuda_redist_find_features.types import PackageName, PydanticMapping
+from cuda_redist_find_features._types import PackageName, PydanticMapping
 
 from .package import FeaturePackageTy
 from .release import FeatureRelease

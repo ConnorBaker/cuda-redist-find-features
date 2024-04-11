@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import logging
 import time
 from collections.abc import Iterable, Mapping
@@ -12,8 +10,8 @@ from rich.live import Live
 from rich.table import Table
 
 from cuda_redist_find_features import utilities
+from cuda_redist_find_features._types import Task, VersionConstraint
 from cuda_redist_find_features.manifest.nvidia import NvidiaManifestRef
-from cuda_redist_find_features.types import Task, VersionConstraint
 
 MyTask = Task[NvidiaManifestRef[HttpUrl], NvidiaManifestRef[FilePath]]
 

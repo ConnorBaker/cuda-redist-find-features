@@ -1,4 +1,4 @@
-from cuda_redist_find_features.types import Platform, PydanticMapping
+from cuda_redist_find_features._types import Platform, PydanticMapping
 
 from .package import FeaturePackageTy
 

@@ -3,7 +3,7 @@ from pathlib import Path
 import click
 from pydantic import HttpUrl
 
-from cuda_redist_find_features.types import LogLevel, Version, VersionConstraint
+from cuda_redist_find_features._types import LogLevel, Version, VersionConstraint
 
 from .argument import manifest_dir_argument, url_argument
 from .option import (

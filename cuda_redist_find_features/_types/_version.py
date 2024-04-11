@@ -1,20 +1,18 @@
 from collections.abc import Mapping
-from functools import partial
-from operator import is_not
 from typing import Any
 
 from pydantic import TypeAdapter, dataclasses, model_serializer, model_validator
 
-from ._non_negative_int import NonNegativeInt
+from ._non_negative_int_str import NonNegativeIntStr
 from ._pydantic import model_config
 
 
 @dataclasses.dataclass(frozen=True, order=True, slots=True, config=model_config)
 class Version:
-    major: NonNegativeInt
-    minor: NonNegativeInt
-    patch: NonNegativeInt
-    build: None | NonNegativeInt = None
+    major: NonNegativeIntStr
+    minor: NonNegativeIntStr
+    patch: NonNegativeIntStr
+    build: None | NonNegativeIntStr = None
 
     @model_validator(mode="before")
     @classmethod
@@ -26,20 +24,23 @@ class Version:
             return value
 
         components = value.split(".")
+        num_components = len(components)
         min_num_components = 3
         max_num_components = 4
-        if len(components) < min_num_components or max_num_components < len(components):
+        if num_components < min_num_components or max_num_components < num_components:
             raise ValueError(f"Invalid version string: {value}")
         return {
-            "major": int(components[0]),
-            "minor": int(components[1]),
-            "patch": int(components[2]),
-            "build": int(components[3]) if len(components) == max_num_components else None,
+            "major": components[0],
+            "minor": components[1],
+            "patch": components[2],
+            "build": components[3] if num_components == max_num_components else None,
         }
 
     @model_serializer(mode="plain")
     def __str__(self) -> str:
-        return ".".join(map(str, filter(partial(is_not, None), (self.major, self.minor, self.patch, self.build))))
+        return ".".join(
+            component for component in (self.major, self.minor, self.patch, self.build) if component is not None
+        )
 
 
 # See note on PydanticTypeAdapter on why we cannot pass a config.

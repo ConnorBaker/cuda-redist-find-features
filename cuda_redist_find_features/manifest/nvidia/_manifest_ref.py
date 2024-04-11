@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import re
 import time
 from collections.abc import Sequence
@@ -10,7 +8,7 @@ from urllib import request
 from pydantic import BaseModel, DirectoryPath, FilePath, HttpUrl
 from pydantic_core import Url
 
-from cuda_redist_find_features.types import (
+from cuda_redist_find_features._types import (
     HttpUrlTA,
     PydanticFrozenField,
     Version,
@@ -44,10 +42,15 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
         logger.info("Reading manifest from %s...", self.ref)
         match self.ref:
             case Url():
-                with request.urlopen(str(self.ref)) as response:
-                    if response.status != 200:  # noqa: PLR2004
-                        raise RuntimeError(f"Failed to fetch url {self.ref}: {response.status} {response.reason}")
-                    return response.read()
+                try:
+                    with request.urlopen(str(self.ref)) as response:
+                        if response.status != 200:  # noqa: PLR2004
+                            logger.error("Failed to fetch url %s: %s %s", self.ref, response.status, response.reason)
+                            raise RuntimeError(f"Failed to fetch url {self.ref}: {response.status} {response.reason}")
+                        return response.read()
+                except request.HTTPError as e:
+                    logger.error("Failed to fetch url %s: %s %s", self.ref, e.code, e.reason)
+                    raise RuntimeError(f"Failed to fetch url {self.ref}: {e.code} {e.reason}")
             case Path():
                 return self.ref.read_bytes()
 
@@ -60,7 +63,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
         logger.info("Manifest product: %s", manifest.release_product or "unknown")
         return manifest
 
-    def download(self, dir: DirectoryPath) -> NvidiaManifestRef[FilePath]:
+    def download(self, dir: DirectoryPath) -> "NvidiaManifestRef[FilePath]":
         """
         Downloads or copies the manifest referenced by `self` to the specified directory.
         """
@@ -74,7 +77,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
         return NvidiaManifestRef(ref=dest_path, version=self.version)
 
     @staticmethod
-    def _from_url(url: HttpUrl, version_constraint: VersionConstraint) -> Sequence[NvidiaManifestRef[HttpUrl]]:
+    def _from_url(url: HttpUrl, version_constraint: VersionConstraint) -> "Sequence[NvidiaManifestRef[HttpUrl]]":
         refs: list[NvidiaManifestRef[HttpUrl]] = []
 
         if version_constraint.version is not None:
@@ -99,7 +102,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
         return refs
 
     @staticmethod
-    def _from_dir(dir: DirectoryPath, version_constraint: VersionConstraint) -> Sequence[NvidiaManifestRef[FilePath]]:
+    def _from_dir(dir: DirectoryPath, version_constraint: VersionConstraint) -> "Sequence[NvidiaManifestRef[FilePath]]":
         filename_prefix = "redistrib_"
         filename_suffix = ".json"
 
@@ -107,7 +110,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
             version_glob_str = str(version_constraint.version)
         else:
             # Use the numbers 0-9 to match any version number and avoid matching redistrib_features_*.json
-            version_glob_str = f"[{''.join(map(str, range(0, 10)))}]*"
+            version_glob_str = f"[{"".join(map(str, range(0, 10)))}]*"
 
         glob_str = filename_prefix + version_glob_str + filename_suffix
 
@@ -121,7 +124,7 @@ class NvidiaManifestRef(BaseModel, Generic[_T]):
         return refs
 
     @staticmethod
-    def from_ref(ref: _T, version_constraint: VersionConstraint) -> Sequence[NvidiaManifestRef[_T]]:
+    def from_ref(ref: _T, version_constraint: VersionConstraint) -> "Sequence[NvidiaManifestRef[_T]]":
         logger.debug("Fetching manifests from %s...", ref)
         start_time = time.time()
         # NOTE: If we move the return statement outside the match, pyright complains that the return type is not

@@ -10,13 +10,13 @@ from rich.live import Live
 from rich.table import Table
 
 from cuda_redist_find_features import utilities
+from cuda_redist_find_features._types import PackageId, Task, Version, VersionConstraint
 from cuda_redist_find_features.manifest.feature import (
     FeatureManifest,
     FeaturePackageDepsUnresolved,
     FeatureRelease,
 )
 from cuda_redist_find_features.manifest.nvidia import NvidiaManifest, NvidiaManifestRef, NvidiaPackage
-from cuda_redist_find_features.types import PackageId, Task, Version, VersionConstraint
 
 logger = utilities.get_logger(__name__)
 

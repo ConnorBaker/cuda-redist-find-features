@@ -2,12 +2,12 @@ from typing import Self
 
 from pydantic import HttpUrl
 
-from cuda_redist_find_features.manifest.feature.outputs import FeatureOutputs
-from cuda_redist_find_features.manifest.nvidia import NvidiaPackage
-from cuda_redist_find_features.types import (
+from cuda_redist_find_features._types import (
     HttpUrlTA,
     NixStoreEntry,
 )
+from cuda_redist_find_features.manifest.feature.outputs import FeatureOutputs
+from cuda_redist_find_features.manifest.nvidia import NvidiaPackage
 from cuda_redist_find_features.utilities import get_logger
 
 from .package import FeaturePackage
