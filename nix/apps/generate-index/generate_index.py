@@ -323,7 +323,8 @@ class NixStoreEntry:
             capture_output=True,
             check=True,
         )
-        return cls(**json.loads(result.stdout))
+        j = json.loads(result.stdout)
+        return cls(hash=j["hash"], store_path=Path(j["storePath"]))
 
     @classmethod
     def unpack_archive(cls, store_path: Path) -> Self:
@@ -339,7 +340,9 @@ class NixStoreEntry:
             capture_output=True,
             check=True,
         )
-        return cls(**json.loads(result.stdout))
+        j = json.loads(result.stdout)
+        # The hash here is actually the NAR hash.
+        return cls(hash=j["hash"], store_path=Path(j["storePath"]))
 
     @classmethod
     def get_nar_hash_from_url(cls, url: str, sha256: str) -> str:
