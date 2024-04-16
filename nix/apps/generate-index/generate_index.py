@@ -380,13 +380,13 @@ if __name__ == "__main__":
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         # Get all of the manifests in parallel.
-        print("Downloading and processing manifests...")
         futures = {
             executor.submit(RestructuredManifest.mk, redist_name, version): (redist_name, version)
             for redist_name in RedistNames
             for version in get_manifest_versions(redist_name)
         }
         num_tasks = len(futures)
+        print(f"Downloading and processing {num_tasks} manifests...")
         for tasks_completed, future in enumerate(concurrent.futures.as_completed(futures)):
             (redist_name, version) = futures[future]
             try:
@@ -404,7 +404,6 @@ if __name__ == "__main__":
                 raise RuntimeError(f"Error processing manifest for {redist_name} version {version}: {e}")
 
         # Ensure all of the tarballs are in the store.
-        print("Downloading tarballs and capturing narHashes...")
         futures = {
             executor.submit(
                 NixStoreEntry.get_nar_hash_from_url,
@@ -422,6 +421,7 @@ if __name__ == "__main__":
             for package_idx, package in enumerate(release.packages)
         }
         num_tasks = len(futures)
+        print(f"Downloading, unpacking, and finding the narHash of {num_tasks} tarballs...")
         for tasks_completed, future in enumerate(concurrent.futures.as_completed(futures)):
             (
                 redist_name,
