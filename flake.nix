@@ -23,6 +23,10 @@
 
   nixConfig = {
     allow-import-from-derivation = true;
+    extra-experimental-features = [
+      "ca-derivations"
+      "recursive-nix"
+    ];
     keep-build-log = true;
     keep-derivations = true;
     keep-env-derivations = true;

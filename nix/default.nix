@@ -1,7 +1,6 @@
 { inputs, ... }:
 {
   imports = [
-    ./apps
     ./devShells
     ./packages
   ];
