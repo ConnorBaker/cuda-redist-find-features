@@ -23,12 +23,6 @@
 
   nixConfig = {
     allow-import-from-derivation = true;
-    extra-experimental-features = [
-      "ca-derivations"
-      "fetch-tree"
-      "flakes"
-      "nix-command"
-    ];
     keep-build-log = true;
     keep-derivations = true;
     keep-env-derivations = true;

@@ -1,18 +1,18 @@
 {
   perSystem =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       apps = {
         generate-index.program =
           let
-            generate-index = pkgs.callPackage ./generate-index { };
+            generate-index = pkgs.callPackage ./generate-index { inherit (config.packages) cuda-redist-lib; };
           in
           "${generate-index}/bin/${generate-index.meta.mainProgram}";
-        generate-features.program =
+        generate-hash-to-nar-hash.program =
           let
-            generate-features = pkgs.callPackage ./generate-features { };
+            generate-hash-to-nar-hash = pkgs.callPackage ./generate-hash-to-nar-hash { };
           in
-          "${generate-features}/bin/${generate-features.meta.mainProgram}";
+          "${generate-hash-to-nar-hash}/bin/${generate-hash-to-nar-hash.meta.mainProgram}";
       };
     };
 }
