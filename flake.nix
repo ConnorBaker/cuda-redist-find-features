@@ -78,7 +78,7 @@
                   wrapper =
                     name:
                     pkgs.writeShellScript name ''
-                      source <(sed -n '/^declare/,$p' ${config.devShells.cuda-redist-find-features})
+                      source <(sed -n '/^declare/,$p' ${config.devShells.default})
                       ${name} "$@"
                     '';
                 in
@@ -129,8 +129,7 @@
               taplo.enable = true;
             };
           };
-          packages.default = config.packages.cuda-redist-find-features;
-          devShells.default = config.devShells.cuda-redist-find-features;
+          devShells.default = config.devShells.cuda-redist-feature-detector;
         };
     };
 }

@@ -3,14 +3,14 @@
     { config, pkgs, ... }:
     {
       devShells = {
-        cuda-redist-find-features =
+        cuda-redist-feature-detector =
           let
-            inherit (config.packages) cuda-redist-find-features;
-            inherit (cuda-redist-find-features.optional-dependencies) dev;
+            inherit (config.packages) cuda-redist-feature-detector;
+            inherit (cuda-redist-feature-detector.optional-dependencies) dev;
           in
           pkgs.mkShell {
             strictDeps = true;
-            inputsFrom = [ cuda-redist-find-features ];
+            inputsFrom = [ cuda-redist-feature-detector ];
             packages = dev;
           };
       };

@@ -5,8 +5,8 @@
   flit-core,
   # propagatedBuildInputs
   annotated-types,
+  cuda-redist-lib,
   pydantic,
-  rich,
   # passthru.optional-dependencies.dev
   pyright,
   ruff,
@@ -16,11 +16,11 @@ let
   moduleName = toModuleName finalAttrs.pname;
   pythonPropagatedBuildInputs = [
     annotated-types
+    cuda-redist-lib
     pydantic
-    rich
   ];
   finalAttrs = {
-    pname = "cuda-redist-lib";
+    pname = "cuda-redist-feature-detector";
     version = "0.1.0";
     format = "pyproject";
     src = lib.sources.sourceByRegex ./. [
@@ -58,15 +58,13 @@ let
       + ''
         echo "Typechecking with pyright"
         pyright --warnings
-        echo "Verifying type completeness with pyright"
-        pyright --verifytypes ${moduleName} --ignoreexternal
       ''
       # postCheck
       + ''
         runHook postCheck
       '';
     meta = with lib; {
-      description = "Library of functions for NVIDIA's redistributable manifests";
+      description = "Detects the presence of certain features of a CUDA redistributable given the path of an unpacked tarball";
       homepage = "https://github.com/ConnorBaker/${finalAttrs.pname}";
       maintainers = with maintainers; [ connorbaker ];
     };
