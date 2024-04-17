@@ -35,7 +35,7 @@ in
       type = attrsOf' config.types.sriHash nonEmptyStr;
       default = builtins.listToAttrs (
         config.utils.mapIndex (
-          args@{ hash, redistName }:
+          args@{ hash, redistName, ... }:
           {
             name = hash;
             value =

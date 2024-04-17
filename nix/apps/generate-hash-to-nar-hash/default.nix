@@ -21,11 +21,11 @@ let
             wholeIndex = lib.trivial.importJSON ../generate-index/index.json;
             smallIndex.cudnn."8.5.0".cudnn = wholeIndex.cudnn."8.5.0".cudnn;
           in
-          smallIndex;
+          wholeIndex;
       }
     ];
   };
-  hashToUnpackedStorePath = writers.writeJSON "hashToUnpackedStorePath.json" indexModule.config.hashToUnpackedStorePath;
+  hashToUnpackedStorePath = writers.writeJSON "hash-to-unpacked-store-path.json" indexModule.config.hashToUnpackedStorePath;
 in
 writeShellApplication {
   name = "generate-hash-to-nar-hash";
