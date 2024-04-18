@@ -46,6 +46,8 @@ These live in [detectors](./packages/cuda-redist-feature-detector/cuda_redist_fe
 > [!Important]
 > Stage 1 requires a large amount of free space in the Nix store. Since Stage 1 will download every tarball from every NVIDIA manifest and unpack it, it will take a while.
 
-- `nix run --builders '' -L .#stage0 && git add .`
-- `nix run --builders '' -L .#stage1 && git add .`
-- `nix run --builders '' -L .#stage2 && git add .`
+Run all the stages with:
+
+```bash
+nix run --builders "" -L .#stages
+```

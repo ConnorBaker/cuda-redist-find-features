@@ -22,11 +22,8 @@
   };
 
   nixConfig = {
-    allow-import-from-derivation = true;
-    extra-experimental-features = [
-      "ca-derivations"
-      "recursive-nix"
-    ];
+    allow-import-from-derivation = false;
+    extra-experimental-features = [ "ca-derivations" ];
     keep-build-log = true;
     keep-derivations = true;
     keep-env-derivations = true;

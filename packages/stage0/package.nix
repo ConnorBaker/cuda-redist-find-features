@@ -18,10 +18,7 @@ writers.makePythonWriter python312 python312Packages buildPackages.python312Pack
       "E501" # line too long
       "W503" # line break before binary operator
     ];
-    libraries = [
-      cuda-redist-lib
-      "pydantic"
-    ];
+    libraries = [ cuda-redist-lib ];
   }
   ''
     import json

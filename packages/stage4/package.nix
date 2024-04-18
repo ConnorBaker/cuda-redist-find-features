@@ -10,14 +10,14 @@ let
       specialArgs = {
         inherit pkgs;
       };
-      modules = [ ../../modules/stages/stage1.nix ];
+      modules = [ ../../modules/stages/stage4.nix ];
     }).config.stages
     )
-    stage1
+    stage4
     ;
 in
 writeShellApplication {
-  inherit (stage1) name;
+  inherit (stage4) name;
   derivationArgs = {
     __contentAddressed = true;
     __structuredAttrs = true;
@@ -28,6 +28,6 @@ writeShellApplication {
   };
   # Avoid using `cp` here because it'll error if the file already exists and have troubles with perms.
   text = ''
-    cat < "${writers.writeJSON stage1.outputPath stage1.result}" > "${stage1.outputPath}"
+    cat < "${writers.writeJSON stage4.outputPath stage4.result}" > "${stage4.outputPath}"
   '';
 }

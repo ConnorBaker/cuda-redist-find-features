@@ -11,5 +11,6 @@ in
   options.stages.stage0.result = mkOption {
     description = "Index of hashes of tarballs.";
     type = config.types.indexOf config.types.sriHash;
+    # A default value would require impure derivations to run and access the internet.
   };
 }
