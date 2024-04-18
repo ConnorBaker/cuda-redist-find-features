@@ -33,6 +33,7 @@ in
       config.types.attrs config.types.sriHash (submodule {
         imports = [
           # Each feature detector should have a corresponding module that outputs the features.
+          cuda-redist-feature-detector.modules.cudaVersionsInLib
           cuda-redist-feature-detector.modules.outputs
         ];
       })

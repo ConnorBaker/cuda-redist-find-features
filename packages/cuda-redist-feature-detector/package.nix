@@ -44,6 +44,7 @@ callPackage (
       ];
       passthru = {
         modules = {
+          cudaVersionsInLib = ./cuda_redist_feature_detector/cuda-versions-in-lib.nix;
           outputs = ./cuda_redist_feature_detector/outputs.nix;
         };
         optional-dependencies.dev = [

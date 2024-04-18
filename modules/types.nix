@@ -31,7 +31,7 @@ in
     cudaVariant = mkOption {
       description = "The option type of a CUDA variant";
       type = optionType;
-      default = strMatching "(None|cuda[0-9]+)";
+      default = strMatching "^(None|cuda[[:digit:]]+)$";
     };
     indexOf = mkOption {
       description = ''
@@ -127,12 +127,13 @@ in
     sriHash = mkOption {
       description = "The option type of a Subresource Integrity hash";
       type = optionType;
-      default = strMatching "(md5|sha1|sha256|sha512)-([A-Za-z0-9+/]+={0,2})";
+      # NOTE: This does not check the length of the hash!
+      default = strMatching "^(md5|sha(1|256|512))-([[:alnum:]+/]+={0,2})$";
     };
     version = mkOption {
       description = "The option type of a version with between two and four components";
       type = optionType;
-      default = strMatching "([0-9]+)(\.[0-9]+){2,3}";
+      default = strMatching "^[[:digit:]]+(\.[[:digit:]]+){2,3}$";
     };
     versionedManifestsOf = mkOption {
       description = ''
