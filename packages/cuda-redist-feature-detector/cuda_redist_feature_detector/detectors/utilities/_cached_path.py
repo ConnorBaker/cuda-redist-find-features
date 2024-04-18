@@ -1,9 +1,11 @@
 from functools import lru_cache
+from logging import Logger
 from pathlib import Path
+from typing import Final
 
 from cuda_redist_lib.logger import get_logger
 
-logger = get_logger(__name__)
+logger: Final[Logger] = get_logger(__name__)
 
 
 def cache_hit_ratio(hits: int, misses: int, _maxsize: None | int, _currsize: int) -> float:

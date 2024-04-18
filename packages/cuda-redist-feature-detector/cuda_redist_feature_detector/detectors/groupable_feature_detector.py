@@ -2,8 +2,9 @@ from abc import abstractmethod
 from collections.abc import Iterable, Mapping, Sequence, Set
 from dataclasses import dataclass
 from functools import reduce
+from logging import Logger
 from pathlib import Path
-from typing import TYPE_CHECKING, TypeVar, cast
+from typing import TYPE_CHECKING, Final, TypeVar, cast
 
 from cuda_redist_lib.logger import get_logger
 
@@ -11,7 +12,7 @@ from .dir import DirDetector
 from .types import FeatureDetector
 from .utilities import cached_path_is_dir, cached_path_iterdir
 
-logger = get_logger(__name__)
+logger: Final[Logger] = get_logger(__name__)
 
 if TYPE_CHECKING:
     from _typeshed import SupportsRichComparison

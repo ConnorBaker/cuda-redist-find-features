@@ -1,7 +1,8 @@
 from collections.abc import Sequence
 from dataclasses import dataclass
+from logging import Logger
 from pathlib import Path
-from typing import override
+from typing import Final, override
 
 from cuda_redist_lib.logger import get_logger
 
@@ -9,7 +10,7 @@ from .dir import DirDetector
 from .types import FeatureDetector
 from .utilities import cached_path_rglob
 
-logger = get_logger(__name__)
+logger: Final[Logger] = get_logger(__name__)
 
 
 @dataclass

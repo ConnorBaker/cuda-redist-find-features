@@ -2,15 +2,16 @@ import subprocess
 import time
 from collections.abc import Mapping, Sequence, Set
 from dataclasses import dataclass, field
+from logging import Logger
 from pathlib import Path
-from typing import override
+from typing import Final, override
 
 from cuda_redist_lib.logger import get_logger
 from cuda_redist_lib.types import LibSoName, LibSoNameTA
 
 from .groupable_feature_detector import GroupableFeatureDetector
 
-logger = get_logger(__name__)
+logger: Final[Logger] = get_logger(__name__)
 
 
 @dataclass

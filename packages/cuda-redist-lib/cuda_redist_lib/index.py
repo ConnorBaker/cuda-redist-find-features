@@ -4,15 +4,18 @@ import concurrent.futures
 import operator
 from collections import defaultdict
 from functools import partial
+from logging import Logger
 from pathlib import Path
 from typing import (
     Any,
+    Final,
     Self,
     TypeAlias,
     cast,
 )
 
-from cuda_redist_lib.manifest import get_nvidia_manifest, get_nvidia_manifest_versions, is_ignored_nvidia_manifest
+from cuda_redist_lib.logger import get_logger
+from cuda_redist_lib.manifest import get_nvidia_manifest, get_nvidia_manifest_versions
 from cuda_redist_lib.pydantic import PydanticMapping, PydanticObject
 from cuda_redist_lib.types import (
     CudaVariant,
@@ -27,6 +30,8 @@ from cuda_redist_lib.types import (
     Version,
 )
 from cuda_redist_lib.utilities import mk_relative_path, sha256_to_sri_hash
+
+logger: Final[Logger] = get_logger(__name__)
 
 PackageVariants: TypeAlias = PydanticMapping[None | CudaVariant, SriHash]
 
@@ -174,16 +179,15 @@ def mk_index() -> Index:
             executor.submit(mk_manifest, redist_name, version): (redist_name, version)
             for redist_name in RedistNames
             for version in get_nvidia_manifest_versions(redist_name)
-            if not is_ignored_nvidia_manifest(redist_name, version)
         }
         num_tasks = len(futures)
-        print(f"Downloading and processing {num_tasks} manifests...")
-        for tasks_completed, future in enumerate(concurrent.futures.as_completed(futures)):
+        logger.info("Downloading and processing %d manifests...", num_tasks)
+        for future in concurrent.futures.as_completed(futures):
             (redist_name, version) = futures[future]
             try:
                 data = future.result()
                 index[redist_name][version] = data
-                print(f"({tasks_completed + 1}/{num_tasks}): Processed manifest for {redist_name} {version}")
+                logger.info("Processed manifest for %s %s", redist_name, version)
             except Exception as e:
                 raise RuntimeError(f"Error processing manifest for {redist_name} version {version}: {e}")
 

@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from itertools import chain
+from logging import Logger
 from pathlib import Path
-from typing import override
+from typing import Final, override
 
 from cuda_redist_lib.logger import get_logger
 
@@ -12,7 +13,7 @@ from .utilities import (
     cached_path_is_dir,
 )
 
-logger = get_logger(__name__)
+logger: Final[Logger] = get_logger(__name__)
 
 
 @dataclass
