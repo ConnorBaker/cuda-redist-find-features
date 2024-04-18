@@ -79,29 +79,41 @@ in
                 jq
                 nixVersions.unstable
               ];
+
+              JQ_COMMON_FLAGS = [
+                "--compact-output"
+                "--sort-keys"
+                "--raw-output"
+              ];
               env.NIX_CONFIG = builtins.concatStringsSep "\n" [ "extra-experimental-features = nix-command" ];
             }
-            ''
-              local packedHashToUnpackedSrcOutPathJSONPath="${packedHashToUnpackedSrcOutPathJSON}"
-              local unpackedSrcOutPathToNarHashJSONPath="aggregate-unpacked-src-to-nar-hash.json"
-
+            (
+              # Declare our variables here
+              ''
+                local packedHashToUnpackedSrcOutPathJSONPath="${packedHashToUnpackedSrcOutPathJSON}"
+                local unpackedSrcOutPathToNarHashJSONPath="aggregate-unpacked-src-to-nar-hash.json"
+              ''
               # Get the NAR hashes for the store paths
-              jq -r '.[]' < "$packedHashToUnpackedSrcOutPathJSONPath" \
-                | nix path-info --quiet --json --stdin \
-                | jq -r 'with_entries(.value |= .narHash)' \
-                > "$unpackedSrcOutPathToNarHashJSONPath"
-
+              + ''
+                jq "''${JQ_COMMON_FLAGS[@]}" '.[]' "$packedHashToUnpackedSrcOutPathJSONPath" \
+                  | nix path-info --quiet --json --stdin \
+                  | jq "''${JQ_COMMON_FLAGS[@]}" 'with_entries(.value |= .narHash)' \
+                  > "$unpackedSrcOutPathToNarHashJSONPath"
+              ''
               # Compose the hash to store path and store path to nar hash mappings
               # We do this partly because we cannot have strings which are store paths in the output!
-              jq --null-input \
-                --slurpfile packedHashToUnpackedSrc "$packedHashToUnpackedSrcOutPathJSONPath" \
-                --slurpfile unpackedSrcToNarHash "$unpackedSrcOutPathToNarHashJSONPath" \
-                '$packedHashToUnpackedSrc[0] | map_values($unpackedSrcToNarHash[0][.])' \
-                > "$out"
-
+              + ''
+                jq --null-input "''${JQ_COMMON_FLAGS[@]}" \
+                  --slurpfile packedHashToUnpackedSrc "$packedHashToUnpackedSrcOutPathJSONPath" \
+                  --slurpfile unpackedSrcToNarHash "$unpackedSrcOutPathToNarHashJSONPath" \
+                  '$packedHashToUnpackedSrc[0] | map_values($unpackedSrcToNarHash[0][.])' \
+                  > "$out"
+              ''
               # Cleanup
-              rm "$unpackedSrcOutPathToNarHashJSONPath"
-            '';
+              + ''
+                rm "$unpackedSrcOutPathToNarHashJSONPath"
+              ''
+            );
         aggregateUnpackedSrcOutPathToNarHashJSON = lib.importJSON aggregateUnpackedSrcOutPathToNarHash;
 
         # Do a lookup on each of the leaves of the original index (tarball hashes) to replace them with

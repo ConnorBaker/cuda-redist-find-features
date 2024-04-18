@@ -37,10 +37,15 @@ let
       pyright
       ruff
     ];
-    passthru.optional-dependencies.dev = [
-      pyright
-      ruff
-    ];
+    passthru = {
+      modules = {
+        outputs = ./cuda_redist_feature_detector/outputs.nix;
+      };
+      optional-dependencies.dev = [
+        pyright
+        ruff
+      ];
+    };
     doCheck = true;
     checkPhase =
       # preCheck

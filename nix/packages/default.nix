@@ -14,7 +14,9 @@
           inherit (config.packages) cuda-redist-lib;
         };
         stage1 = pkgs.callPackage ./stage1-generate-index-of-nar-hashes { };
-        # stage2 = pkgs.callPackage ./stage2-generate-index-features { };
+        stage2 = pkgs.callPackage ./stage2-generate-index-features {
+          inherit (config.packages) cuda-redist-feature-detector;
+        };
       };
     };
 }

@@ -1,5 +1,6 @@
 {
   config,
+  cuda-redist-feature-detector,
   lib,
   pkgs,
   ...
@@ -8,7 +9,7 @@ let
   inherit (lib.attrsets) nameValuePair;
   inherit (lib.options) mkOption;
   inherit (lib.trivial) pipe;
-  inherit (lib.types) bool submodule;
+  inherit (lib.types) submodule;
   inherit (pkgs)
     fetchzip
     jq
@@ -28,12 +29,14 @@ in
   };
   options.stages.stage2.result = mkOption {
     description = "Index of features";
-    type = config.types.indexOf (submodule {
-      options = {
-        narHash = mkOption { type = config.types.sriHash; };
-        features = mkOption { type = config.types.attrsOf bool; };
-      };
-    });
+    type = config.types.indexOf (
+      config.types.attrs config.types.sriHash (submodule {
+        imports = [
+          # Each feature detector should have a corresponding module that outputs the features.
+          cuda-redist-feature-detector.modules.outputs
+        ];
+      })
+    );
     default =
       let
         narHashToFeatureOutPathJSON = pipe config.stages.stage1.result [
@@ -45,7 +48,6 @@ in
                 inherit hash;
                 url = config.utils.mkRedistURL redistName (config.utils.mkRelativePath args);
               };
-              # TODO: implement feature checks
               features =
                 runCommand "generate-features"
                   {
@@ -55,12 +57,11 @@ in
 
                     preferLocalBuild = true;
                     allowSubstitutes = false;
+
+                    nativeBuildInputs = [ cuda-redist-feature-detector ];
                   }
                   ''
-                    local src="${unpackedSrc}"
-                    echo '{
-                      "someFeature": true
-                    }' > "$out"
+                    cuda-redist-feature-detector --store-path "${unpackedSrc}" > "$out"
                   '';
             in
             nameValuePair hash features.outPath
@@ -81,41 +82,51 @@ in
               preferLocalBuild = true;
               allowSubstitutes = false;
 
-              nativeBuildInputs = [ jq ];
-            }
-            ''
-              local narHashToFeatureOutPathJSONPath="${narHashToFeatureOutPathJSON}"
+              nativeBuildInputs = [
+                cuda-redist-feature-detector
+                jq
+              ];
 
+              JQ_COMMON_FLAGS = [
+                "--compact-output"
+                "--sort-keys"
+                "--raw-output"
+              ];
+            }
+            (
+              # Declare our variables here
+              ''
+                local narHashToFeatureOutPathJSONPath="${narHashToFeatureOutPathJSON}"
+                local -A narHashToFeature
+              ''
               # For each NAR hash, we need to read the contents of the associated store path to
               # get the feature object.
-
-              local unpackedSrcToNarHashJSONPath="unpacked-src-to-nar-hash.json"
-
-              # Get the NAR hashes for the store paths
-              jq -r '.[]' < "$narHashToFeatureOutPathJSONPath" \
-                | nix path-info --quiet --json --stdin \
-                | jq -r 'with_entries(.value |= .narHash)' \
-                > "$unpackedSrcToNarHashJSONPath"
-
-              # Compose the hash to store path and store path to nar hash mappings
-              # We do this partly because we cannot have strings which are store paths in the output!
-              jq --null-input \
-                --slurpfile packedHashToUnpackedSrc "$narHashToFeatureOutPathJSONPath" \
-                --slurpfile unpackedSrcToNarHash "$unpackedSrcToNarHashJSONPath" \
-                '$packedHashToUnpackedSrc[0] | map_values($unpackedSrcToNarHash[0][.])' \
-                > "$out"
-
-              # Cleanup
-              rm "$unpackedSrcToNarHashJSONPath"
-            '';
+              + ''
+                while IFS=$'\t' read -r narHash featureOutPath; do
+                  narHashToFeature["$narHash"]="$(jq "''${JQ_COMMON_FLAGS[@]}" '.' "$featureOutPath")"
+                done < <(jq "''${JQ_COMMON_FLAGS[@]}" 'to_entries[] | "\(.key)\t\(.value)"' "$narHashToFeatureOutPathJSONPath")
+              ''
+              # Convert the associative array to a JSON string and serialize it to out.
+              + ''
+                jq --null-input "''${JQ_COMMON_FLAGS[@]}" \
+                  '[$ARGS.positional | _nwise(2) | {(.[0]): (.[1] | fromjson)}] | add' \
+                  --args "''${narHashToFeature[@]@k}" \
+                  > "$out"
+              ''
+            );
         aggregateNarHashToFeatureJSON = lib.importJSON aggregateNarHashToFeature;
 
-        # Do a lookup on each of the leaves of the original index (NAR hashes) to replace them with
-        # the feature object.
-        indexOfNarHashes = config.utils.mapIndexLeaves (
-          { leaf, ... }: aggregateNarHashToFeatureJSON.${leaf}
-        ) config.stages.stage0.result;
+        # Do a lookup on each of the leaves of the original index (NAR hashes) and map them to the feature object.
+        indexOfNarHashToFeatures = config.utils.mapIndexLeaves (
+          { leaf, ... }:
+          let
+            narHash = leaf;
+          in
+          {
+            ${narHash} = aggregateNarHashToFeatureJSON.${narHash};
+          }
+        ) config.stages.stage1.result;
       in
-      indexOfNarHashes;
+      indexOfNarHashToFeatures;
   };
 }
