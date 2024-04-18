@@ -34,8 +34,11 @@
     keep-going = true;
     keep-outputs = true;
     log-lines = 50;
+    narinfo-cache-negative-ttl = 0;
+    narinfo-cache-positive-ttl = 2592000; # 30 days
     pure-eval = true;
     show-trace = true;
+    tarball-ttl = 2592000; # 30 days
   };
 
   outputs =
