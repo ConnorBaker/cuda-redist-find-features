@@ -8,7 +8,6 @@ let
   inherit (lib.attrsets) nameValuePair;
   inherit (lib.options) mkOption;
   inherit (lib.trivial) pipe;
-  inherit (lib.types) submodule;
   inherit (pkgs)
     cuda-redist-feature-detector
     fetchzip
@@ -24,19 +23,13 @@ in
     stage1.result = lib.trivial.importJSON ../../${config.stages.stage1.outputPath};
     stage2 = {
       description = "Replace the NAR hashes of the unpacked tarballs with a feature object";
-      name = "stage2-generate-index-of-features";
+      name = "stage2-generate-index-of-nar-hash-to-feature";
     };
   };
   options.stages.stage2.result = mkOption {
-    description = "Index of features";
+    description = "Index of NAR hash to feature";
     type = config.types.indexOf (
-      config.types.attrs config.types.sriHash (submodule {
-        imports = [
-          # Each feature detector should have a corresponding module that outputs the features.
-          cuda-redist-feature-detector.modules.cudaVersionsInLib
-          cuda-redist-feature-detector.modules.outputs
-        ];
-      })
+      config.types.attrs config.types.sriHash cuda-redist-feature-detector.submodule
     );
     default =
       let
@@ -50,7 +43,7 @@ in
                 url = config.utils.mkRedistURL redistName (config.utils.mkRelativePath args);
               };
               features =
-                runCommand "generate-features"
+                runCommand "generate-feature"
                   {
                     __contentAddressed = true;
                     __structuredAttrs = true;
@@ -62,7 +55,7 @@ in
                     nativeBuildInputs = [ cuda-redist-feature-detector ];
                   }
                   ''
-                    echo "Finding features for ${unpackedSrc}"
+                    echo "Creating feature for ${unpackedSrc}"
                     cuda-redist-feature-detector --store-path "${unpackedSrc}" > "$out"
                   '';
             in
@@ -111,7 +104,7 @@ in
               ''
               # Convert the associative array to a JSON string and serialize it to out.
               + ''
-                echo "Serializing aggregation of NAR hashes to feature objects"
+                echo "Serializing aggregation of NAR hash to feature objects"
                 jq --null-input "''${JQ_COMMON_FLAGS[@]}" \
                   '[$ARGS.positional | _nwise(2) | {(.[0]): (.[1] | fromjson)}] | add' \
                   --args "''${narHashToFeature[@]@k}" \
