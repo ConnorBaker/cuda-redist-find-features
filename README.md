@@ -28,7 +28,7 @@ Computes the "features" of the packages. The result is a deeply-nested JSON obje
 
 #### Implemented Feature Detectors
 
-These live in [detectors](./nix/packages/cuda-redist-feature-detector/cuda_redist_feature_detector/detectors).
+These live in [detectors](./packages/cuda-redist-feature-detector/cuda_redist_feature_detector/detectors).
 
 - `cuda_architectures.py`: Runs `cuobjdump` on the unpacked archive to find the CUDA architectures it supports.
 - `dynamic_library.py`: Checks if the unpacked archive contains a `lib` directory with dynamic libraries.

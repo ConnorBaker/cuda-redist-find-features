@@ -12,7 +12,7 @@ let
       specialArgs = {
         inherit pkgs;
       };
-      modules = [ ../../modules/stage1.nix ];
+      modules = [ ../../modules/stages/stage1.nix ];
     }).config.stages
     )
     stage1

@@ -1,6 +1,5 @@
 {
   config,
-  cuda-redist-feature-detector,
   lib,
   pkgs,
   ...
@@ -11,6 +10,7 @@ let
   inherit (lib.trivial) pipe;
   inherit (lib.types) submodule;
   inherit (pkgs)
+    cuda-redist-feature-detector
     fetchzip
     jq
     runCommand

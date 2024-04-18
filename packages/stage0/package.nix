@@ -7,7 +7,7 @@
   writers,
 }:
 let
-  inherit ((lib.modules.evalModules { modules = [ ../../modules/stage0.nix ]; }).config.stages)
+  inherit ((lib.modules.evalModules { modules = [ ../../modules/stages/stage0.nix ]; }).config.stages)
     stage0
     ;
 in

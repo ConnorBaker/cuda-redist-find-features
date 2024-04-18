@@ -1,7 +1,7 @@
 {
   imports = [
     ./data.nix
-    ./stages.nix
+    ./stages
     ./types.nix
     ./utils.nix
   ];

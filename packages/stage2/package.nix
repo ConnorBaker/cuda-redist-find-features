@@ -1,7 +1,6 @@
 # NOTE:
 # Make sure to run `nix run .#stage1 && git add .` prior to this script.
 {
-  cuda-redist-feature-detector,
   lib,
   pkgs,
   writers,
@@ -11,9 +10,9 @@ let
   inherit
     ((lib.modules.evalModules {
       specialArgs = {
-        inherit pkgs cuda-redist-feature-detector;
+        inherit pkgs;
       };
-      modules = [ ../../modules/stage2.nix ];
+      modules = [ ../../modules/stages/stage2.nix ];
     }).config.stages
     )
     stage2

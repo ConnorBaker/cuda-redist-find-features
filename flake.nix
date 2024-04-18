@@ -53,12 +53,42 @@
       imports = [
         inputs.treefmt-nix.flakeModule
         inputs.pre-commit-hooks-nix.flakeModule
-        ./nix
       ];
       perSystem =
-        { config, pkgs, ... }:
         {
+          config,
+          lib,
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          _module.args.pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [
+              (
+                final: _:
+                lib.filesystem.packagesFromDirectoryRecursive {
+                  inherit (final) callPackage;
+                  directory = ./packages;
+                }
+              )
+            ];
+          };
+
           legacyPackages = pkgs;
+
+          packages =
+            let
+              names = lib.trivial.pipe ./packages [
+                builtins.readDir
+                (lib.attrsets.filterAttrs (_: type: type == "directory"))
+                builtins.attrNames
+              ];
+            in
+            lib.attrsets.getAttrs names pkgs;
+
           pre-commit.settings.hooks = {
             # Formatter checks
             treefmt = {
@@ -132,7 +162,20 @@
               taplo.enable = true;
             };
           };
-          devShells.default = config.devShells.cuda-redist-feature-detector;
+
+          devShells = {
+            cuda-redist-feature-detector =
+              let
+                inherit (pkgs) cuda-redist-feature-detector;
+                inherit (cuda-redist-feature-detector.optional-dependencies) dev;
+              in
+              pkgs.mkShell {
+                strictDeps = true;
+                inputsFrom = [ cuda-redist-feature-detector ];
+                packages = dev;
+              };
+            default = config.devShells.cuda-redist-feature-detector;
+          };
         };
     };
 }
