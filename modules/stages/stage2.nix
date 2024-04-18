@@ -61,6 +61,7 @@ in
                     nativeBuildInputs = [ cuda-redist-feature-detector ];
                   }
                   ''
+                    echo "Finding features for ${unpackedSrc}"
                     cuda-redist-feature-detector --store-path "${unpackedSrc}" > "$out"
                   '';
             in
@@ -102,12 +103,14 @@ in
               # For each NAR hash, we need to read the contents of the associated store path to
               # get the feature object.
               + ''
+                echo "Reading feature objects from store paths in $narHashToFeatureOutPathJSONPath"
                 while IFS=$'\t' read -r narHash featureOutPath; do
                   narHashToFeature["$narHash"]="$(jq "''${JQ_COMMON_FLAGS[@]}" '.' "$featureOutPath")"
                 done < <(jq "''${JQ_COMMON_FLAGS[@]}" 'to_entries[] | "\(.key)\t\(.value)"' "$narHashToFeatureOutPathJSONPath")
               ''
               # Convert the associative array to a JSON string and serialize it to out.
               + ''
+                echo "Serializing aggregation of NAR hashes to feature objects"
                 jq --null-input "''${JQ_COMMON_FLAGS[@]}" \
                   '[$ARGS.positional | _nwise(2) | {(.[0]): (.[1] | fromjson)}] | add' \
                   --args "''${narHashToFeature[@]@k}" \

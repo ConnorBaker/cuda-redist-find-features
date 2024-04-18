@@ -95,6 +95,7 @@ in
               ''
               # Get the NAR hashes for the store paths
               + ''
+                echo "Acquiring NAR hashes for store paths in $packedHashToUnpackedSrcOutPathJSONPath"
                 jq "''${JQ_COMMON_FLAGS[@]}" '.[]' "$packedHashToUnpackedSrcOutPathJSONPath" \
                   | nix path-info --quiet --json --stdin \
                   | jq "''${JQ_COMMON_FLAGS[@]}" 'with_entries(.value |= .narHash)' \
@@ -103,6 +104,7 @@ in
               # Compose the hash to store path and store path to nar hash mappings
               # We do this partly because we cannot have strings which are store paths in the output!
               + ''
+                echo "Composing the hash to store path and store path to nar hash mappings"
                 jq --null-input "''${JQ_COMMON_FLAGS[@]}" \
                   --slurpfile packedHashToUnpackedSrc "$packedHashToUnpackedSrcOutPathJSONPath" \
                   --slurpfile unpackedSrcToNarHash "$unpackedSrcOutPathToNarHashJSONPath" \

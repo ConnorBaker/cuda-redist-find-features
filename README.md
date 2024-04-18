@@ -1,6 +1,6 @@
 # `cuda_redist_find_features`
 
-> [!IMPORTANT]
+> [!Important]
 > This repo is in a transitory stage. It should be moved to `nix-community` or in-tree in Nixpkgs.
 
 ## Roadmap
@@ -43,6 +43,9 @@ These live in [detectors](./packages/cuda-redist-feature-detector/cuda_redist_fe
 
 ## Usage
 
-- `nix run .#stage0 && git add .` to run the first stage and add the results to the git index.
-- `nix run .#stage1 && git add .` to run the second stage and add the results to the git index.
-- `nix run .#stage2 && git add .` to run the third stage and add the results to the git index.
+> [!Important]
+> Stage 1 requires a large amount of free space in the Nix store. Since Stage 1 will download every tarball from every NVIDIA manifest and unpack it, it will take a while.
+
+- `nix run --builders '' -L .#stage0 && git add .`
+- `nix run --builders '' -L .#stage1 && git add .`
+- `nix run --builders '' -L .#stage2 && git add .`
