@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Self
 
-from cuda_redist_lib.pydantic import PydanticObject
+from cuda_redist_lib.pydantic import PydanticSequence
 
 from cuda_redist_feature_detector.detectors import (
     DirDetector,
@@ -12,7 +12,7 @@ from cuda_redist_feature_detector.detectors import (
 )
 
 
-class FeatureOutputs(PydanticObject):
+class FeatureOutputs(PydanticSequence[str]):
     """
     Describes the different outputs a release can have.
 
@@ -20,27 +20,26 @@ class FeatureOutputs(PydanticObject):
     https://github.com/NixOS/nixpkgs/blob/d4d822f526f1f72a450da88bf35abe132181170f/pkgs/build-support/setup-hooks/multiple-outputs.sh.
     """
 
-    bin: bool
-    dev: bool
-    doc: bool
-    lib: bool
-    python: bool
-    sample: bool
-    static: bool
-    stubs: bool
-
     @classmethod
     def of(cls, store_path: Path) -> Self:
-        return cls(
-            bin=cls.check_bin(store_path),
-            dev=cls.check_dev(store_path),
-            doc=cls.check_doc(store_path),
-            lib=cls.check_lib(store_path),
-            python=cls.check_python(store_path),
-            sample=cls.check_sample(store_path),
-            static=cls.check_static(store_path),
-            stubs=cls.check_stubs(store_path),
-        )
+        outputs: list[str] = []
+        if cls.check_bin(store_path):
+            outputs.append("bin")
+        if cls.check_dev(store_path):
+            outputs.append("dev")
+        if cls.check_doc(store_path):
+            outputs.append("doc")
+        if cls.check_lib(store_path):
+            outputs.append("lib")
+        if cls.check_python(store_path):
+            outputs.append("python")
+        if cls.check_sample(store_path):
+            outputs.append("sample")
+        if cls.check_static(store_path):
+            outputs.append("static")
+        if cls.check_stubs(store_path):
+            outputs.append("stubs")
+        return cls(outputs)
 
     @staticmethod
     def check_bin(store_path: Path) -> bool:
