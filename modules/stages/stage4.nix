@@ -16,6 +16,9 @@ in
   ];
   config.stages = {
     # NOTE: We must use path-interpolation because string interpolation for paths is forbidden in pure evaluation mode.
+    # NOTE: We must use the materialized version of stage1 rather than the default value provided by the module system,
+    # otherwise the store paths are those of floating content-addressed store paths.
+    stage1.result = lib.trivial.importJSON ../../${config.stages.stage1.outputPath};
     stage2.result = lib.trivial.importJSON ../../${config.stages.stage2.outputPath};
     stage3.result = lib.trivial.importJSON ../../${config.stages.stage3.outputPath};
     stage4 = {
