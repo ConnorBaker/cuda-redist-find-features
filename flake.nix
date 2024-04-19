@@ -129,10 +129,7 @@
                   "*.md"
                   "*.yaml"
                 ];
-                excludes = [
-                  "feature_manifests/*.json"
-                  "redistrib_manifests/*.json"
-                ];
+                excludes = [ "stage*.json" ];
                 settings = {
                   embeddedLanguageFormatting = "auto";
                   printWidth = 120;

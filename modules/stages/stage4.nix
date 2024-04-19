@@ -5,7 +5,6 @@
   ...
 }:
 let
-  inherit (lib.attrsets) nameValuePair;
   inherit (lib.options) mkOption;
   inherit (pkgs) cuda-redist-feature-detector;
 in
@@ -17,7 +16,10 @@ in
   config.stages = {
     # NOTE: We must use path-interpolation because string interpolation for paths is forbidden in pure evaluation mode.
     # NOTE: We must use the materialized version of stage1 rather than the default value provided by the module system,
-    # otherwise the store paths are those of floating content-addressed store paths.
+    # because the store paths are those of floating content-addressed store paths. We get the following error if we
+    # don't use the materialized version:
+    # error: the string '/033991s98wnd7zdm0crizrhsfjdanla7bj506phlxzlzl092xvq1' is not allowed to refer to a
+    # store path (such as '!out!li5jji2jik59ck771ibpqiy2ps44ydrr-libcal-linux-sbsa-0.4.2.25_cuda11-archive-source.drv')
     stage1.result = lib.trivial.importJSON ../../${config.stages.stage1.outputPath};
     stage2.result = lib.trivial.importJSON ../../${config.stages.stage2.outputPath};
     stage3.result = lib.trivial.importJSON ../../${config.stages.stage3.outputPath};
@@ -46,7 +48,9 @@ in
           feature = unpackedTarballToFeature.${unpackedTarball};
           narHash = unpackedTarballToNarHash.${unpackedTarball};
         in
-        nameValuePair narHash feature
+        {
+          ${narHash} = feature;
+        }
       ) indexOfTarballHashes;
   };
 }
