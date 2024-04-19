@@ -20,11 +20,19 @@ Retrieves and processes the manifests from NVIDIA's website. The result is a dee
 
 ### `stage1`
 
-Unpacks the tarballs and computes their recursive NAR hash, so we can package them as Fixed Output Derivations. The result is a deeply-nested JSON object, just as in `stage0`, but with the SRI hashes replaced by the NAR hashes.
+Unpacks the tarballs and creates a mapping between tarball hash and the store path of the unpacked tarball.
 
 ### `stage2`
 
-Computes the "features" of the packages. The result is a deeply-nested JSON object, just as in `stage1`, but the NAR hashes now map to a `feature` attribute set describing the features of the package.
+Creates a mapping between the unpacked tarball store path and a feature object, describing the functionality (and directory structure) of the redistributable. This information is used by Nixpkgs to determine which outputs to provide.
+
+### `stage3`
+
+Creates a mapping between the unpacked tarball store path and the recursive NAR hash of the unpacked tarball. This information is used by Nixpkgs to treat the redistributables as Fixed Output Derivations.
+
+### `stage4`
+
+Composes the results of the prior stages, creating a deeply-nested JSON object like `stage0`. Instead of the values being the SRI hashes of the tarballs, they are the NAR hashes of the unpacked tarballs, which map to the feature object for that redistributable.
 
 #### Implemented Feature Detectors
 
