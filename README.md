@@ -31,10 +31,10 @@ Computes the "features" of the packages. The result is a deeply-nested JSON obje
 These live in [detectors](./packages/cuda-redist-feature-detector/cuda_redist_feature_detector/detectors).
 
 - `cuda_architectures.py`: Runs `cuobjdump` on the unpacked archive to find the CUDA architectures it supports.
+- `cuda_versions_in_lib.py`: Checks for subdirectories in `lib` named after CUDA versions.
 - `dynamic_library.py`: Checks if the unpacked archive contains a `lib` directory with dynamic libraries.
 - `executable.py`: Checks if the unpacked archive contains executables in `bin`.
 - `header.py`: Checks if the unpacked archive contains a `include` directory with headers.
-- `lib_subdirs.py`: Checks if the unpacked archive contains subdirectories in `lib`.
 - `needed_libs.py`: Runs `patchelf --print-needed` on the unpacked archive to find the libraries it needs.
 - `provided_libs.py`: Runs `patchelf --print-soname` on the unpacked archive to find the libraries it provides.
 - `python_module.py`: Checks if the unpacked archive contains a `site-packages` directory with Python modules.
@@ -51,3 +51,14 @@ Run all the stages with:
 ```bash
 nix run --builders "" -L .#stages
 ```
+
+The script also accepts arguments, which you can see with the `--help` flag:
+
+```console
+$ nix run --builders "" -L .#stages -- --help
+Usage: stages [--start <start>] [--stop <stop>]
+  --start: The stage to start at (default: 0)
+  --stop: The stage to stop at (default: 4)
+```
+
+These arguments are helpful if you want to run only a subset of the stages. For example, you might run `stage0` separately to generate the first index, and then manually delete some items from it to avoid processing them. This is especially useful if there is a new redistributable manifest, but you'd like to avoid redownloading unrelated artifacts you don't have cached.
