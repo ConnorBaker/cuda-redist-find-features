@@ -59,6 +59,11 @@ def get_nvidia_manifest_versions(redist_name: RedistName) -> Sequence[Version]:
         \1                   # Match the same quote as the first capture group
     """
 
+    # For CUDA, and CUDA only, we take only the latest minor version for each major version.
+    # For other packages, like cuDNN, we take the latest patch version for each minor version.
+    # An example of why we do this: between patch releases of cuDNN, NVIDIA may not offer support for all
+    # architecutres! For instance, cuDNN 8.9.5 supports Jetson, but cuDNN 8.9.6 does not.
+    num_components: int = 2 if redist_name == "cuda" else 3
     # Map major and minor component to the tuple of all components and the version string.
     version_dict: dict[tuple[int, ...], tuple[tuple[int, ...], Version]] = {}
     with request.urlopen(f"{RedistUrlPrefix}/{redist_name}/redist/index.html") as response:
@@ -74,9 +79,9 @@ def get_nvidia_manifest_versions(redist_name: RedistName) -> Sequence[Version]:
 
             # Take only the latest minor version for each major version.
             components = tuple(map(int, version.split(".")))
-            existing_components, _ = version_dict.get(components[:2], (None, None))
+            existing_components, _ = version_dict.get(components[:num_components], (None, None))
             if existing_components is None or components > existing_components:
-                version_dict[components[:2]] = (components, version)
+                version_dict[components[:num_components]] = (components, version)
 
     return [version for _, version in version_dict.values()]
 
