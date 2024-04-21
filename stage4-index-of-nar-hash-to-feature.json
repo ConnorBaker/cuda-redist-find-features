@@ -1,5 +1,209 @@
 {
   "cublasmp": {
+    "0.1.0": {
+      "libcal": {
+        "packages": {
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-PmfKgvPU4vYexMlAE/vUS4iCpjd+ieKsmNuYTRMaWXU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-z5kGnVrkkvvqknB8zUxBUOND0JSZp8U25qOlzS0g4jo=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vd/Z1Nd16x9i39O6GgYtKTGT8Ymq4EpJyFYZfk7/p0M=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-scWp5M7YLZq/4zTdkEf8HSkyT8G16iYL0WaptZ1mt3w=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "libcal library",
+          "licensePath": "libcal/LICENSE.txt",
+          "name": "NVIDIA libcal library",
+          "version": "0.4.2.25"
+        }
+      },
+      "libcublasmp": {
+        "packages": {
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-YpsXgOSiIko/aXhLtW5DWwE4QXbybecM/7PI4uZT204=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-OufJHdDJREbB6WI0Wix9ShU+Yfguzwtdyo5Pv6UW8JU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-6BP055B8unqrAENKHzaYJY3r5BYH9d2KcO9SIgMJKi4=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-hm8bs9xo1Xn4ehzn+BdBIAzJ9rL/wOoiHGTII7tLPGU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuBLASMp library",
+          "licensePath": "libcublasmp/LICENSE.txt",
+          "name": "NVIDIA cuBLASMp library",
+          "version": "0.1.0.189"
+        }
+      }
+    },
+    "0.1.1": {
+      "libcal": {
+        "packages": {
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-PmfKgvPU4vYexMlAE/vUS4iCpjd+ieKsmNuYTRMaWXU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-z5kGnVrkkvvqknB8zUxBUOND0JSZp8U25qOlzS0g4jo=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vd/Z1Nd16x9i39O6GgYtKTGT8Ymq4EpJyFYZfk7/p0M=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-scWp5M7YLZq/4zTdkEf8HSkyT8G16iYL0WaptZ1mt3w=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "libcal library",
+          "licensePath": "libcal/LICENSE.txt",
+          "name": "NVIDIA libcal library",
+          "version": "0.4.2.25"
+        }
+      },
+      "libcublasmp": {
+        "packages": {
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-IwakojOqYU++4vU7R6f+i2Xm2U9ImyfyX+HKwCFbioI=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-6lsLeN268bZPYNRmmtBovTYSlGg3gKv/T+Nde/bl558=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-TeoztyLq5ynIchLDEBIZZr6FtTfCFrd9HsDb6s7l8rE=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-520muQdfAX6WA5l0oqCsMz+ijDecyVsLTJvqqJRZWkw=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuBLASMp library",
+          "licensePath": "libcublasmp/LICENSE.txt",
+          "name": "NVIDIA cuBLASMp library",
+          "version": "0.1.1.245"
+        }
+      }
+    },
     "0.1.2": {
       "libcal": {
         "packages": {
@@ -15905,6 +16109,136 @@
         }
       }
     },
+    "8.8.0": {
+      "cudnn": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-f2tJBx28MK6MXxl0YqWHA4lrogK4t04sB60a5rwoFDw=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-ugMKaTU+b4AnosFezrE/dTiJwDKZ15ORL0CW9RSP8oA=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vdpE/04M8SgKOJf8nnd2iokgw/k8GJjeQWH2R+5iU+M=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-8gi08Tw7Y12DgcB/JJmVaKEx0b1P8UJS7xG2suIqbWU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-KTnG2zC8RR8qt6ALbboLAYmdC5W1yvCBrUQgNjXMxS4=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-/R7nPqI+eKqukqDAA3tmZbyUtAKYldR5XY1QaveBEfM=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "8.8.0.121"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-zLpypmYcYYQ6w/A3v3ivAFKtsenSe7PujCBR3eFZJ0s=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-zLpypmYcYYQ6w/A3v3ivAFKtsenSe7PujCBR3eFZJ0s=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-zLpypmYcYYQ6w/A3v3ivAFKtsenSe7PujCBR3eFZJ0s=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-zLpypmYcYYQ6w/A3v3ivAFKtsenSe7PujCBR3eFZJ0s=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-zLpypmYcYYQ6w/A3v3ivAFKtsenSe7PujCBR3eFZJ0s=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-zLpypmYcYYQ6w/A3v3ivAFKtsenSe7PujCBR3eFZJ0s=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "8.8.0.121"
+        }
+      }
+    },
     "8.8.1": {
       "cudnn": {
         "packages": {
@@ -16032,6 +16366,956 @@
           "licensePath": "cudnn_samples/LICENSE.txt",
           "name": "NVIDIA cuDNN samples",
           "version": "8.8.1.3"
+        }
+      }
+    },
+    "8.9.0": {
+      "cudnn": {
+        "packages": {
+          "linux-aarch64": {
+            "cuda12": {
+              "sha256-8xJiCdLzLoIwILHkvDDpf7bgMh2t9Vkv6KQr0kleljY=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-lu4D8hTL3ePX/JD5u/NYhoImLqax496P8jkyVtkjfr0=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-fe8qch3ZPy+NtAZDORxRY5nCPtioIv374jwrrO+zQiw=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-jD+XbCUmuzNASGIwFN0kNpH1XXFg6nt9Me/FFiAjTqU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-qHfswsdgw8OksG1Y4Zyws96in/KPbEF0b44Sp9qZhe8=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-DlEN/xXM9SO5pPHejbQ7d8GsYiI62tOQ3PfFjXVrp94=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-kZGh38pcUBBu7E3F52cWsj8geYqwBAVrggLkN+Twsm0=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "8.9.0.131"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "linux-aarch64": {
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "8.9.0.131"
+        }
+      }
+    },
+    "8.9.1": {
+      "cudnn": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-83P9sQh8GIcFpDsTZkKBer9SePvLfHltO4Vh32nJmH8=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-XJTelirvDrZlX5dx5NZ4FsN1fY07+LPxLZzF1Ys68iE=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-ucLaXqqrtQ/oa9ovNItT0yxRE+QoDmIC0CsEGrY9AM4=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-ZCFpFqMakASgIVl2K4eqik6OrOWjFT747991ABxdq/k=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-YXYyXYjDs/FqEibAiNkz319dR+3iJE+UzfzamWzZc34=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-Ya7ndQVMjse+2Gex/iZ1qm1jqcc8xOZHrurE2f3xK+E=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "8.9.1.23"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "8.9.1.23"
+        }
+      }
+    },
+    "8.9.2": {
+      "cudnn": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-ghpnhCkNEpJi7zjzpWDysoa/hKHUZNmbs1gxXETVOCY=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-ZEB1Md+/3TqJu4BWWEc3F0ZWm1zTNdb5z+WuFfwwGAU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-PlDJcOG6bSoCqKZrKA5Kp6MlOZ8QLYPl9OyK6sY1DzU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-yv15XuQY4cjFxH2DJV29U88a1WJZd6Cdq1beHdD308E=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-+wpvafuTaSH3c5i87WvaYp2LGQCJBpRepZvji3VnQHg=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-yjJXzffki0lgETzFhvMp0HwVm2NJKR4I4vJyswF6jMo=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "8.9.2.26"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "8.9.2.26"
+        }
+      }
+    },
+    "8.9.3": {
+      "cudnn": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-YC3T/m/19zSE47govsiIPD6y84tITNMBsLbsN8UdlHE=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-pjRZ/cMxEEGBRZ9KPAF2LRNJVnlhkQn1QVlDDV08+OQ=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-dq9oJfof5IO4ly+4O3oiA3xQpTLQOkoNw1SKO55iIns=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-UduJbZeArnSDhG/RllVVMuytyi43qJgcOqm3S0B6rlE=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-KszgqSeT207TL2olsF2BvNWwDe7Cy6tYA9r727y1te4=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-bOmHfoC0gONYrD0zXPkgqMP8tpNfp7QQgWvM6Kfq1Kc=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "8.9.3.28"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "8.9.3.28"
+        }
+      }
+    },
+    "8.9.4": {
+      "cudnn": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-a8jznSisgBjX/KWinMdrOns3TRdeEf0Pr1/M+EuzBfY=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-imjBGUF8hLRJKlxoHqnuR8/8sbSZWGSJhP8kk0X3hcQ=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-wMsG9OJOjzU5Hi3rxWBWfHvbq54OppNp4sfF4ouqAhI=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-fKHCQqs7r6y+zjVDncVmotC190smjJcLs0kflCkJFnw=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-/fAx26Jon1ineXp8Edw5K6Pqj28igcH3akyVo5LPv3A=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-87QQiaecRYMfKCG+jj7hDsXz8aI5CmqPKnrCKtPmLxs=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "8.9.4.25"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "8.9.4.25"
+        }
+      }
+    },
+    "8.9.5": {
+      "cudnn": {
+        "packages": {
+          "linux-aarch64": {
+            "cuda12": {
+              "sha256-kmXA8c6CosBe9xIb1pT44oMoWGjYqP8GtJ1lMxngBLw=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-6TA3Rbsz5dml4aAOpE7kurUxnVZ+kcEGny2ctpVfjPY=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-/LYs8t68v4nqNcZZNMtZiIR2ihz0jAbH/JCpT8nqibM=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vIQEDZMv2TbdAHii4EN85CeGB896aw6QXlIwb/tPAvw=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-MwykK6S+f0u+odOq2AthxLM09Z91tE4jGC4CMemnH28=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-Q8MI/1N+P+Pc4oyQWcaImVgva9+8USFuwhO9IPk5tp4=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-hfr+QJaBix+H74sNq5/sOsJro3GskHgIFBYFwtn1F3k=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "8.9.5.30"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "linux-aarch64": {
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "8.9.5.30"
+        }
+      }
+    },
+    "8.9.6": {
+      "cudnn": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-uhhKPDp5sAiI3obXihgYr/5GsEVvxY//GSbWgeuhYOA=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-3x2HoGcCqJr4SU1+jT0pQrlj0RZCnIn9eeVS+7Z4oEU=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-nbZOgkwnZ3RWdOQNgozxkelyCn5VH3KpRbDRWohdlIk=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-HcCh8xTEfFbaoMyQXIqcGm35lKV5XSc7NOhbAPfQWmc=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-m22Y3OTfUaqApdIPtW4lwYpIdjynKX7HnQng0tx4Vu0=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-uBF+jfIx7D/uJrypUp2JW9kbklUic6+b6Cbxk3aCjJY=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "8.9.6.50"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            },
+            "cuda12": {
+              "sha256-vzLL1ss7LEkrFxlX2jafFDpo0NGJFG3Ffi00FZKUAPs=": {
+                "cudaVersionsInLib": [],
+                "outputs": []
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "8.9.6.50"
         }
       }
     },
@@ -16385,6 +17669,42 @@
         }
       }
     },
+    "0.2.0": {
+      "libcudss": {
+        "packages": {
+          "linux-sbsa": {
+            "cuda12": {
+              "sha256-GsqPcQnX8EoO/kv8PCx5F04fc1UW5znH69DZ+qfDoWk=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda12": {
+              "sha256-O22lJkOtlpgfkjZOb7CepggbsSPK9rx7z2siVvYqVZM=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuDSS library",
+          "licensePath": "libcudss/LICENSE.txt",
+          "name": "NVIDIA cuDSS library",
+          "version": "0.2.0.12"
+        }
+      }
+    },
     "0.2.1": {
       "libcudss": {
         "packages": {
@@ -16567,6 +17887,54 @@
         }
       }
     },
+    "22.07.0": {
+      "cuquantum": {
+        "packages": {
+          "linux-ppc64le": {
+            "None": {
+              "sha256-BRR9nev57kVqoLg6dcwQAhNn2pDQbYMtxOEiTkhcyuk=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "None": {
+              "sha256-2OaYJJeHYB294G5qgcG+CjH2hgyuoD2llz8sDWIefKM=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256-O1a5XYFYq1apB0IpCpzwMAPGdQ9HT/OOUq288v+HYWE=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuQuantum",
+          "licensePath": null,
+          "name": "NVIDIA cuQuantum",
+          "version": "22.07.0.11"
+        }
+      }
+    },
     "22.07.1": {
       "cuquantum": {
         "packages": {
@@ -16708,6 +18076,84 @@
           "licensePath": null,
           "name": "NVIDIA cuQuantum",
           "version": "23.03.0.20"
+        }
+      }
+    },
+    "23.06.0": {
+      "cuquantum": {
+        "packages": {
+          "linux-ppc64le": {
+            "cuda11": {
+              "sha256-viGv5Z9Fd8ADU9tmakssE6+xBzCuGxu3kGevZbHGuJw=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-7MczGD4QjUDuLhzYeoaKy6Idw/fmMeSZtEzWM5ot6Zs=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256-gJiMzXSmB64INA0NdUDiymbXGtyIrFadSfq0fexqgnc=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-WmKT45jNUBvX9yvmhXzNa2cAdPO4zOFk4zqttL0eLKA=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-nGez0YWIUYjXViaPvOjTT/rLAgpQqTDL3RGzgab/FKA=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-3bD9fAyAhxN/8bAYViTww1qYezzIvZHsrcdDB1YF6Ng=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuQuantum",
+          "licensePath": "cuquantum/LICENSE.txt",
+          "name": "NVIDIA cuQuantum",
+          "version": "23.06.0.7"
         }
       }
     },
@@ -17073,6 +18519,78 @@
         }
       }
     },
+    "0.5.0": {
+      "libcusparse_lt": {
+        "packages": {
+          "linux-sbsa": {
+            "None": {
+              "sha256-p5tfEcXAtQ9YOPsP5DMfhlhpuIzpb+4+l9czFskJeCQ=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256-UlVcTcVfM33L5kE+UMGNZJzo5sIaebXpspL/nEPtRHw=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuSPARSELt",
+          "licensePath": "libcusparse_lt/LICENSE.txt",
+          "name": "NVIDIA cuSPARSELt",
+          "version": "0.5.0.1"
+        }
+      }
+    },
+    "0.5.1": {
+      "libcusparse_lt": {
+        "packages": {
+          "linux-sbsa": {
+            "None": {
+              "sha256-9zcR/42MKgjLIOYz4KY8BiBebydd9FDPnIZHziSbDaE=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256-vfAFKuIsOaAoBT3q7xKuIJA/Ly1bFrAVwzTzkDXBMJY=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuSPARSELt",
+          "licensePath": "libcusparse_lt/LICENSE.txt",
+          "name": "NVIDIA cuSPARSELt",
+          "version": "0.5.1.1"
+        }
+      }
+    },
     "0.5.2": {
       "libcusparse_lt": {
         "packages": {
@@ -17147,6 +18665,62 @@
     }
   },
   "cutensor": {
+    "1.3.2": {
+      "libcutensor": {
+        "packages": {
+          "linux-ppc64le": {
+            "None": {
+              "sha256-y0gFZ/H2IAAX3lmUWwKUq2qOAzEqyGptsMYZ7nC+1Fg=": {
+                "cudaVersionsInLib": [
+                  "10.2",
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "None": {
+              "sha256-VSD09f5m9WQHrL6m4wmQl1bBW3/6mvjjqP42v/KOTQ8=": {
+                "cudaVersionsInLib": [
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256-aHpNQz/Ss1rxK+soZDtP715Bnv+OGmVgbsncTkXJXvI=": {
+                "cudaVersionsInLib": [
+                  "10.2",
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuTensor",
+          "licensePath": null,
+          "name": "NVIDIA cuTENSOR",
+          "version": "1.3.2.3"
+        }
+      }
+    },
     "1.3.3": {
       "libcutensor": {
         "packages": {
@@ -17315,6 +18889,118 @@
         }
       }
     },
+    "1.6.0": {
+      "libcutensor": {
+        "packages": {
+          "linux-ppc64le": {
+            "None": {
+              "sha256-f9EDSttsXze4iVtnDAXLkHdC5XW6Z2vxpJgCxq0PFbg=": {
+                "cudaVersionsInLib": [
+                  "10.2",
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "None": {
+              "sha256-3KKLekP9rOmeg+A+LJhZ8wO/0KsFDplPm1JuV+KZz2g=": {
+                "cudaVersionsInLib": [
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256-mQ5Ri+YMrycANk8LXHK8Bi+9IntdzpVb/K8BbO94xdk=": {
+                "cudaVersionsInLib": [
+                  "10.2",
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuTensor",
+          "licensePath": null,
+          "name": "NVIDIA cuTENSOR",
+          "version": "1.6.0.3"
+        }
+      }
+    },
+    "1.6.1": {
+      "libcutensor": {
+        "packages": {
+          "linux-ppc64le": {
+            "None": {
+              "sha256-uislGY62kUPp1R/Zicxx9L51H+bA7sw5D4XdGIUVHjc=": {
+                "cudaVersionsInLib": [
+                  "10.2",
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "None": {
+              "sha256-CxV9qiJ3uLlss+GN8CSccjFGSwlivAxmAgqxZQdhYk0=": {
+                "cudaVersionsInLib": [
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256-swxGv8T41IdHW2YNDcRo+ZRYTzn5VYX1YdK73juCcLg=": {
+                "cudaVersionsInLib": [
+                  "10.2",
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuTensor",
+          "licensePath": null,
+          "name": "NVIDIA cuTENSOR",
+          "version": "1.6.1.5"
+        }
+      }
+    },
     "1.6.2": {
       "libcutensor": {
         "packages": {
@@ -17427,6 +19113,60 @@
         }
       }
     },
+    "2.0.0": {
+      "libcutensor": {
+        "packages": {
+          "linux-ppc64le": {
+            "None": {
+              "sha256-6NDo1mUlpMANXNHBqH98MPs0sn6fkgzdQdXFAi6hxWI=": {
+                "cudaVersionsInLib": [
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "None": {
+              "sha256-FIXXNto9n023UMo4c/vso/zB9UVTAAWDueKs6Vv6ALM=": {
+                "cudaVersionsInLib": [
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256-vK1xLIU0HXQbjGKfllTKPSEuqqETJiNjgPGX4oxw3D8=": {
+                "cudaVersionsInLib": [
+                  "11.0"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuTensor",
+          "licensePath": "libcutensor/LICENSE.txt",
+          "name": "NVIDIA cuTENSOR",
+          "version": "2.0.0.7"
+        }
+      }
+    },
     "2.0.1": {
       "libcutensor": {
         "packages": {
@@ -17528,6 +19268,30 @@
           "licensePath": null,
           "name": "NVIDIA nvJPEG 2000",
           "version": "0.6.0.28"
+        }
+      }
+    },
+    "0.7.0": {
+      "libnvjpeg_2k": {
+        "packages": {
+          "linux-x86_64": {
+            "None": {
+              "sha256-PxRzyG96Mtg0T4ypryB5OreF8gq2d53zVTjCqdJ2exY=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "nvJPEG 2K",
+          "licensePath": null,
+          "name": "NVIDIA nvJPEG 2000",
+          "version": "0.7.0.31"
         }
       }
     },
@@ -17888,6 +19652,40 @@
     }
   },
   "nvtiff": {
+    "0.3.0": {
+      "libnvtiff": {
+        "packages": {
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256-MPCaKiOvhdMCcOY3b7NRB32dWQYinYslkkRm0Bq1B0g=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            },
+            "cuda12": {
+              "sha256-wtzc5WOImI0v1axUoZUqMp43DzjfvoWnbkLj3foJP1A=": {
+                "cudaVersionsInLib": [],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "nvTIFF",
+          "licensePath": "libnvtiff/LICENSE.txt",
+          "name": "NVIDIA nvTIFF",
+          "version": "0.3.0.55"
+        }
+      }
+    },
     "0.3.1": {
       "libnvtiff": {
         "packages": {
