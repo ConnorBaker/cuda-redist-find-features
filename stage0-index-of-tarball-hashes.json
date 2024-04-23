@@ -8249,6 +8249,27 @@
           "version": "0.7.5.32"
         }
       }
+    },
+    "0.8.0": {
+      "libnvjpeg_2k": {
+        "packages": {
+          "linux-aarch64": {
+            "None": "sha256-2sTx0MCIwiFVBnt4EULcJ+wdPO1ouZ0hgPzR/PAv4Z4="
+          },
+          "linux-sbsa": {
+            "None": "sha256-A6VoMFmJslvm3vfYYLJRlXfr7xU4xwPeCtCG+iMUoeA="
+          },
+          "linux-x86_64": {
+            "None": "sha256-8LTwq54ZV5xUfpbOGJxqk3MfZiiYdRqI1i48qllHI2c="
+          }
+        },
+        "releaseInfo": {
+          "license": "nvJPEG 2K",
+          "licensePath": "libnvjpeg_2k/LICENSE.txt",
+          "name": "NVIDIA nvJPEG 2000",
+          "version": "0.8.0.38"
+        }
+      }
     }
   },
   "nvpl": {

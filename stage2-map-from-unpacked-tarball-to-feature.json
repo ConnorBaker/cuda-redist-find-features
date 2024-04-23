@@ -243,7 +243,9 @@
   },
   "/nix/store/0lmpx16spank8qn2y451xdhsx5q5xvdy-libcutensor-linux-sbsa-2.0.0.7-archive-source": {
     "cudaVersionsInLib": [
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -1947,7 +1949,9 @@
   "/nix/store/5zqsf1bmsmjnrv8dv9xgysqm0fm4dpvp-libcutensor-linux-x86_64-1.7.0.1-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -2047,7 +2051,10 @@
     ]
   },
   "/nix/store/6j8lhszbmjkpw0y5jiq38wbb3bnph7n7-libnvjpeg_2k-linux-sbsa-0.7.5.32-archive-source": {
-    "cudaVersionsInLib": [],
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
     "outputs": [
       "dev",
       "lib",
@@ -2471,6 +2478,7 @@
   "/nix/store/84h3rdfkc1a4906iw12wn4xviymywg7w-libcutensor-linux-x86_64-1.3.2.3-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -2572,6 +2580,7 @@
   "/nix/store/8g3d1d8cidbsybfpdvkpin56jqvlqr3g-libcutensor-linux-x86_64-1.6.0.3-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -2607,6 +2616,17 @@
     "cudaVersionsInLib": [],
     "outputs": [
       "bin"
+    ]
+  },
+  "/nix/store/8jbfsjb72dcb94qkmlpvf6lszkxjf72s-libnvjpeg_2k-linux-x86_64-0.8.0.38-archive-source": {
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
+    "outputs": [
+      "dev",
+      "lib",
+      "static"
     ]
   },
   "/nix/store/8jf7mfb9gskifnjh0grbkji8dvc0bn17-cuquantum-linux-ppc64le-22.07.0.11-archive-source": {
@@ -2842,7 +2862,9 @@
   },
   "/nix/store/99vynsgahdb292x0izhvha7zb2a9qnsn-libcutensor-linux-ppc64le-2.0.1.2-archive-source": {
     "cudaVersionsInLib": [
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -2975,7 +2997,9 @@
   },
   "/nix/store/9jz5xsp1n1wnmyxkviwhhl6r9hqjzkfs-libcutensor-linux-ppc64le-2.0.0.7-archive-source": {
     "cudaVersionsInLib": [
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -3400,6 +3424,7 @@
   },
   "/nix/store/axcmwnqsc8si9ckiw8ls3zfnfjvrhxw8-libcutensor-linux-sbsa-1.3.2.3-archive-source": {
     "cudaVersionsInLib": [
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -3475,6 +3500,7 @@
   "/nix/store/b3fvb95bkymwp3dlj49kxwbb0y2bc611-libcutensor-linux-ppc64le-1.4.0.6-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -3777,6 +3803,7 @@
   "/nix/store/bvslay93jidn4r2x9bmhhjxjzya2vhdx-libcutensor-linux-x86_64-1.5.0.3-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -3883,6 +3910,17 @@
     "cudaVersionsInLib": [],
     "outputs": [
       "bin"
+    ]
+  },
+  "/nix/store/c6g5p7hapl6q0w72ia2akkwsx2wib2jr-libnvjpeg_2k-linux-sbsa-0.8.0.38-archive-source": {
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
+    "outputs": [
+      "dev",
+      "lib",
+      "static"
     ]
   },
   "/nix/store/c6v5m3wwqi88bw21xypv87lddf943pcs-cudnn-linux-ppc64le-8.8.0.121_cuda12-archive-source": {
@@ -4015,7 +4053,10 @@
     "outputs": []
   },
   "/nix/store/cpzfcn0wr2d29ra1kzls3x1f2l4bqwc3-libnvjpeg_2k-linux-x86_64-0.7.0.31-archive-source": {
-    "cudaVersionsInLib": [],
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
     "outputs": [
       "dev",
       "lib",
@@ -4465,7 +4506,9 @@
   },
   "/nix/store/fjpp26dpsfc8ljdsj5k71l5w4sd71lad-libcutensor-linux-sbsa-2.0.1.2-archive-source": {
     "cudaVersionsInLib": [
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -5073,7 +5116,10 @@
     ]
   },
   "/nix/store/hv5s79bgh3j173hxbmn15y6rbp5np8vi-cuquantum-linux-sbsa-23.03.0.20-archive-source": {
-    "cudaVersionsInLib": [],
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
     "outputs": [
       "dev",
       "lib",
@@ -5188,6 +5234,7 @@
   },
   "/nix/store/i7cynxvg45v5c0a4ibasg7nx3ycv46ni-libcutensor-linux-sbsa-1.3.3.2-archive-source": {
     "cudaVersionsInLib": [
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -5582,7 +5629,9 @@
   "/nix/store/jdkjmx8dwi9923kpkjfnxsss6jc4j6q0-libcutensor-linux-x86_64-1.6.2.3-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -5609,7 +5658,9 @@
   "/nix/store/jfig5gakf8xk3hsda0cw9hcah4mnvw1j-libcutensor-linux-ppc64le-1.6.2.3-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -5852,7 +5903,9 @@
   },
   "/nix/store/kc5srcf0hh0bk16s212k1wa10sl5mqq7-libcutensor-linux-sbsa-1.7.0.1-archive-source": {
     "cudaVersionsInLib": [
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -5904,6 +5957,7 @@
   "/nix/store/kg6d3vx6a7qxp2w0pls3qxkwb8hg5hsb-libcutensor-linux-ppc64le-1.6.1.5-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -6453,6 +6507,7 @@
   "/nix/store/m6fkgki8dhjsc19n1d7cz7zn61zp7ddb-libcutensor-linux-x86_64-1.6.1.5-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -6519,7 +6574,10 @@
     ]
   },
   "/nix/store/mjpc16mfdd9lj3bvvsm82zpyy9kczmql-cuquantum-linux-x86_64-23.03.0.20-archive-source": {
-    "cudaVersionsInLib": [],
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
     "outputs": [
       "dev",
       "lib",
@@ -6691,6 +6749,7 @@
   },
   "/nix/store/n58nmcf0piv7f2cyhmg7vsxmzyy4wrc1-libcutensor-linux-sbsa-1.5.0.3-archive-source": {
     "cudaVersionsInLib": [
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -6785,7 +6844,9 @@
   },
   "/nix/store/nf25592yf8z9bgrzar4f6snx3sviaybl-libcutensor-linux-x86_64-2.0.1.2-archive-source": {
     "cudaVersionsInLib": [
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -7178,7 +7239,9 @@
   },
   "/nix/store/pml5ydainp0cyirci7bhfk8mk3cfgsbz-libcutensor-linux-sbsa-1.6.2.3-archive-source": {
     "cudaVersionsInLib": [
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -7319,6 +7382,7 @@
   "/nix/store/q4m61w5hf4a87jlhfvqz4z20pjw4874j-libcutensor-linux-ppc64le-1.3.3.2-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -7624,7 +7688,9 @@
   },
   "/nix/store/qs0kb8ikrvjph9srsz91r4pw75b075yr-libcutensor-linux-x86_64-2.0.0.7-archive-source": {
     "cudaVersionsInLib": [
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -8147,7 +8213,10 @@
     ]
   },
   "/nix/store/sgfmqig3lzqfkq75ifgq4q70z33pdvdv-cuquantum-linux-ppc64le-23.03.0.20-archive-source": {
-    "cudaVersionsInLib": [],
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
     "outputs": [
       "dev",
       "lib",
@@ -8587,6 +8656,7 @@
   },
   "/nix/store/w1l92h9lj3lkp5kf2vl9q1sl4aak7qzk-libcutensor-linux-sbsa-1.6.1.5-archive-source": {
     "cudaVersionsInLib": [
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -8631,6 +8701,7 @@
   "/nix/store/w5rs061mk25jlx5mz7cg4cqxygk3mf20-libcutensor-linux-ppc64le-1.3.2.3-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -8651,6 +8722,7 @@
   "/nix/store/w6khd803yhl35w2cwpg7gn8az0by8r45-libcutensor-linux-ppc64le-1.6.0.3-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -8712,6 +8784,7 @@
   "/nix/store/w9v48afm16dn0245c5lgz5w8llhvw5j0-libcutensor-linux-x86_64-1.3.3.2-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -8823,6 +8896,7 @@
   },
   "/nix/store/wm2j4947dadpl1blnd84pk2xf9znbm0x-libcutensor-linux-sbsa-1.4.0.6-archive-source": {
     "cudaVersionsInLib": [
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -8881,7 +8955,9 @@
   "/nix/store/wssvibcaqpmifvi2qlqql8q9y3c912aj-libcutensor-linux-ppc64le-1.7.0.1-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
-      "11.0"
+      "11",
+      "11.0",
+      "12"
     ],
     "outputs": [
       "dev",
@@ -9048,6 +9124,7 @@
   "/nix/store/xfbzmbcs64lp7j36hjq2h8wnfh66mi9v-libcutensor-linux-x86_64-1.4.0.6-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -9280,6 +9357,17 @@
     "cudaVersionsInLib": [],
     "outputs": [
       "bin"
+    ]
+  },
+  "/nix/store/y6bm859lrqrc000mvk4kxprzganars3w-libnvjpeg_2k-linux-aarch64-0.8.0.38-archive-source": {
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
+    "outputs": [
+      "dev",
+      "lib",
+      "static"
     ]
   },
   "/nix/store/y89v9yq7qlqpdn136pyrq34l2g19dhrd-cudnn-linux-x86_64-9.0.0.312_cuda12-archive-source": {
@@ -9566,7 +9654,10 @@
     ]
   },
   "/nix/store/z03ya8h1y2cxgl58h6pgx9gahj6fzpg7-libnvjpeg_2k-linux-x86_64-0.7.5.32-archive-source": {
-    "cudaVersionsInLib": [],
+    "cudaVersionsInLib": [
+      "11",
+      "12"
+    ],
     "outputs": [
       "dev",
       "lib",
@@ -9747,6 +9838,7 @@
   },
   "/nix/store/zrn8qf7qslnws68by03hc6siaan3k6j8-libcutensor-linux-sbsa-1.6.0.3-archive-source": {
     "cudaVersionsInLib": [
+      "11",
       "11.0"
     ],
     "outputs": [
@@ -9796,6 +9888,7 @@
   "/nix/store/zzgcglfx58m9zciz0p1gi7n827p1b6nq-libcutensor-linux-ppc64le-1.5.0.3-archive-source": {
     "cudaVersionsInLib": [
       "10.2",
+      "11",
       "11.0"
     ],
     "outputs": [

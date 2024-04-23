@@ -18037,7 +18037,10 @@
           "linux-ppc64le": {
             "None": {
               "sha256-fQU4o13IxoYKiyM/zrQg+wkFNSytmHMoRWFzAtFDgUM=": {
-                "cudaVersionsInLib": [],
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
                 "outputs": [
                   "dev",
                   "lib",
@@ -18049,7 +18052,10 @@
           "linux-sbsa": {
             "None": {
               "sha256-FopuYIeEymtw9b7WFvMjseLkv+K2alPTUghFGFPuaZc=": {
-                "cudaVersionsInLib": [],
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
                 "outputs": [
                   "dev",
                   "lib",
@@ -18061,7 +18067,10 @@
           "linux-x86_64": {
             "None": {
               "sha256-JcEwxVEjKJd+83kk1+eswwhudBNkK1nOhglvWGx8E0E=": {
-                "cudaVersionsInLib": [],
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
                 "outputs": [
                   "dev",
                   "lib",
@@ -18673,6 +18682,7 @@
               "sha256-y0gFZ/H2IAAX3lmUWwKUq2qOAzEqyGptsMYZ7nC+1Fg=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18687,6 +18697,7 @@
             "None": {
               "sha256-VSD09f5m9WQHrL6m4wmQl1bBW3/6mvjjqP42v/KOTQ8=": {
                 "cudaVersionsInLib": [
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18702,6 +18713,7 @@
               "sha256-aHpNQz/Ss1rxK+soZDtP715Bnv+OGmVgbsncTkXJXvI=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18729,6 +18741,7 @@
               "sha256-w6mK06ogjO01JvfDSV4wcIkyDazofX2h9pwsDDnq40E=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18743,6 +18756,7 @@
             "None": {
               "sha256-+pDcrwrqpF+mGnMkOiaU+r1nj7WmsTjp/1Qn0N//XyU=": {
                 "cudaVersionsInLib": [
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18758,6 +18772,7 @@
               "sha256-ALnmu+jJKlqHSRKaXAyGE2IPAODxqzTTd8PJMOJKXec=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18785,6 +18800,7 @@
               "sha256-iGrJSt4e0zUvyoQr4SkOR+kf8SJSkVqpC1s9KkcjgiQ=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18799,6 +18815,7 @@
             "None": {
               "sha256-Q70d0MpZPUr6h1Uw8HSz/CSh2euJU408Y0qdkBB51LU=": {
                 "cudaVersionsInLib": [
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18814,6 +18831,7 @@
               "sha256-nWKSDMqxgtyRoiLCXq2JtINmDLGlc2bVLzFMS9dDFxE=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18841,6 +18859,7 @@
               "sha256-V0CMiHTCmciPNkgV8+yVdG7POCh59O6kUE8a2qpvikM=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18855,6 +18874,7 @@
             "None": {
               "sha256-JK3OLiJaVdnRW7Hhdd1pL6ImY44i+3BoyjJPVSOqMZE=": {
                 "cudaVersionsInLib": [
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18870,6 +18890,7 @@
               "sha256-SSJJAHslJGuqdy77/mtRcvdzkQtXybX7Ss1CwT++rCg=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18897,6 +18918,7 @@
               "sha256-f9EDSttsXze4iVtnDAXLkHdC5XW6Z2vxpJgCxq0PFbg=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18911,6 +18933,7 @@
             "None": {
               "sha256-3KKLekP9rOmeg+A+LJhZ8wO/0KsFDplPm1JuV+KZz2g=": {
                 "cudaVersionsInLib": [
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18926,6 +18949,7 @@
               "sha256-mQ5Ri+YMrycANk8LXHK8Bi+9IntdzpVb/K8BbO94xdk=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18953,6 +18977,7 @@
               "sha256-uislGY62kUPp1R/Zicxx9L51H+bA7sw5D4XdGIUVHjc=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18967,6 +18992,7 @@
             "None": {
               "sha256-CxV9qiJ3uLlss+GN8CSccjFGSwlivAxmAgqxZQdhYk0=": {
                 "cudaVersionsInLib": [
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -18982,6 +19008,7 @@
               "sha256-swxGv8T41IdHW2YNDcRo+ZRYTzn5VYX1YdK73juCcLg=": {
                 "cudaVersionsInLib": [
                   "10.2",
+                  "11",
                   "11.0"
                 ],
                 "outputs": [
@@ -19009,7 +19036,9 @@
               "sha256-R+BN5iNuRTUVV5TOJzzAagmyQbJxQpqxHOMWSLdBuHw=": {
                 "cudaVersionsInLib": [
                   "10.2",
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19023,7 +19052,9 @@
             "None": {
               "sha256-E6lO6+mf1PeEu6D3cAQS4ocssGnEhaHVPH+1hfo2gkw=": {
                 "cudaVersionsInLib": [
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19038,7 +19069,9 @@
               "sha256-e0LB4jHYBgM1BaDECg8kt3zSdwOT+O7d5jGKVQ6YJvs=": {
                 "cudaVersionsInLib": [
                   "10.2",
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19065,7 +19098,9 @@
               "sha256-TicVpkjp7jFuwvFU7IPdLpHSqYvLulYxUfi2qeD97mk=": {
                 "cudaVersionsInLib": [
                   "10.2",
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19079,7 +19114,9 @@
             "None": {
               "sha256-6vk8Y1FuxQVqNkBLby74MKF/jVcEuqi1osXiIJhMQ5I=": {
                 "cudaVersionsInLib": [
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19094,7 +19131,9 @@
               "sha256-CzU0hc6E0GEdUO7S5gfggGCtL0c8qblLqAzCoS7zidI=": {
                 "cudaVersionsInLib": [
                   "10.2",
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19120,7 +19159,9 @@
             "None": {
               "sha256-6NDo1mUlpMANXNHBqH98MPs0sn6fkgzdQdXFAi6hxWI=": {
                 "cudaVersionsInLib": [
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19134,7 +19175,9 @@
             "None": {
               "sha256-FIXXNto9n023UMo4c/vso/zB9UVTAAWDueKs6Vv6ALM=": {
                 "cudaVersionsInLib": [
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19148,7 +19191,9 @@
             "None": {
               "sha256-vK1xLIU0HXQbjGKfllTKPSEuqqETJiNjgPGX4oxw3D8=": {
                 "cudaVersionsInLib": [
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19174,7 +19219,9 @@
             "None": {
               "sha256-3SDtlCAs3G9xZNFAv/RBho8xwUjxPEiIUobywFvRsI0=": {
                 "cudaVersionsInLib": [
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19188,7 +19235,9 @@
             "None": {
               "sha256-vTEQ7uJYrEC1Q55DgCO5/PXTm0f34ndqezotnqq6E00=": {
                 "cudaVersionsInLib": [
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19202,7 +19251,9 @@
             "None": {
               "sha256-OPn5577DBwzcGdSovv5tMv+x3wW2QgF5XVmRgm5y148=": {
                 "cudaVersionsInLib": [
-                  "11.0"
+                  "11",
+                  "11.0",
+                  "12"
                 ],
                 "outputs": [
                   "dev",
@@ -19277,7 +19328,10 @@
           "linux-x86_64": {
             "None": {
               "sha256-PxRzyG96Mtg0T4ypryB5OreF8gq2d53zVTjCqdJ2exY=": {
-                "cudaVersionsInLib": [],
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
                 "outputs": [
                   "dev",
                   "lib",
@@ -19301,7 +19355,10 @@
           "linux-sbsa": {
             "None": {
               "sha256-dZVr1x5/PuZU+xbNFdUoGGVlhfhf0nkGxrEE/kj5d2o=": {
-                "cudaVersionsInLib": [],
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
                 "outputs": [
                   "dev",
                   "lib",
@@ -19313,7 +19370,10 @@
           "linux-x86_64": {
             "None": {
               "sha256-iysePdHY2oUoXja2Wck8In46D0PwyM9xNlGdacCdGKg=": {
-                "cudaVersionsInLib": [],
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
                 "outputs": [
                   "dev",
                   "lib",
@@ -19328,6 +19388,63 @@
           "licensePath": "libnvjpeg_2k/LICENSE.txt",
           "name": "NVIDIA nvJPEG 2000",
           "version": "0.7.5.32"
+        }
+      }
+    },
+    "0.8.0": {
+      "libnvjpeg_2k": {
+        "packages": {
+          "linux-aarch64": {
+            "None": {
+              "sha256-dUCyuewpeaH0vt8XsizLAUExVflZXeKk0gfxWg8iDG8=": {
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-sbsa": {
+            "None": {
+              "sha256-HvtkbdpluWeTBzoJum/HD1UudYpTFuiJ7o1K4usTFyM=": {
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256-k8659yCDEwCd4y9zUATi4+IEfVkTk5xw/cobZKIi81Q=": {
+                "cudaVersionsInLib": [
+                  "11",
+                  "12"
+                ],
+                "outputs": [
+                  "dev",
+                  "lib",
+                  "static"
+                ]
+              }
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "nvJPEG 2K",
+          "licensePath": "libnvjpeg_2k/LICENSE.txt",
+          "name": "NVIDIA nvJPEG 2000",
+          "version": "0.8.0.38"
         }
       }
     }
