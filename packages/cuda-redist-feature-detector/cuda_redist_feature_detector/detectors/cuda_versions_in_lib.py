@@ -28,7 +28,7 @@ class CudaVersionsInLibDetector(FeatureDetector[Sequence[Path]]):
         if lib_dir is None:
             return None
 
-        cuda_version_pattern = re.compile(r"^\d+(?:\.\d+)$")
+        cuda_version_pattern = re.compile(r"^\d+(?:\.\d+)?$")
         lib_subdirs = sorted(
             subdir.relative_to(lib_dir)
             for path in lib_dir.iterdir()
