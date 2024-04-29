@@ -32,6 +32,7 @@ in
         "nvjpeg2000"
         "nvpl"
         "nvtiff"
+        "tensorrt" # NOTE: not truly a redist; uses different naming convention
       ];
     };
     redistUrlPrefix = mkOption {
