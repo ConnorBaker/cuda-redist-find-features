@@ -7,3 +7,5 @@ After using `nix store prefetch-file` to get the hash of the tarball, you need t
 ```console
 nix hash convert --from sri --to base64 <hash>
 ```
+
+Only available from 10.0.0 and onwards, which is when NVIDIA stopped putting them behind a login wall.
