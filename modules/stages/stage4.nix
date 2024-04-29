@@ -1,7 +1,6 @@
 { config, lib, ... }:
 let
   inherit (lib.options) mkOption;
-  inherit (lib.types) nonEmptyStr nullOr submodule;
 in
 {
   imports = [
@@ -19,29 +18,13 @@ in
     stage2.result = lib.trivial.importJSON ../../${config.stages.stage2.outputPath};
     stage3.result = lib.trivial.importJSON ../../${config.stages.stage3.outputPath};
     stage4 = {
-      description = "Create an index of NAR hash to feature";
-      name = "stage4-generate-index-of-nar-hash-to-feature";
+      description = "Create an index of packageInfo";
+      name = "stage4-generate-index-of-package-info";
     };
   };
   options.stages.stage4.result = mkOption {
-    description = "Index of NAR hash to feature";
-    type = config.types.indexOf (submodule {
-      options = {
-        feature = mkOption {
-          description = "Features the package provides";
-          type = config.types.feature;
-        };
-        narHash = mkOption {
-          description = "Recursive NAR hash of the unpacked tarball";
-          type = config.types.sriHash;
-        };
-        relativePath = mkOption {
-          type = nullOr nonEmptyStr;
-          default = null;
-        };
-        sha256 = mkOption { type = config.types.sha256; };
-      };
-    });
+    description = "Index of packageInfo";
+    type = config.types.indexOf config.types.pacakgeInfo;
     default =
       let
         indexOfTarballHashes = config.stages.stage0.result;

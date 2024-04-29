@@ -67,6 +67,31 @@ in
       type = functionTo optionType;
       default = leafType: config.types.attrs config.types.packageName (config.types.releasesOf leafType);
     };
+    packageInfo = mkOption {
+      description = "The option type of a package info attribute set.";
+      type = optionType;
+      default = submodule {
+        options = {
+          feature = mkOption {
+            description = "Features the package provides";
+            type = config.types.feature;
+          };
+          narHash = mkOption {
+            description = "Recursive NAR hash of the unpacked tarball";
+            type = config.types.sriHash;
+          };
+          relativePath = mkOption {
+            description = "The path to the package in the redistributable tree or null if it can be reconstructed.";
+            type = nullOr nonEmptyStr;
+            default = null;
+          };
+          sha256 = mkOption {
+            description = "SHA-256 hash of the tarball";
+            type = config.types.sha256;
+          };
+        };
+      };
+    };
     packagesOf = mkOption {
       description = "The option type of a package info attribute set, mapping platform to packageVariantsOf leafType.";
       type = functionTo optionType;
