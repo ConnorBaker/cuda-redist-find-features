@@ -41,6 +41,17 @@ in
       default =
         leafType: config.types.attrs config.types.redistName (config.types.versionedManifestsOf leafType);
     };
+    feature = mkOption {
+      description = "The option type of a feature";
+      type = optionType;
+      default = submodule {
+        # Each feature detector should have a corresponding module that outputs the features.
+        imports = [
+          ./feature/cuda-versions-in-lib.nix
+          ./feature/outputs.nix
+        ];
+      };
+    };
     # TODO: Look into how `pkgs` makes an option type by overriding another option type:
     # https://github.com/NixOS/nixpkgs/blob/a6cc776496975eaef2de3218505c85bb5059fccb/lib/types.nix#L524-L530
     # We should do that for `attrs` and `function` to make docs more readable.

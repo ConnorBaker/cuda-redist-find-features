@@ -1,13 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 let
   inherit (lib.options) mkOption;
   inherit (lib.types) nonEmptyStr nullOr submodule;
-  inherit (pkgs) cuda-redist-feature-detector;
 in
 {
   imports = [
@@ -35,7 +29,7 @@ in
       options = {
         feature = mkOption {
           description = "Features the package provides";
-          type = cuda-redist-feature-detector.submodule;
+          type = config.types.feature;
         };
         narHash = mkOption {
           description = "Recursive NAR hash of the unpacked tarball";

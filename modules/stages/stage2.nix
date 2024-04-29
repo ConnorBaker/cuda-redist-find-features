@@ -1,13 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 let
   inherit (lib.options) mkOption;
   inherit (lib.types) pathInStore;
-  inherit (pkgs) cuda-redist-feature-detector;
 in
 {
   imports = [ ./stage1.nix ];
@@ -17,7 +11,7 @@ in
   };
   options.stages.stage2.result = mkOption {
     description = "Map from unpacked tarball store path to feature";
-    type = config.types.attrs pathInStore cuda-redist-feature-detector.submodule;
+    type = config.types.attrs pathInStore config.types.feature;
     # A default value would require Import From Derivation.
   };
 }

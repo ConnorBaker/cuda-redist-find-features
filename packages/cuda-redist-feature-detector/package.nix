@@ -42,19 +42,10 @@ callPackage (
         pyright
         ruff
       ];
-      passthru = {
-        submodule = lib.types.submodule {
-          # Each feature detector should have a corresponding module that outputs the features.
-          imports = [
-            ./cuda_redist_feature_detector/cuda-versions-in-lib.nix
-            ./cuda_redist_feature_detector/outputs.nix
-          ];
-        };
-        optional-dependencies.dev = [
-          pyright
-          ruff
-        ];
-      };
+      passthru.optional-dependencies.dev = [
+        pyright
+        ruff
+      ];
       doCheck = true;
       checkPhase =
         # preCheck
