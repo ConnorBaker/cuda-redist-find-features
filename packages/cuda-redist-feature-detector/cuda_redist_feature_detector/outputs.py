@@ -22,7 +22,7 @@ class FeatureOutputs(PydanticSequence[str]):
 
     @classmethod
     def of(cls, store_path: Path) -> Self:
-        outputs: list[str] = []
+        outputs: list[str] = ["out"]
         if cls.check_bin(store_path):
             outputs.append("bin")
         if cls.check_dev(store_path):

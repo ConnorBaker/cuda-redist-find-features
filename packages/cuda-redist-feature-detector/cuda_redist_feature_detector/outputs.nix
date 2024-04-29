@@ -40,6 +40,7 @@ in
         shared or static library.
       '';
       type = nonEmptyListOf (enum [
+        "out" # Always present
         "bin"
         "dev"
         "doc"
