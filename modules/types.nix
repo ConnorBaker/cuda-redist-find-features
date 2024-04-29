@@ -108,6 +108,7 @@ in
           licensePath = mkOption {
             description = "The path to the license file in the redistributable tree";
             type = nullOr nonEmptyStr;
+            default = null;
           };
           license = mkOption {
             description = "The license of the redistributable";
