@@ -110,14 +110,13 @@ in
         assert assertMsg (
           redistName != "tensorrt"
         ) "mkRedistURL: tensorrt does not use standard naming conventions for URLs; use mkTensorRTURL";
-        relativePath: "${config.data.redistUrlPrefix}/${redistName}/redist/${relativePath}";
-    };
-    mkTensorRTURL = mkOption {
-      description = "Function to generate a URL for TensorRT";
-      type = functionTo (functionTo nonEmptyStr);
-      default =
-        version: relativePath:
-        "${config.data.redistUrlPrefix}/machine-learning/tensorrt/${version}/tars/${relativePath}";
+        relativePath:
+        concatStringsSep "/" [
+          config.data.redistUrlPrefix
+          redistName
+          "redist"
+          relativePath
+        ];
     };
     mkRelativePath = mkOption {
       description = "Function to recreate a relative path for a redistributable";
@@ -142,6 +141,20 @@ in
             (releaseInfo.version + (if cudaVariant != "None" then "_${cudaVariant}" else ""))
             "archive.tar.xz"
           ])
+        ];
+    };
+    mkTensorRTURL = mkOption {
+      description = "Function to generate a URL for TensorRT";
+      type = functionTo (functionTo nonEmptyStr);
+      default =
+        version: relativePath:
+        concatStringsSep "/" [
+          config.data.redistUrlPrefix
+          "machine-learning"
+          "tensorrt"
+          version
+          "tars"
+          relativePath
         ];
     };
   };

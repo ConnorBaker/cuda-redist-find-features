@@ -59,7 +59,10 @@ in
               preferLocalBuild = true;
               allowSubstitutes = false;
 
-              name = removeSuffix ".tar.xz" tarballSrc.name;
+              name = pipe tarballSrc.name [
+                (removeSuffix ".tar.xz")
+                (removeSuffix ".tar.gz")
+              ];
               src = tarballSrc;
             };
           in
