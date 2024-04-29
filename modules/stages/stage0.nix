@@ -13,12 +13,11 @@ in
     description = "Index of hashes of tarballs.";
     type = config.types.indexOf (submodule {
       options = {
-        sha256 = mkOption { type = config.types.sha256; };
         relativePath = mkOption {
-          description = "Relative path to the tarball or null if it can be reconstructed.";
           type = nullOr nonEmptyStr;
           default = null;
         };
+        sha256 = mkOption { type = config.types.sha256; };
       };
     });
     # A default value would require impure derivations to run and access the internet.

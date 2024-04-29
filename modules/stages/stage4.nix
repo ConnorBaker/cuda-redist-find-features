@@ -6,6 +6,7 @@
 }:
 let
   inherit (lib.options) mkOption;
+  inherit (lib.types) nonEmptyStr nullOr submodule;
   inherit (pkgs) cuda-redist-feature-detector;
 in
 {
@@ -30,9 +31,23 @@ in
   };
   options.stages.stage4.result = mkOption {
     description = "Index of NAR hash to feature";
-    type = config.types.indexOf (
-      config.types.attrs config.types.sriHash cuda-redist-feature-detector.submodule
-    );
+    type = config.types.indexOf (submodule {
+      options = {
+        feature = mkOption {
+          description = "Features the package provides";
+          type = cuda-redist-feature-detector.submodule;
+        };
+        narHash = mkOption {
+          description = "Recursive NAR hash of the unpacked tarball";
+          type = config.types.sriHash;
+        };
+        relativePath = mkOption {
+          type = nullOr nonEmptyStr;
+          default = null;
+        };
+        sha256 = mkOption { type = config.types.sha256; };
+      };
+    });
     default =
       let
         indexOfTarballHashes = config.stages.stage0.result;
@@ -43,14 +58,12 @@ in
       config.utils.mapIndexLeaves (
         args:
         let
-          tarballHash = args.leaf;
+          tarballHash = args.leaf.sha256;
           unpackedTarball = tarballHashToUnpackedTarball.${tarballHash};
           feature = unpackedTarballToFeature.${unpackedTarball};
           narHash = unpackedTarballToNarHash.${unpackedTarball};
         in
-        {
-          ${narHash} = feature;
-        }
+        args.leaf // { inherit feature narHash; }
       ) indexOfTarballHashes;
   };
 }
