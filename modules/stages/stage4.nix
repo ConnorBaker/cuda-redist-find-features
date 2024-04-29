@@ -24,7 +24,7 @@ in
   };
   options.stages.stage4.result = mkOption {
     description = "Index of packageInfo";
-    type = config.types.indexOf config.types.pacakgeInfo;
+    type = config.types.indexOf config.types.packageInfo;
     default =
       let
         indexOfTarballHashes = config.stages.stage0.result;
