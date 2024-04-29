@@ -19,18 +19,10 @@ writers.makePythonWriter python312 python312Packages buildPackages.python312Pack
       "W503" # line break before binary operator
     ];
     libraries = [ cuda-redist-lib ];
+    makeWrapperArgs = [
+      "--set"
+      "STAGE0_OUTPUT_PATH"
+      stage0.outputPath
+    ];
   }
-  ''
-    import json
-
-    from cuda_redist_lib.index import mk_index
-
-    with open("${stage0.outputPath}", "w", encoding="utf-8") as file:
-        json.dump(
-            mk_index().model_dump(by_alias=True, mode="json"),
-            file,
-            indent=2,
-            sort_keys=True,
-        )
-        file.write("\n")
-  ''
+  (builtins.readFile ./stage0.py)

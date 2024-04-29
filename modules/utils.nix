@@ -1,5 +1,6 @@
 { config, lib, ... }:
 let
+  inherit (lib.asserts) assertMsg;
   inherit (lib.attrsets) mapAttrs mapAttrsToList;
   inherit (lib.lists) flatten;
   inherit (lib.options) mkOption;
@@ -105,7 +106,18 @@ in
       description = "Function to generate a URL for something in the redistributable tree";
       type = functionTo (functionTo config.types.redistUrl);
       default =
-        redistName: relativePath: "${config.data.redistUrlPrefix}/${redistName}/redist/${relativePath}";
+        redistName:
+        assert assertMsg (
+          redistName != "tensorrt"
+        ) "mkRedistURL: tensorrt does not use standard naming conventions for URLs; use mkTensorRTURL";
+        relativePath: "${config.data.redistUrlPrefix}/${redistName}/redist/${relativePath}";
+    };
+    mkTensorRTURL = mkOption {
+      description = "Function to generate a URL for TensorRT";
+      type = functionTo (functionTo nonEmptyStr);
+      default =
+        version: relativePath:
+        "${config.data.redistUrlPrefix}/machine-learning/tensorrt/${version}/tars/${relativePath}";
     };
     mkRelativePath = mkOption {
       description = "Function to recreate a relative path for a redistributable";
@@ -114,10 +126,13 @@ in
         {
           packageName,
           platform,
+          redistName,
           releaseInfo,
           cudaVariant,
           ...
         }:
+        assert assertMsg (redistName != "tensorrt")
+          "mkRelativePath: tensorrt does not use standard naming conventions for relative paths; use mkTensorRTURL";
         concatStringsSep "/" [
           packageName
           platform

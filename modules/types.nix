@@ -124,6 +124,11 @@ in
         };
       };
     };
+    sha256 = mkOption {
+      description = "The option type of a SHA-256, base64-encoded hash";
+      type = optionType;
+      default = strMatching "^[[:alnum:]+/]{64}$";
+    };
     sriHash = mkOption {
       description = "The option type of a Subresource Integrity hash";
       type = optionType;

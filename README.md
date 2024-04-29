@@ -3,6 +3,9 @@
 > [!Important]
 > This repo is in a transitory stage. It should be moved to `nix-community` or in-tree in Nixpkgs.
 
+> [!Note]
+> The `tensorrt` directory contains hand-made manifests meant to mimic the structure of NVIDIA's manifests for their other redistributables. They add TensorRT to the generated index.
+
 ## Roadmap
 
 - \[ \] Move to `nix-community` or in-tree in Nixpkgs.

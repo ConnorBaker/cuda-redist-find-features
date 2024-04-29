@@ -1,8 +1,6 @@
 # NOTE: Open bugs in Pydantic like https://github.com/pydantic/pydantic/issues/8984 prevent the full switch to the type
 # keyword introduced in Python 3.12.
-import concurrent.futures
 import operator
-from collections import defaultdict
 from functools import partial
 from logging import Logger
 from pathlib import Path
@@ -26,14 +24,29 @@ from cuda_redist_lib.types import (
     Platforms,
     RedistName,
     RedistNames,
-    SriHash,
+    Sha256,
+    Sha256TA,
     Version,
 )
-from cuda_redist_lib.utilities import mk_relative_path, sha256_to_sri_hash
+from cuda_redist_lib.utilities import mk_relative_path
 
 logger: Final[Logger] = get_logger(__name__)
 
-PackageVariants: TypeAlias = PydanticMapping[None | CudaVariant, SriHash]
+
+class PackageInfo(PydanticObject):
+    """
+    A package in the manifest, with a hash and a relative path.
+
+    The relative path is None when it can be reconstructed from information in the index.
+
+    A case where the relative path is non-None: TensorRT, which does not follow the usual naming convention.
+    """
+
+    sha256: Sha256
+    relative_path: None | Path = None
+
+
+PackageVariants: TypeAlias = PydanticMapping[None | CudaVariant, PackageInfo]
 
 Packages: TypeAlias = PydanticMapping[Platform, PackageVariants]
 
@@ -135,18 +148,24 @@ def mk_package_hashes(
         )
 
     packages: dict[None | str, Any] = {None: nvidia_package} if not any_cuda_keys else nvidia_package  # type: ignore
-    infos: dict[None | CudaVariant, SriHash] = {}
+    infos: dict[None | CudaVariant, PackageInfo] = {}
     for cuda_variant_name in set(packages.keys()):
         nvidia_package = packages.pop(cuda_variant_name)
+        sha256 = Sha256TA.validate_strings(nvidia_package.pop("sha256"))
 
         # Verify that we can compute the correct relative path before throwing it away.
         actual_relative_path = Path(nvidia_package.pop("relative_path"))
         expected_relative_path = mk_relative_path(package_name, platform, release_info.version, cuda_variant_name)
+        package_info: PackageInfo
         if actual_relative_path != expected_relative_path:
-            raise RuntimeError(f"Expected relative path to be {expected_relative_path}, got {actual_relative_path}")
+            # TensorRT will fail this check because it doesn't follow the usual naming convention.
+            if release_info.name != "NVIDIA TensorRT":
+                logger.info("Expected relative path to be %s, got %s", expected_relative_path, actual_relative_path)
+            package_info = PackageInfo.model_validate({"sha256": sha256, "relative_path": actual_relative_path})
+        else:
+            package_info = PackageInfo.model_validate({"sha256": sha256, "relative_path": None})
 
-        infos[cuda_variant_name] = sha256_to_sri_hash(nvidia_package.pop("sha256"))
-
+        infos[cuda_variant_name] = package_info
     return PackageVariants.model_validate(infos)
 
 
@@ -172,23 +191,9 @@ def mk_manifest(redist_name: RedistName, version: Version, nvidia_manifest: None
 
 
 def mk_index() -> Index:
-    index: dict[RedistName, dict[Version, Manifest]] = defaultdict(dict)
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        # Get all of the manifests in parallel.
-        futures = {
-            executor.submit(mk_manifest, redist_name, version): (redist_name, version)
-            for redist_name in RedistNames
-            for version in get_nvidia_manifest_versions(redist_name)
+    return Index.model_validate({
+        redist_name: {
+            version: mk_manifest(redist_name, version) for version in get_nvidia_manifest_versions(redist_name)
         }
-        num_tasks = len(futures)
-        logger.info("Downloading and processing %d manifests...", num_tasks)
-        for future in concurrent.futures.as_completed(futures):
-            (redist_name, version) = futures[future]
-            try:
-                data = future.result()
-                index[redist_name][version] = data
-                logger.info("Processed manifest for %s %s", redist_name, version)
-            except Exception as e:
-                raise RuntimeError(f"Error processing manifest for {redist_name} version {version}: {e}")
-
-    return Index.model_validate(index)
+        for redist_name in RedistNames
+    })

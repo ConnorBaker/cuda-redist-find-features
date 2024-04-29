@@ -38,6 +38,8 @@ type RedistName = Literal[
     "nvjpeg2000",
     "nvpl",
     "nvtiff",
+    # TensorRT is a special case.
+    "tensorrt",
 ]
 RedistNames: Final[Set[RedistName]] = set(get_args(RedistName.__value__))
 

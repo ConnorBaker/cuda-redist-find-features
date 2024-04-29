@@ -32,7 +32,7 @@ in
     # NOTE: We cannot use `package` because in stage4, we are unable to get the outPath of the derivation
     # to index the data created in stage2 and stage3:
     # error: 'builtins.storePath' is not allowed in pure evaluation mode
-    type = config.types.attrs config.types.sriHash path;
+    type = config.types.attrs config.types.sha256 path;
     default =
       let
         indexOfTarballHashes = config.stages.stage0.result;
@@ -41,10 +41,14 @@ in
         (config.utils.mapIndexLeavesToList (
           args:
           let
-            hash = args.leaf;
+            inherit (args.leaf) sha256;
             tarballSrc = fetchurl {
-              inherit hash;
-              url = config.utils.mkRedistURL args.redistName (config.utils.mkRelativePath args);
+              inherit sha256;
+              url =
+                if args.redistName == "tensorrt" then
+                  config.utils.mkTensorRTURL args.version args.leaf.relativePath
+                else
+                  config.utils.mkRedistURL args.redistName (config.utils.mkRelativePath args);
             };
             # Thankfully, using srcOnly is equivalent to using fetchzip!
             unpackedSrc = srcOnly {
@@ -59,7 +63,7 @@ in
               src = tarballSrc;
             };
           in
-          nameValuePair hash unpackedSrc.outPath
+          nameValuePair sha256 unpackedSrc.outPath
         ))
         builtins.listToAttrs
       ];

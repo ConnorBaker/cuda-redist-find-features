@@ -3,7 +3,9 @@
 import json
 import re
 from collections.abc import Sequence
+from io import TextIOWrapper
 from logging import Logger
+from pathlib import Path
 from typing import Any, Final
 from urllib import request
 
@@ -50,46 +52,70 @@ def is_ignored_nvidia_manifest(redist_name: RedistName, version: Version) -> tup
 
 
 def get_nvidia_manifest_versions(redist_name: RedistName) -> Sequence[Version]:
-    regex_str = r"""
-        href=                # Match 'href='
-        ('|")                # Capture a single or double quote
+    logger.info("Getting versions for %s", redist_name)
+    regex_pattern = re.compile(
+        r"""
         redistrib_           # Match 'redistrib_'
         (\d+(?:\.\d+){1,3})  # Capture a version number with 2-4 components
         \.json               # Match '.json'
-        \1                   # Match the same quote as the first capture group
-    """
+        """,
+        flags=re.VERBOSE,
+    )
+
+    # Map major and minor component to the tuple of all components and the version string.
+    version_dict: dict[tuple[int, ...], tuple[tuple[int, ...], Version]] = {}
 
     # For CUDA, and CUDA only, we take only the latest minor version for each major version.
     # For other packages, like cuDNN, we take the latest patch version for each minor version.
     # An example of why we do this: between patch releases of cuDNN, NVIDIA may not offer support for all
     # architecutres! For instance, cuDNN 8.9.5 supports Jetson, but cuDNN 8.9.6 does not.
-    num_components: int = 2 if redist_name == "cuda" else 3
-    # Map major and minor component to the tuple of all components and the version string.
-    version_dict: dict[tuple[int, ...], tuple[tuple[int, ...], Version]] = {}
-    with request.urlopen(f"{RedistUrlPrefix}/{redist_name}/redist/index.html") as response:
-        s: str = response.read().decode("utf-8")
-        for raw_version_match in re.finditer(regex_str, s, flags=re.VERBOSE):
-            raw_version: str = raw_version_match.group(2)
-            version = VersionTA.validate_strings(raw_version)
+    num_components: int
+    match redist_name:
+        case "cuda":
+            num_components = 2
+        case _:
+            num_components = 3
 
-            is_ignored, reason = is_ignored_nvidia_manifest(redist_name, version)
-            if is_ignored:
-                logger.info("Ignoring manifest %s version %s: %s", redist_name, version, reason)
-                continue
+    listing: str
+    match redist_name:
+        case "tensorrt":
+            listing = "\n".join(
+                redistrib_path.name for redistrib_path in Path("tensorrt").iterdir() if redistrib_path.is_file()
+            )
+        case _:
+            with request.urlopen(f"{RedistUrlPrefix}/{redist_name}/redist/index.html") as response:
+                listing = response.read().decode("utf-8")
 
-            # Take only the latest minor version for each major version.
-            components = tuple(map(int, version.split(".")))
-            existing_components, _ = version_dict.get(components[:num_components], (None, None))
-            if existing_components is None or components > existing_components:
-                version_dict[components[:num_components]] = (components, version)
+    for raw_version_match in regex_pattern.finditer(listing):
+        raw_version: str = raw_version_match.group(1)
+        version = VersionTA.validate_strings(raw_version)
+
+        is_ignored, reason = is_ignored_nvidia_manifest(redist_name, version)
+        if is_ignored:
+            logger.info("Ignoring manifest %s version %s: %s", redist_name, version, reason)
+            continue
+
+        # Take only the latest minor version for each major version.
+        components = tuple(map(int, version.split(".")))
+        existing_components, _ = version_dict.get(components[:num_components], (None, None))
+        if existing_components is None or components > existing_components:
+            version_dict[components[:num_components]] = (components, version)
 
     return [version for _, version in version_dict.values()]
 
 
-def get_nvidia_manifest(redist_name: RedistName, version: str) -> dict[str, Any]:
-    with request.urlopen(f"{RedistUrlPrefix}/{redist_name}/redist/redistrib_{version}.json") as response:
-        content_bytes = response.read()
-        maybe_obj = json.loads(content_bytes)
+def get_nvidia_manifest(redist_name: RedistName, version: Version) -> dict[str, Any]:
+    logger.info("Getting manifest for %s %s", redist_name, version)
+    context: TextIOWrapper
+    match redist_name:
+        case "tensorrt":
+            context = (Path("tensorrt") / f"redistrib_{version}.json").open(encoding="utf-8")
+        case _:
+            context = request.urlopen(f"{RedistUrlPrefix}/{redist_name}/redist/redistrib_{version}.json")
+
+    with context as readable:
+        maybe_obj = json.load(readable)
         if not isinstance(maybe_obj, dict):
             raise RuntimeError(f"Expected JSON object for manifest {redist_name} {version}, got {type(maybe_obj)}")
-        return maybe_obj  # type: ignore
+
+        return maybe_obj  # pyright: ignore[reportUnknownVariableType]
