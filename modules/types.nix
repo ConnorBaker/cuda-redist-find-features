@@ -137,9 +137,9 @@ in
       default = strMatching "^(md5|sha(1|256|512))-([[:alnum:]+/]+={0,2})$";
     };
     version = mkOption {
-      description = "The option type of a version with between two and four components";
+      description = "The option type of a version with at least one component";
       type = optionType;
-      default = strMatching "^[[:digit:]]+(\.[[:digit:]]+){2,3}$";
+      default = strMatching "^[[:digit:]]+(\.[[:digit:]]+)*$";
     };
     versionedManifestsOf = mkOption {
       description = ''
