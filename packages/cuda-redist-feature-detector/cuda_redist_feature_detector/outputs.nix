@@ -1,7 +1,7 @@
 { lib, ... }:
 let
   inherit (lib.options) mkOption;
-  inherit (lib.types) listOf enum;
+  inherit (lib.types) nonEmptyListOf enum;
 in
 {
   options = {
@@ -39,7 +39,7 @@ in
         A `stubs` output requires that we have a non-empty `lib/stubs` or `stubs` directory containing at least one
         shared or static library.
       '';
-      type = listOf (enum [
+      type = nonEmptyListOf (enum [
         "bin"
         "dev"
         "doc"

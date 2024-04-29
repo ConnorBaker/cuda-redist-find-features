@@ -2,11 +2,13 @@ import concurrent.futures
 import json
 import sys
 from argparse import ArgumentParser, Namespace
+from functools import partial
 from logging import Logger
 from pathlib import Path
 from typing import Any, Final
 
 from cuda_redist_lib.logger import get_logger
+from pydantic import BaseModel
 
 from cuda_redist_feature_detector.cuda_versions_in_lib import FeatureCudaVersionsInLib
 from cuda_redist_feature_detector.outputs import FeatureOutputs
@@ -27,9 +29,12 @@ def setup_argparse() -> ArgumentParser:
 
 
 def process_store_path(store_path: Path) -> dict[str, Any]:
+    outputs = FeatureOutputs.of(store_path)
+    cuda_versions_in_lib = FeatureCudaVersionsInLib.of(store_path)
+    dump_model = partial(BaseModel.model_dump, by_alias=True, exclude_none=True, exclude_unset=True, mode="json")
     return {
-        "outputs": FeatureOutputs.of(store_path).model_dump(by_alias=True, mode="json"),
-        "cudaVersionsInLib": FeatureCudaVersionsInLib.of(store_path).model_dump(by_alias=True, mode="json"),
+        "outputs": dump_model(outputs),
+        "cudaVersionsInLib": dump_model(cuda_versions_in_lib) if cuda_versions_in_lib else None,
     }
 
 

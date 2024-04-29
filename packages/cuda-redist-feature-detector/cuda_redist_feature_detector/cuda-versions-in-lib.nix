@@ -1,7 +1,7 @@
 { lib, ... }:
 let
   inherit (lib.options) mkOption;
-  inherit (lib.types) listOf strMatching;
+  inherit (lib.types) nonEmptyListOf nullOr strMatching;
 in
 {
   options = {
@@ -12,8 +12,8 @@ in
     # 2.  A package with a non-empty `cudaVersionsInLib` feature MUST have a `lib` output.
     cudaVersionsInLib = mkOption {
       description = "Subdirectories of the `lib` directory which are named after CUDA versions";
-      type = listOf (strMatching "^[[:digit:]]+(\.[[:digit:]]+)?$");
-      default = [ ];
+      type = nullOr (nonEmptyListOf (strMatching "^[[:digit:]]+(\.[[:digit:]]+)?$"));
+      default = null;
     };
   };
 }
