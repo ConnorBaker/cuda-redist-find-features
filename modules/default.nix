@@ -2,7 +2,7 @@
   imports = [
     ./data.nix
     ./stages
-    ./types.nix
+    ./types
     ./utils.nix
   ];
 }
