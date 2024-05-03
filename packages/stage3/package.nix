@@ -12,13 +12,13 @@ let
       specialArgs = {
         inherit pkgs;
       };
-      modules = [ ../../modules/stages/stage3.nix ];
-    }).config.stages
+      modules = [ ../../modules ];
+    }).config.data.stages
     )
     stage1
     stage3
     ;
-  tarballHashToUnpackedTarballJSON = writers.writeJSON stage1.outputPath stage1.result;
+  tarballHashToUnpackedTarballJSON = writers.writeJSON "${stage1.name}.json" stage1.result;
 in
 writeShellApplication {
   inherit (stage3) name;
@@ -43,6 +43,6 @@ writeShellApplication {
     jq "''${JQ_COMMON_FLAGS[@]}" '.[]' "${tarballHashToUnpackedTarballJSON}" \
       | nix path-info --quiet --json --stdin \
       | jq "''${JQ_COMMON_FLAGS[@]}" 'with_entries(.value |= .narHash)' \
-      > "${stage3.outputPath}"
+      > "./modules/data/stages/${stage3.name}.json"
   '';
 }

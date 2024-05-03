@@ -9789,6 +9789,54 @@
           "version": "9.1.0.70"
         }
       }
+    },
+    "9.1.1": {
+      "cudnn": {
+        "packages": {
+          "linux-aarch64": {
+            "cuda12": {
+              "sha256": "03d3969d2cb0182db7167b75edc362384e6b48b6686c318e05022a4f711c7edf"
+            }
+          },
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256": "534984ea42f9e754d78aace88d6b5bed124c2557d84350c9488776e4d0dffa56"
+            },
+            "cuda12": {
+              "sha256": "19bd66ee9fb30348f18801a398d0bec98b4663866efa244ca122825b3429526c"
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256": "15a8b77123c1911606b45703691ad0990892c6098070ffab0bcaa003183a7dcb"
+            },
+            "cuda12": {
+              "sha256": "992b4be26899cc4c618bb1f6989261df7d0a9f9032b2217bf1fce9dd3228c904"
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn/LICENSE.txt",
+          "name": "NVIDIA CUDA Deep Neural Network library",
+          "version": "9.1.1.17"
+        }
+      },
+      "cudnn_samples": {
+        "packages": {
+          "source": {
+            "None": {
+              "sha256": "67f900d296cf6ac6504f580471938f0ad7f406de0812f2d5d5e36eb12418de92"
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cudnn",
+          "licensePath": "cudnn_samples/LICENSE.txt",
+          "name": "NVIDIA cuDNN samples",
+          "version": "9.1.1.17"
+        }
+      }
     }
   },
   "cudss": {
@@ -10210,6 +10258,34 @@
           "version": "0.4.3.549"
         }
       }
+    },
+    "0.5.0": {
+      "libcusolvermp": {
+        "packages": {
+          "linux-sbsa": {
+            "cuda11": {
+              "sha256": "8d8bd7369bef3bd1760bba06312dd09ae124dc9c8a5ce081752085ae9366a5aa"
+            },
+            "cuda12": {
+              "sha256": "a549e564f44f1e5b58e8c9f0ab315aca68ac2b29d415d6e28d97da2e0f1de7a9"
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "sha256": "9326ae6f3c7175783c69a52d19bcdc3940734ac8c158b843c44bdd1aaec4163b"
+            },
+            "cuda12": {
+              "sha256": "1bcbae1a6c98a63b6c0dd9dbb033f6a5b7fd78fe33d0ec8b52eb0a1b306dad2a"
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "libcusolvermp library",
+          "licensePath": "libcusolvermp/LICENSE.txt",
+          "name": "NVIDIA libcusolvermp library",
+          "version": "0.5.0.664"
+        }
+      }
     }
   },
   "cusparselt": {
@@ -10340,6 +10416,28 @@
           "licensePath": "libcusparse_lt/LICENSE.txt",
           "name": "NVIDIA cuSPARSELt",
           "version": "0.6.0.6"
+        }
+      }
+    },
+    "0.6.1": {
+      "libcusparse_lt": {
+        "packages": {
+          "linux-sbsa": {
+            "None": {
+              "sha256": "d07ee5ff24fb18f4b7c769d5a6bf476c7e68f7a18dd31f6b676b1d1c27759482"
+            }
+          },
+          "linux-x86_64": {
+            "None": {
+              "sha256": "57288bed161cf5cb7365ea5488fac53d76da3e9682c1b2130515e64de4366276"
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuSPARSELt",
+          "licensePath": "libcusparse_lt/LICENSE.txt",
+          "name": "NVIDIA cuSPARSELt",
+          "version": "0.6.1.0"
         }
       }
     }

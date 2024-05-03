@@ -13,13 +13,15 @@ let
       specialArgs = {
         inherit pkgs;
       };
-      modules = [ ../../modules/stages/stage2.nix ];
-    }).config.stages
+      modules = [ ../../modules ];
+    }).config.data.stages
     )
     stage1
     stage2
     ;
-  tarballHashToUnpackedTarballJSON = writers.writeJSON stage1.outputPath stage1.result;
+  tarballHashToUnpackedTarballJSON = writers.writeJSON "${stage1.name}.json" stage1.result;
+  # Having the result as a separate derivation rather than created during the execution of the main derivation
+  # allows us to cache the result and avoid re-running the feature detection for the same tarball.
   result =
     runCommand "generate-map-from-unpacked-tarball-to-feature"
       {
@@ -58,6 +60,6 @@ writeShellApplication {
   };
   # Avoid using `cp` here because it'll error if the file already exists and have troubles with perms.
   text = ''
-    cat < "${result}" > "${stage2.outputPath}"
+    cat < "${result}" > "./modules/data/stages/${stage2.name}.json"
   '';
 }

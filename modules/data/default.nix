@@ -6,6 +6,7 @@ let
   inherit (lib.types) nonEmptyListOf nonEmptyStr;
 in
 {
+  imports = [ ./stages ];
   options.data = mapAttrs (const mkOption) {
     platforms = {
       description = "List of platforms to use in creation of the platform type.";

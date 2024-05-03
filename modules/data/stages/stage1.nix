@@ -13,17 +13,13 @@ let
   inherit (pkgs) fetchurl srcOnly;
 in
 {
-  imports = [ ./stage0.nix ];
-  config.stages = {
+  config.data.stages = {
     # NOTE: We must use path-interpolation because string interpolation for paths is forbidden in pure evaluation mode.
     # NOTE: We only define this here because we use it to create the result for stage1.
-    stage0.result = lib.trivial.importJSON ../../${config.stages.stage0.outputPath};
-    stage1 = {
-      description = "Create a map from tarball hash to unpacked tarball.";
-      name = "stage1-generate-map-from-tarball-hash-to-unpacked-tarball";
-    };
+    stage0.result = lib.trivial.importJSON ./stage0.json;
+    stage1.description = "Create a map from tarball hash to unpacked tarball.";
   };
-  options.stages.stage1 = mapAttrs (const mkOption) {
+  options.data.stages.stage1 = mapAttrs (const mkOption) {
     result = {
       description = "Map from tarball hash to unpacked tarball.";
       # NOTE: We cannot use `pathInStore` as the value type because these are content-addressed derivations,
@@ -36,7 +32,7 @@ in
       type = config.types.attrs config.types.sha256 path;
       default =
         let
-          indexOfTarballHashes = config.stages.stage0.result;
+          indexOfTarballHashes = config.data.stages.stage0.result;
         in
         pipe indexOfTarballHashes [
           (config.utils.mapIndexLeavesToList (

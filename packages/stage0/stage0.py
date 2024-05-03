@@ -1,10 +1,10 @@
+from pathlib import Path
 import json
-import os
 
 from cuda_redist_lib.index import mk_index
 
 # Environment variable is provided by Nix via makeWrapper.
-with open(os.environ["STAGE0_OUTPUT_PATH"], "w", encoding="utf-8") as file:
+with open(Path("modules") / "data" / "stages" / "stage0.json", "w", encoding="utf-8") as file:
     json.dump(
         mk_index().model_dump(
             by_alias=True,

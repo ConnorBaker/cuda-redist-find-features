@@ -7,9 +7,7 @@
   writers,
 }:
 let
-  inherit ((lib.modules.evalModules { modules = [ ../../modules/stages/stage0.nix ]; }).config.stages)
-    stage0
-    ;
+  inherit ((lib.modules.evalModules { modules = [ ../../modules ]; }).config.data.stages) stage0;
 in
 writers.makePythonWriter python312 python312Packages buildPackages.python312Packages
   "/bin/${stage0.name}"
@@ -19,10 +17,5 @@ writers.makePythonWriter python312 python312Packages buildPackages.python312Pack
       "W503" # line break before binary operator
     ];
     libraries = [ cuda-redist-lib ];
-    makeWrapperArgs = [
-      "--set"
-      "STAGE0_OUTPUT_PATH"
-      stage0.outputPath
-    ];
   }
   (builtins.readFile ./stage0.py)

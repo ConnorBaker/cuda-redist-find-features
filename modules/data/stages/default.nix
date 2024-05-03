@@ -2,12 +2,18 @@
 let
   inherit (lib.attrsets) mapAttrs;
   inherit (lib.options) mkOption;
-  inherit (lib.strings) replaceStrings;
   inherit (lib.trivial) const;
   inherit (lib.types) attrsOf nonEmptyStr submodule;
 in
 {
-  options = mapAttrs (const mkOption) {
+  imports = [
+    ./stage0.nix
+    ./stage1.nix
+    ./stage2.nix
+    ./stage3.nix
+    ./stage4.nix
+  ];
+  options.data = mapAttrs (const mkOption) {
     stages = {
       description = "A collection of stages to run in the pipeline";
       type = submodule {
@@ -23,11 +29,7 @@ in
                 name = {
                   description = "The name of the stage.";
                   type = nonEmptyStr;
-                };
-                outputPath = {
-                  description = "The path to the result of the stage.";
-                  type = nonEmptyStr;
-                  default = replaceStrings [ "-generate-" ] [ "-" ] config.name + ".json";
+                  default = config._module.args.name;
                 };
               };
             }
