@@ -1,11 +1,13 @@
 { lib, ... }:
 let
+  inherit (lib.attrsets) mapAttrs;
   inherit (lib.options) mkOption;
+  inherit (lib.trivial) const;
   inherit (lib.types) nonEmptyListOf enum;
 in
 {
-  options = {
-    outputs = mkOption {
+  options = mapAttrs (const mkOption) {
+    outputs = {
       description = ''
         The outputs provided by a package.
 

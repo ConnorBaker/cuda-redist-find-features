@@ -1,6 +1,8 @@
 { config, lib, ... }:
 let
+  inherit (lib.attrsets) mapAttrs;
   inherit (lib.options) mkOption;
+  inherit (lib.trivial) const;
 in
 {
   imports = [
@@ -22,25 +24,27 @@ in
       name = "stage4-generate-index-of-package-info";
     };
   };
-  options.stages.stage4.result = mkOption {
-    description = "Index of packageInfo";
-    type = config.types.indexOf config.types.packageInfo;
-    default =
-      let
-        indexOfTarballHashes = config.stages.stage0.result;
-        tarballHashToUnpackedTarball = config.stages.stage1.result;
-        unpackedTarballToFeature = config.stages.stage2.result;
-        unpackedTarballToNarHash = config.stages.stage3.result;
-      in
-      config.utils.mapIndexLeaves (
-        args:
+  options.stages.stage4 = mapAttrs (const mkOption) {
+    result = {
+      description = "Index of packageInfo";
+      type = config.types.indexOf config.types.packageInfo;
+      default =
         let
-          tarballHash = args.leaf.sha256;
-          unpackedTarball = tarballHashToUnpackedTarball.${tarballHash};
-          feature = unpackedTarballToFeature.${unpackedTarball};
-          narHash = unpackedTarballToNarHash.${unpackedTarball};
+          indexOfTarballHashes = config.stages.stage0.result;
+          tarballHashToUnpackedTarball = config.stages.stage1.result;
+          unpackedTarballToFeature = config.stages.stage2.result;
+          unpackedTarballToNarHash = config.stages.stage3.result;
         in
-        args.leaf // { inherit feature narHash; }
-      ) indexOfTarballHashes;
+        config.utils.mapIndexLeaves (
+          args:
+          let
+            tarballHash = args.leaf.sha256;
+            unpackedTarball = tarballHashToUnpackedTarball.${tarballHash};
+            feature = unpackedTarballToFeature.${unpackedTarball};
+            narHash = unpackedTarballToNarHash.${unpackedTarball};
+          in
+          args.leaf // { inherit feature narHash; }
+        ) indexOfTarballHashes;
+    };
   };
 }

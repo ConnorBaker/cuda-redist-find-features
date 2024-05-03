@@ -5,11 +5,12 @@ let
   inherit (lib.lists) flatten;
   inherit (lib.options) mkOption;
   inherit (lib.strings) concatStringsSep;
+  inherit (lib.trivial) const;
   inherit (lib.types) functionTo nonEmptyStr raw;
 in
 {
-  options.utils = {
-    mapIndexLeaves = mkOption {
+  options.utils = mapAttrs (const mkOption) {
+    mapIndexLeaves = {
       description = ''
         Function to map over the leaves of an index, replacing them with the result of the function.
 
@@ -56,7 +57,7 @@ in
           )
         ) index;
     };
-    mapIndexLeavesToList = mkOption {
+    mapIndexLeavesToList = {
       description = ''
         Function to map over the leaves of an index, returning a list of the results.
 
@@ -102,7 +103,7 @@ in
           ) index
         );
     };
-    mkRedistURL = mkOption {
+    mkRedistURL = {
       description = "Function to generate a URL for something in the redistributable tree";
       type = functionTo (functionTo config.types.redistUrl);
       default =
@@ -118,7 +119,7 @@ in
           relativePath
         ];
     };
-    mkRelativePath = mkOption {
+    mkRelativePath = {
       description = "Function to recreate a relative path for a redistributable";
       type = functionTo nonEmptyStr;
       default =
@@ -143,7 +144,7 @@ in
           ])
         ];
     };
-    mkTensorRTURL = mkOption {
+    mkTensorRTURL = {
       description = "Function to generate a URL for TensorRT";
       type = functionTo (functionTo nonEmptyStr);
       default =
