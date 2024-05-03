@@ -1,0 +1,122 @@
+{
+  "cublasmp": {
+    "0.1.0": {
+      "libcal": {
+        "packages": {
+          "linux-sbsa": {
+            "cuda11": {
+              "feature": {
+                "outputs": [
+                  "out",
+                  "dev",
+                  "lib"
+                ]
+              },
+              "narHash": "sha256-PmfKgvPU4vYexMlAE/vUS4iCpjd+ieKsmNuYTRMaWXU=",
+              "sha256": "59e07e23dccc97ad57e06a70cb4a49f321cda4fc5c8f3418dfeca76436e54082"
+            },
+            "cuda12": {
+              "feature": {
+                "outputs": [
+                  "out",
+                  "dev",
+                  "lib"
+                ]
+              },
+              "narHash": "sha256-z5kGnVrkkvvqknB8zUxBUOND0JSZp8U25qOlzS0g4jo=",
+              "sha256": "aa4ca7e078c1ba7c0b2955920f51b4a279c9d6da5f0634aaa9bd9c610f2b39a7"
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "feature": {
+                "outputs": [
+                  "out",
+                  "dev",
+                  "lib"
+                ]
+              },
+              "narHash": "sha256-vd/Z1Nd16x9i39O6GgYtKTGT8Ymq4EpJyFYZfk7/p0M=",
+              "sha256": "2e19fa486cd8cbe6707ad7ef4f405d95fd43a99ca29053b7bf04808633f6e7ca"
+            },
+            "cuda12": {
+              "feature": {
+                "outputs": [
+                  "out",
+                  "dev",
+                  "lib"
+                ]
+              },
+              "narHash": "sha256-scWp5M7YLZq/4zTdkEf8HSkyT8G16iYL0WaptZ1mt3w=",
+              "sha256": "ff23658267b8f36c0798a7787db9173b605cf88100c107fffd0c704bfe463525"
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "libcal library",
+          "licensePath": "libcal/LICENSE.txt",
+          "name": "NVIDIA libcal library",
+          "version": "0.4.2.25"
+        }
+      },
+      "libcublasmp": {
+        "packages": {
+          "linux-sbsa": {
+            "cuda11": {
+              "feature": {
+                "outputs": [
+                  "out",
+                  "dev",
+                  "lib"
+                ]
+              },
+              "narHash": "sha256-YpsXgOSiIko/aXhLtW5DWwE4QXbybecM/7PI4uZT204=",
+              "sha256": "1681af5fbcd83dccb7d3860672d2fbf9e6c19f2918bc3fed496c0564c1d15ce4"
+            },
+            "cuda12": {
+              "feature": {
+                "outputs": [
+                  "out",
+                  "dev",
+                  "lib"
+                ]
+              },
+              "narHash": "sha256-OufJHdDJREbB6WI0Wix9ShU+Yfguzwtdyo5Pv6UW8JU=",
+              "sha256": "8aa2de23a9afc34b3224358f5aeb18232615a722c19104ed6c5a3f2ddb9f0284"
+            }
+          },
+          "linux-x86_64": {
+            "cuda11": {
+              "feature": {
+                "outputs": [
+                  "out",
+                  "dev",
+                  "lib"
+                ]
+              },
+              "narHash": "sha256-6BP055B8unqrAENKHzaYJY3r5BYH9d2KcO9SIgMJKi4=",
+              "sha256": "8fb1b31ade2dd7bf4a601427a93d55ec0ccc13b2d9e1b09d3450421c1c683ec9"
+            },
+            "cuda12": {
+              "feature": {
+                "outputs": [
+                  "out",
+                  "dev",
+                  "lib"
+                ]
+              },
+              "narHash": "sha256-hm8bs9xo1Xn4ehzn+BdBIAzJ9rL/wOoiHGTII7tLPGU=",
+              "sha256": "20151f841ddd7ad87280b44d6e7228dcf16207dd10b36a601bbde087e34bb44d"
+            }
+          }
+        },
+        "releaseInfo": {
+          "license": "cuBLASMp library",
+          "licensePath": "libcublasmp/LICENSE.txt",
+          "name": "NVIDIA cuBLASMp library",
+          "version": "0.1.0.189"
+        }
+      }
+    }
+  }
+}

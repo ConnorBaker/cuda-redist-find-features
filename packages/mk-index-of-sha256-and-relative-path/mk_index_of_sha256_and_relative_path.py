@@ -4,7 +4,11 @@ import json
 from cuda_redist_lib.index import mk_index
 
 # Environment variable is provided by Nix via makeWrapper.
-with open(Path("modules") / "data" / "stages" / "stage0.json", "w", encoding="utf-8") as file:
+with open(
+    Path("modules") / "data" / "indices" / "sha256-and-relative-path.json",
+    "w",
+    encoding="utf-8",
+) as file:
     json.dump(
         mk_index().model_dump(
             by_alias=True,

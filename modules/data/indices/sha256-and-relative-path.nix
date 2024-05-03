@@ -6,10 +6,11 @@ let
   inherit (lib.types) nonEmptyStr nullOr submodule;
 in
 {
-  config.data.stages.stage0.description = "Parse NVIDIA's manifests and generate an index of hashes of tarballs.";
-  options.data.stages.stage0 = mapAttrs (const mkOption) {
-    result = {
-      description = "Index of hashes of tarballs.";
+  options.data.indices = mapAttrs (const mkOption) {
+    sha256AndRelativePath = {
+      description = ''
+        Index of NVIDIA's sha256 hashes of their tarballs and relative paths when unable to be derived from context.
+      '';
       type = config.types.indexOf (submodule {
         options = mapAttrs (const mkOption) {
           relativePath = {
@@ -19,7 +20,9 @@ in
           sha256.type = config.types.sha256;
         };
       });
-      # A default value would require impure derivations to run and access the internet.
+      default = { };
+      # Given them empty defaults to avoid breaking evaluation when the index has not been generated.
+      # A true default value would require impure derivations to run and access the internet.
     };
   };
 }

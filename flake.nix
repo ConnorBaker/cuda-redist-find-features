@@ -23,7 +23,6 @@
 
   nixConfig = {
     allow-import-from-derivation = false;
-    extra-experimental-features = [ "ca-derivations" ];
     keep-build-log = true;
     keep-derivations = true;
     keep-env-derivations = true;
@@ -31,11 +30,11 @@
     keep-going = true;
     keep-outputs = true;
     log-lines = 50;
-    narinfo-cache-negative-ttl = 0;
-    narinfo-cache-positive-ttl = 2592000; # 30 days
+    narinfo-cache-negative-ttl = 86400; # 1 day in seconds
+    narinfo-cache-positive-ttl = 2592000; # 30 days in seconds
     pure-eval = true;
     show-trace = true;
-    tarball-ttl = 2592000; # 30 days
+    tarball-ttl = 2592000; # 30 days in seconds
   };
 
   outputs =

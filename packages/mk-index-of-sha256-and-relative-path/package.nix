@@ -1,16 +1,12 @@
 {
   buildPackages,
   cuda-redist-lib,
-  lib,
   python312,
   python312Packages,
   writers,
 }:
-let
-  inherit ((lib.modules.evalModules { modules = [ ../../modules ]; }).config.data.stages) stage0;
-in
 writers.makePythonWriter python312 python312Packages buildPackages.python312Packages
-  "/bin/${stage0.name}"
+  "/bin/mk-index-of-sha256-and-relative-path"
   {
     flakeIgnore = [
       "E501" # line too long
@@ -18,4 +14,4 @@ writers.makePythonWriter python312 python312Packages buildPackages.python312Pack
     ];
     libraries = [ cuda-redist-lib ];
   }
-  (builtins.readFile ./stage0.py)
+  (builtins.readFile ./mk_index_of_sha256_and_relative_path.py)
