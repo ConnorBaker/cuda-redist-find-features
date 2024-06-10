@@ -1,9 +1,11 @@
 # `cuda_redist_find_features`
 
 > [!Important]
+>
 > This repo is in a transitory stage. It should be moved to `nix-community` or in-tree in Nixpkgs.
 
 > [!Note]
+>
 > The `tensorrt` directory contains hand-made manifests meant to mimic the structure of NVIDIA's manifests for their other redistributables. They add TensorRT to the generated index.
 
 ## Roadmap
@@ -46,6 +48,7 @@ These live in [detectors](./packages/cuda-redist-feature-detector/cuda_redist_fe
 ## Usage
 
 > [!Important]
+>
 > `mk-index-of-package-info` requires a large amount of free space in the Nix store, since it will download every tarball from every NVIDIA manifest and unpack it.
 
 Make the indices with:

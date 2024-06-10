@@ -1,7 +1,7 @@
 { nixVersions, writeShellApplication }:
 writeShellApplication {
   name = "stages";
-  runtimeInputs = [ nixVersions.unstable ];
+  runtimeInputs = [ nixVersions.latest ];
   derivationArgs = {
     __structuredAttrs = true;
     strictDeps = true;

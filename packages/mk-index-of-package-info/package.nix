@@ -100,7 +100,7 @@ writeShellApplication {
   runtimeInputs = [
     cuda-redist-feature-detector
     jq
-    nixVersions.unstable
+    nixVersions.latest
   ];
   runtimeEnv = {
     JQ_COMMON_FLAGS = [

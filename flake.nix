@@ -5,16 +5,14 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
       url = "github:hercules-ci/flake-parts";
     };
-    flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    pre-commit-hooks-nix = {
+    git-hooks-nix = {
       inputs = {
-        flake-utils.follows = "flake-utils";
         nixpkgs-stable.follows = "nixpkgs";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:cachix/pre-commit-hooks.nix";
+      url = "github:cachix/git-hooks.nix";
     };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
@@ -48,7 +46,7 @@
       ];
       imports = [
         inputs.treefmt-nix.flakeModule
-        inputs.pre-commit-hooks-nix.flakeModule
+        inputs.git-hooks-nix.flakeModule
       ];
       perSystem =
         {
@@ -128,7 +126,7 @@
                   "*.md"
                   "*.yaml"
                 ];
-                excludes = [ "stage*.json" ];
+                excludes = [ "modules/data/indices/*.json" ];
                 settings = {
                   embeddedLanguageFormatting = "auto";
                   printWidth = 120;

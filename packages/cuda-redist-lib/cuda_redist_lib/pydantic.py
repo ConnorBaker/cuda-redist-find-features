@@ -70,7 +70,7 @@ class PydanticMapping[K, V](RootModel[Mapping[K, V]]):
     @overload
     def get[T](self, __key: K, __default: T) -> V | T: ...
 
-    def get[T](self, key: K, default: T = None) -> V | T:
+    def get[T](self, key: K, default: T = None) -> V | T:  # pyright: ignore[reportInconsistentOverload]
         "D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None."
         return self.root.get(key, default)
 

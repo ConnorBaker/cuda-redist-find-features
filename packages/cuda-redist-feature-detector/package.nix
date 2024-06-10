@@ -1,6 +1,7 @@
 { python312Packages }:
 let
   callPackage = attrs: python312Packages.callPackage attrs { };
+  toModuleName = builtins.replaceStrings [ "-" ] [ "_" ];
 in
 callPackage (
   {
@@ -17,27 +18,22 @@ callPackage (
     ruff,
   }:
   let
-    toModuleName = builtins.replaceStrings [ "-" ] [ "_" ];
     moduleName = toModuleName finalAttrs.pname;
-    pythonPropagatedBuildInputs = [
-      annotated-types
-      cuda-redist-lib
-      pydantic
-    ];
     finalAttrs = {
       pname = "cuda-redist-feature-detector";
       version = "0.1.0";
-      format = "pyproject";
+      pyproject = true;
       src = lib.sources.sourceByRegex ./. [
         "${moduleName}(:?/.*)?"
         "pyproject.toml"
       ];
-      nativeBuildInputs = [ flit-core ];
-      propagatedBuildInputs = pythonPropagatedBuildInputs;
-      pythonImportsCheck =
-        builtins.map (drv: toModuleName drv.pname)
-          # Check all python propagated build inputs and the package itself
-          (pythonPropagatedBuildInputs ++ [ finalAttrs ]);
+      build-system = [ flit-core ];
+      dependencies = [
+        annotated-types
+        cuda-redist-lib
+        pydantic
+      ];
+      pythonImportsCheck = [ moduleName ];
       nativeCheckInputs = [
         pyright
         ruff
