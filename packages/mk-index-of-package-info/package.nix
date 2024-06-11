@@ -44,7 +44,9 @@ let
             if args.redistName == "tensorrt" then
               utils.mkTensorRTURL args.leaf.relativePath
             else
-              utils.mkRedistURL args.redistName (utils.mkRelativePath args);
+              utils.mkRedistURL args.redistName (
+                utils.mkRelativePath (args // { inherit (args.leaf) relativePath; })
+              );
         };
         # Thankfully, using srcOnly is equivalent to using fetchzip!
         unpackedSrc = srcOnly {

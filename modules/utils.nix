@@ -129,13 +129,13 @@ in
           redistName,
           releaseInfo,
           cudaVariant,
-          leaf,
+          relativePath ? null,
           ...
         }:
         assert assertMsg (redistName != "tensorrt")
           "mkRelativePath: tensorrt does not use standard naming conventions for relative paths; use mkTensorRTURL";
-        if leaf.relativePath != null then
-          leaf.relativePath
+        if relativePath != null then
+          relativePath
         else
           concatStringsSep "/" [
             packageName
