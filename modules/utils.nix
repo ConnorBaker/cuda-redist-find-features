@@ -129,32 +129,33 @@ in
           redistName,
           releaseInfo,
           cudaVariant,
+          leaf,
           ...
         }:
         assert assertMsg (redistName != "tensorrt")
           "mkRelativePath: tensorrt does not use standard naming conventions for relative paths; use mkTensorRTURL";
-        concatStringsSep "/" [
-          packageName
-          platform
-          (concatStringsSep "-" [
+        if leaf.relativePath != null then
+          leaf.relativePath
+        else
+          concatStringsSep "/" [
             packageName
             platform
-            (releaseInfo.version + (if cudaVariant != "None" then "_${cudaVariant}" else ""))
-            "archive.tar.xz"
-          ])
-        ];
+            (concatStringsSep "-" [
+              packageName
+              platform
+              (releaseInfo.version + (if cudaVariant != "None" then "_${cudaVariant}" else ""))
+              "archive.tar.xz"
+            ])
+          ];
     };
     mkTensorRTURL = {
       description = "Function to generate a URL for TensorRT";
-      type = functionTo (functionTo nonEmptyStr);
+      type = functionTo nonEmptyStr;
       default =
-        version: relativePath:
+        relativePath:
         concatStringsSep "/" [
           config.data.redistUrlPrefix
           "machine-learning"
-          "tensorrt"
-          version
-          "tars"
           relativePath
         ];
     };

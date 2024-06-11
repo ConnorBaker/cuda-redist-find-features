@@ -42,7 +42,7 @@ let
           inherit sha256;
           url =
             if args.redistName == "tensorrt" then
-              utils.mkTensorRTURL args.version args.leaf.relativePath
+              utils.mkTensorRTURL args.leaf.relativePath
             else
               utils.mkRedistURL args.redistName (utils.mkRelativePath args);
         };
@@ -69,31 +69,6 @@ let
     # Write the results to JSON for further processing with JQ.
     (writers.writeJSON "sha256-to-unpacked-store-path.json")
   ];
-
-  jqFilter = writers.writeText "jq-filter.jq" ''
-    walk(
-      # If we have reached an object with a `sha256` key, we need to augment the object with
-      # the feature and nar hash.
-      if type == "object" and has("sha256") then
-        # Get the hash of the object.
-        .sha256 as $sha256 |
-        # Get the unpacked store path, which we use to get the feature and nar hash.
-        $hashToUnpackedStorePath[0][$sha256] as $unpackedStorePath |
-        $unpackedStorePathToFeature[0][$unpackedStorePath] as $feature |
-        $unpackedStorePathToNarHash[0][$unpackedStorePath] as $narHash |
-        # Update the object with the feature and nar hash.
-        . + {
-          feature: $feature,
-          narHash: $narHash,
-        }
-      else
-        # Otherwise, just return the value.
-        .
-      end
-    ) |
-    # Remove any null values.
-    del(..|nulls)
-  '';
 in
 writeShellApplication {
   name = "mk-index-of-package-info";
@@ -145,7 +120,7 @@ writeShellApplication {
       > "$unpackedStorePathToFeatureJSONPath"
 
     echo "Joining the results"
-    jq "''${JQ_COMMON_FLAGS[@]}" --from-file "${jqFilter}" "$indexOfSha256AndRelativePathJSONPath" \
+    jq "''${JQ_COMMON_FLAGS[@]}" --from-file "${./filter.jq}" "$indexOfSha256AndRelativePathJSONPath" \
       --slurpfile hashToUnpackedStorePath "$hashToUnpackedStorePathJSONPath" \
       --slurpfile unpackedStorePathToFeature "$unpackedStorePathToFeatureJSONPath" \
       --slurpfile unpackedStorePathToNarHash "$unpackedStorePathToNarHashJSONPath" \
