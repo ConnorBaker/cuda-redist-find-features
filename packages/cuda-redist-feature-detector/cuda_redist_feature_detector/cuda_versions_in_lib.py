@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Self
 
-from cuda_redist_lib.pydantic import PydanticSequence
+from cuda_redist_lib.extra_pydantic import PydanticSequence
 
 from cuda_redist_feature_detector.detectors import CudaVersionsInLibDetector
 

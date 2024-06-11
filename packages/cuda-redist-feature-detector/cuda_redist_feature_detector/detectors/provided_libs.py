@@ -6,8 +6,8 @@ from logging import Logger
 from pathlib import Path
 from typing import Final, override
 
+from cuda_redist_lib.extra_types import LibSoName, LibSoNameTA
 from cuda_redist_lib.logger import get_logger
-from cuda_redist_lib.types import LibSoName, LibSoNameTA
 
 from .groupable_feature_detector import GroupableFeatureDetector
 
