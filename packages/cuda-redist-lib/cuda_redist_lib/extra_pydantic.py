@@ -20,6 +20,10 @@ ModelConfig: Final[ConfigDict] = ConfigDict(
     validate_default=True,
 )
 
+ModelConfigForbidExtra: Final[ConfigDict] = ModelConfig | ConfigDict(extra="forbid")
+
+ModelConfigAllowExtra: Final[ConfigDict] = ModelConfig | ConfigDict(extra="allow")
+
 # NOTE: pydantic.errors.PydanticUserError: Cannot use `config` when the type is a BaseModel, dataclass or TypedDict.
 # These types can have their own config and setting the config via the `config` parameter to TypeAdapter will not
 # override it, thus the `config` you passed to TypeAdapter becomes meaningless, which is probably not what you want.
@@ -101,4 +105,4 @@ class PydanticObject(BaseModel):
     Base model.
     """
 
-    model_config = ModelConfig
+    model_config = ModelConfigForbidExtra

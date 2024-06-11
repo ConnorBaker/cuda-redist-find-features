@@ -10,19 +10,19 @@ from typing import (
 
 from pydantic import Field, TypeAdapter
 
-from cuda_redist_lib.pydantic import PydanticTypeAdapter
+from cuda_redist_lib.extra_pydantic import PydanticTypeAdapter
 
-type IgnoredPlatform = Literal["windows-x86_64"]
-IgnoredPlatforms: Final[Set[IgnoredPlatform]] = set(get_args(IgnoredPlatform.__value__))
+type IgnoredRedistPlatform = Literal["windows-x86_64"]
+IgnoredRedistPlatforms: Final[Set[IgnoredRedistPlatform]] = set(get_args(IgnoredRedistPlatform.__value__))
 
-type Platform = Literal[
+type RedistPlatform = Literal[
     "source",  # Source-agnostic
     "linux-aarch64",
     "linux-ppc64le",
     "linux-sbsa",
     "linux-x86_64",
 ]
-Platforms: Final[Set[Platform]] = set(get_args(Platform.__value__))
+RedistPlatforms: Final[Set[RedistPlatform]] = set(get_args(RedistPlatform.__value__))
 
 type RedistName = Literal[
     "cublasmp",
@@ -44,6 +44,16 @@ type RedistName = Literal[
 RedistNames: Final[Set[RedistName]] = set(get_args(RedistName.__value__))
 
 RedistUrlPrefix: Final[str] = "https://developer.download.nvidia.com/compute"
+
+type Md5 = Annotated[
+    str,
+    Field(
+        description="An MD5 hash.",
+        examples=["0123456789abcdef0123456789abcdef"],
+        pattern=r"[0-9a-f]{32}",
+    ),
+]
+Md5TA: Final[TypeAdapter[Md5]] = PydanticTypeAdapter(Md5)
 
 type Sha256 = Annotated[
     str,
@@ -84,6 +94,26 @@ type PackageName = Annotated[
     ),
 ]
 PackageNameTA: Final[TypeAdapter[PackageName]] = PydanticTypeAdapter(PackageName)
+
+type Date = Annotated[
+    str,
+    Field(
+        description="A date in the format YYYY-MM-DD.",
+        examples=["2022-01-01", "2022-12-31"],
+        pattern=r"\d{4}-\d{2}-\d{2}",
+    ),
+]
+DateTA: Final[TypeAdapter[Date]] = PydanticTypeAdapter(Date)
+
+type MajorVersion = Annotated[
+    str,
+    Field(
+        description="A major version number.",
+        examples=["10", "11", "12"],
+        pattern=r"\d+",
+    ),
+]
+MajorVersionTA: Final[TypeAdapter[MajorVersion]] = PydanticTypeAdapter(MajorVersion)
 
 type Version = Annotated[
     str,

@@ -3,7 +3,7 @@
 import base64
 from pathlib import Path
 
-from cuda_redist_lib.types import CudaVariant, PackageName, Platform, Sha256, SriHash, SriHashTA, Version
+from cuda_redist_lib.extra_types import CudaVariant, PackageName, RedistPlatform, Sha256, SriHash, SriHashTA, Version
 
 
 def sha256_to_sri_hash(sha256: Sha256) -> SriHash:
@@ -18,7 +18,7 @@ def sha256_to_sri_hash(sha256: Sha256) -> SriHash:
 
 def mk_relative_path(
     package_name: PackageName,
-    platform: Platform,
+    platform: RedistPlatform,
     version: Version,
     cuda_variant: None | CudaVariant,
 ) -> Path:
