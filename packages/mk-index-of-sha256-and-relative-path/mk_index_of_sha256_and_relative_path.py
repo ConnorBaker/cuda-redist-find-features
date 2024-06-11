@@ -3,7 +3,6 @@ import json
 
 from cuda_redist_lib.index import mk_index
 
-# Environment variable is provided by Nix via makeWrapper.
 with open(
     Path("modules") / "data" / "indices" / "sha256-and-relative-path.json",
     "w",
