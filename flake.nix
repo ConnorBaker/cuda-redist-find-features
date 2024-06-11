@@ -154,19 +154,22 @@
             };
           };
 
-          devShells = {
-            cuda-redist-feature-detector =
-              let
-                inherit (pkgs) cuda-redist-feature-detector;
-                inherit (cuda-redist-feature-detector.optional-dependencies) dev;
-              in
-              pkgs.mkShell {
-                strictDeps = true;
-                inputsFrom = [ cuda-redist-feature-detector ];
-                packages = dev;
-              };
-            default = config.devShells.cuda-redist-feature-detector;
-          };
+          devShells =
+            let
+              mkShellHelper =
+                pname:
+                pkgs.mkShell {
+                  strictDeps = true;
+                  inputsFrom = [ pkgs.${pname} ];
+                  packages = pkgs.${pname}.optional-dependencies.dev;
+                };
+            in
+            {
+              cuda-redist-lib = mkShellHelper "cuda-redist-lib";
+              cuda-redist-feature-detector = mkShellHelper "cuda-redist-feature-detector";
+              default = config.devShells.cuda-redist-feature-detector;
+              # default = config.devShells.cuda-redist-lib;
+            };
         };
     };
 }
