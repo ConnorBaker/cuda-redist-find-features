@@ -94,6 +94,11 @@ in
       default =
         leafType: config.types.attrs config.types.platform (config.types.packageVariantsOf leafType);
     };
+    packageName = {
+      description = "The option type of a package name";
+      type = optionType;
+      default = strMatching "^[[:alnum:]_-]+$";
+    };
     packageVariantsOf = {
       description = "The option type of a package variant attribute set, mapping CUDA variant to leafType.";
       type = functionTo optionType;
