@@ -23,22 +23,19 @@ class FeatureOutputs(PydanticSequence[str]):
     @classmethod
     def of(cls, store_path: Path) -> Self:
         outputs: list[str] = ["out"]
-        if cls.check_bin(store_path):
-            outputs.append("bin")
-        if cls.check_dev(store_path):
-            outputs.append("dev")
-        if cls.check_doc(store_path):
-            outputs.append("doc")
-        if cls.check_lib(store_path):
-            outputs.append("lib")
-        if cls.check_python(store_path):
-            outputs.append("python")
-        if cls.check_sample(store_path):
-            outputs.append("sample")
-        if cls.check_static(store_path):
-            outputs.append("static")
-        if cls.check_stubs(store_path):
-            outputs.append("stubs")
+        for check, output in [
+            (cls.check_bin, "bin"),
+            (cls.check_dev, "dev"),
+            (cls.check_doc, "doc"),
+            (cls.check_include, "include"),
+            (cls.check_lib, "lib"),
+            (cls.check_python, "python"),
+            (cls.check_sample, "sample"),
+            (cls.check_static, "static"),
+            (cls.check_stubs, "stubs"),
+        ]:
+            if check(store_path):
+                outputs.append(output)
         return cls(outputs)
 
     @staticmethod
@@ -54,11 +51,14 @@ class FeatureOutputs(PydanticSequence[str]):
         """
         A `dev` output requires that we have at least one of the following non-empty directories:
 
-        - `include`
         - `lib/pkgconfig`
         - `share/pkgconfig`
         - `lib/cmake`
         - `share/aclocal`
+
+        NOTE: Absent from this list is `include`, which is handled by the `include` output. This is because the `dev`
+        output in Nixpkgs is used for development files and is selected as the default output to install if present.
+        Since we want to be able to access only the header files, they are present in a separate output.
         """
         return any(
             DirDetector(dir).detect(store_path)
@@ -85,6 +85,13 @@ class FeatureOutputs(PydanticSequence[str]):
         return any(
             DirDetector(Path("share") / dir).detect(store_path) for dir in ("info", "doc", "gtk-doc", "devhelp", "man")
         )
+
+    @staticmethod
+    def check_include(store_path: Path) -> bool:
+        """
+        An `include` output requires that we have a non-empty `include` directory.
+        """
+        return DirDetector(Path("include")).detect(store_path)
 
     @staticmethod
     def check_lib(store_path: Path) -> bool:

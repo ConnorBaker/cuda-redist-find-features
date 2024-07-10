@@ -30,8 +30,8 @@ class HeaderDetector(FeatureDetector[Sequence[Path]]):
 
         headers = [
             header
-            for header in cached_path_rglob(include_dir, "*.h*", files_only=True)
-            if header.suffix in {".h", ".hh", ".hpp", ".hxx"}
+            for header in cached_path_rglob(include_dir, "*.*h*", files_only=True)
+            if header.suffix in {".h", ".hh", ".cuh", ".hpp", ".hxx"}
         ]
         if [] != headers:
             logger.debug("Found headers: %s.", headers)
