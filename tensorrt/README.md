@@ -11,15 +11,15 @@ Construct entries using the provider `helper.sh` script.
 As an example:
 
 ```console
-$ ./tensorrt/helper.sh 11.8 10.0.1.6 linux-x86_64
-main: storePath: /nix/store/3wah1b4z19pnlxi85mi30whx7jcrin1s-TensorRT-10.0.1.6.l4t.aarch64-gnu.cuda-12.4.tar.gz
+$ ./tensorrt/helper.sh 12.5 10.2.0.19 windows-x86_64
+main: storePath: /nix/store/l2hq83ihj3bcm4z836cz2dw3ilkhwrpy-TensorRT-10.2.0.19.Windows.win10.cuda-12.5.zip
 {
-  "linux-aarch64": {
+  "windows-x86_64": {
     "cuda12": {
-      "md5": "34a63595d03ef613a8c5e152f32cb3a7",
-      "relative_path": "tensorrt/10.0.1/tars/TensorRT-10.0.1.6.l4t.aarch64-gnu.cuda-12.4.tar.gz",
-      "sha256": "cb56e30a7f6819f6f1af8c2cd417e71e47c97b52d978ad06f3365858aafccbbf",
-      "size": "666711593"
+      "md5": "70282ec501c9e395a3ffdd0d2baf9d95",
+      "relative_path": "tensorrt/10.2.0/zip/TensorRT-10.2.0.19.Windows.win10.cuda-12.5.zip",
+      "sha256": "4a9c6e279fd36559551a6d88e37d835db5ebdc950246160257b0b538960e57fa",
+      "size": "1281366141"
     }
   }
 }

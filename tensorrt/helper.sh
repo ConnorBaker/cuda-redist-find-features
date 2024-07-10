@@ -109,7 +109,7 @@ main() {
   local -r storePath="$(getNixStorePath "$relativePath")"
   echo "main: storePath: $storePath" >&2
   local -r md5Hash="$(nix hash file --type md5 --base16 "$storePath")"
-  local -r sha256Hash="$(nix hash path --type sha256 --base16 "$storePath")"
+  local -r sha256Hash="$(nix hash file --type sha256 --base16 "$storePath")"
   local -r size="$(du -b "$storePath" | cut -f1)"
 
   printOutput "$cudaMajorMinorVersion" "$redistArch" "$md5Hash" "$relativePath" "$sha256Hash" "$size"

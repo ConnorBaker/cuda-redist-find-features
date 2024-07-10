@@ -11,7 +11,7 @@
       "cuda12": {
         "md5": "1408cef1b8cc3b84dd1e9d70c3b84243",
         "relative_path": "tensorrt/10.1.0/tars/TensorRT-10.1.0.27.l4t.aarch64-gnu.cuda-12.4.tar.gz",
-        "sha256": "4367d3f600ba51f86584d909790286ec71fa490d188e3df723825b9cd3f8acd4",
+        "sha256": "508048d1ebf01f56265f0a15236c9570701ad5a59199a736ab43336a62be1be7",
         "size": "665980780"
       }
     },
@@ -19,7 +19,7 @@
       "cuda12": {
         "md5": "4bb9d517f83a5423c1baa619bcfd0e58",
         "relative_path": "tensorrt/10.1.0/tars/TensorRT-10.1.0.27.Ubuntu-22.04.aarch64-gnu.cuda-12.4.tar.gz",
-        "sha256": "b7860abe8a572c0b3668ca029341a4b857e50931e8274d8b33f260edfacecda5",
+        "sha256": "6c37f3852ac278401b873a3e5df7afea51c43c4c5616aa2415b008d6cd69ddb3",
         "size": "2398575314"
       }
     },
@@ -27,13 +27,13 @@
       "cuda11": {
         "md5": "449d5d601a898f23e94cc15a8b91d8ac",
         "relative_path": "tensorrt/10.1.0/tars/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-11.8.tar.gz",
-        "sha256": "bb8aa91cf474ab63a5aa352d57d58a517a142e9abffc7f2c8117b3e39a91080b",
+        "sha256": "b82256748ee82b1c11f392492c5a21bbb43c33d631daf0ead6580809861c3566",
         "size": "2416878753"
       },
       "cuda12": {
         "md5": "a9edcabc460f3a1411985668a21a5fa5",
         "relative_path": "tensorrt/10.1.0/tars/TensorRT-10.1.0.27.Linux.x86_64-gnu.cuda-12.4.tar.gz",
-        "sha256": "90cb9a9f154d7dfa8c14f30bf18c5e2897c1e013d86357b591565795aa78ceae",
+        "sha256": "606436ed219c72d1a25a889b2b0ae5cb5a68499dd6f944da4cabb3c34c067d55",
         "size": "2415952766"
       }
     },
@@ -41,13 +41,13 @@
       "cuda11": {
         "md5": "d04087d1a86095dc1cf85de52fbcab12",
         "relative_path": "tensorrt/10.1.0/zip/TensorRT-10.1.0.27.Windows.win10.cuda-11.8.zip",
-        "sha256": "737713f387298f31beb6cf20d6626582a1e4749896feac3c6e0cdb16e859ff87",
+        "sha256": "108a90329d137303d65192589e1ae0066d9a63bf393e861c7caf72cd38e6c717",
         "size": "1270429150"
       },
       "cuda12": {
         "md5": "5d370bb8d57e970745520b0c49f30f99",
         "relative_path": "tensorrt/10.1.0/zip/TensorRT-10.1.0.27.Windows.win10.cuda-12.4.zip",
-        "sha256": "f5d2e98a552d47373ce6a75a616b0b4993f4f646226135624fb6aa76b4789254",
+        "sha256": "2eb98008944945377eb328871a308704e95bf3bb295fc548784c6da41a70bbed",
         "size": "1269294617"
       }
     }
