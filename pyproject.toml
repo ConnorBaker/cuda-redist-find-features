@@ -4,10 +4,10 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "cuda_redist_find_features"
-version = "0.1.0"
-authors = [{ name = "Connor Baker", email = "connorbaker@tweag.io" }]
+version = "0.1.1"
+authors = [{ name = "Connor Baker", email = "ConnorBaker01@gmail.com" }]
 requires-python = ">=3.11"
-license = { text = "BSD-3-Clause" }
+license = { text = "MIT" }
 description = "Find the features of a CUDA redistributable package"
 dependencies = [
     "annotated-types>=0.5.0",

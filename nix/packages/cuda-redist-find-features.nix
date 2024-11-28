@@ -28,7 +28,7 @@
   ];
   finalAttrs = {
     pname = "cuda-redist-find-features";
-    version = "0.1.0";
+    version = "0.1.1";
     format = "pyproject";
     src = lib.sources.sourceByRegex ../.. [
       "${moduleName}(:?/.*)?"
@@ -67,6 +67,7 @@
     meta = with lib; {
       description = "Find features provided by a CUDA redistributable";
       homepage = "https://github.com/ConnorBaker/${finalAttrs.pname}";
+      license = licenses.mit;
       maintainers = with maintainers; [connorbaker];
       mainProgram = "cuda-redist-find-features";
     };
