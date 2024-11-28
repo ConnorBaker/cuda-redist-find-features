@@ -9,6 +9,7 @@ __pycache__
 
 # Shell
 .direnv
+.envrc
 
 # Used in generating the readme
 cutensor_manifests

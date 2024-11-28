@@ -13,9 +13,9 @@ __all__ = [
     "FeatureManifest",
     "FeatureOutputs",
     "FeaturePackage",
-    "FeaturePackageTy",
-    "FeaturePackageDepsUnresolved",
     "FeaturePackageDepsResolved",
     "FeaturePackageDepsResolver",
+    "FeaturePackageDepsUnresolved",
+    "FeaturePackageTy",
     "FeatureRelease",
 ]

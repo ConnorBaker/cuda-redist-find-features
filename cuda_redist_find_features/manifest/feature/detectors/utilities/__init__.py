@@ -8,6 +8,6 @@ __all__ = [
     "cached_path_exists",
     "cached_path_has_contents",
     "cached_path_is_dir",
-    "cached_path_rglob",
     "cached_path_iterdir",
+    "cached_path_rglob",
 ]

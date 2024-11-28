@@ -5,15 +5,13 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
       url = "github:hercules-ci/flake-parts";
     };
-    flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     pre-commit-hooks-nix = {
       inputs = {
-        flake-utils.follows = "flake-utils";
         nixpkgs-stable.follows = "nixpkgs";
         nixpkgs.follows = "nixpkgs";
       };
-      url = "github:cachix/pre-commit-hooks.nix";
+      url = "github:cachix/git-hooks.nix";
     };
     treefmt-nix = {
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,8 +19,9 @@
     };
   };
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "aarch64-darwin"
         "aarch64-linux"
@@ -34,13 +33,10 @@
         inputs.pre-commit-hooks-nix.flakeModule
         ./nix
       ];
-      perSystem = {
-        config,
-        pkgs,
-        ...
-      }: {
-        pre-commit.settings = {
-          hooks = {
+      perSystem =
+        { config, ... }:
+        {
+          pre-commit.settings.hooks = {
             # Formatter checks
             treefmt.enable = true;
 
@@ -48,64 +44,40 @@
             deadnix.enable = true;
             nil.enable = true;
             statix.enable = true;
-
-            # Python checks
-            pyright.enable = true;
-            ruff.enable = true;
           };
-          settings = let
-            # We need to provide wrapped version of mypy and pyright which can find our imports.
-            # TODO: The script we're sourcing is an implementation detail of `mkShell` and we should
-            # not depend on it exisitng. In fact, the first few lines of the file state as much
-            # (that's why we need to strip them, sourcing only the content of the script).
-            wrapper = name:
-              pkgs.writeShellScript name ''
-                source <(sed -n '/^declare/,$p' ${config.devShells.cuda-redist-find-features})
-                ${name} "$@"
-              '';
-          in {
-            # Formatter
-            treefmt.package = config.treefmt.build.wrapper;
 
-            # Python
-            pyright.binPath = builtins.toString (wrapper "pyright");
-          };
-        };
-
-        treefmt = {
-          projectRootFile = "flake.nix";
-          programs = {
-            # Markdown, YAML, JSON
-            prettier = {
-              enable = true;
-              includes = [
-                "*.json"
-                "*.md"
-                "*.yaml"
-              ];
-              settings = {
-                embeddedLanguageFormatting = "auto";
-                printWidth = 120;
-                tabWidth = 2;
+          treefmt = {
+            projectRootFile = "flake.nix";
+            programs = {
+              # Markdown, YAML, JSON
+              prettier = {
+                enable = true;
+                includes = [
+                  "*.json"
+                  "*.md"
+                  "*.yaml"
+                ];
+                settings = {
+                  embeddedLanguageFormatting = "auto";
+                  printWidth = 120;
+                  tabWidth = 2;
+                };
               };
+
+              # Nix
+              nixfmt.enable = true;
+
+              # Python
+              ruff.enable = true;
+
+              # Shell
+              shellcheck.enable = true;
+              shfmt.enable = true;
             };
-
-            # Nix
-            nixfmt = {
-              enable = true;
-              package = pkgs.nixfmt-rfc-style;
-            };
-
-            # Python
-            ruff.enable = true;
-
-            # Shell
-            shellcheck.enable = true;
-            shfmt.enable = true;
           };
+
+          packages.default = config.packages.cuda-redist-find-features;
+          devShells.default = config.devShells.cuda-redist-find-features;
         };
-        packages.default = config.packages.cuda-redist-find-features;
-        devShells.default = config.devShells.cuda-redist-find-features;
-      };
     };
 }

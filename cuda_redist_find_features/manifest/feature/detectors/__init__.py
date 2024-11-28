@@ -9,13 +9,13 @@ from .python_module import PythonModuleDetector
 from .static_library import StaticLibraryDetector
 
 __all__ = [
+    "CudaArchitecturesDetector",
     "DirDetector",
     "DynamicLibraryDetector",
     "ExecutableDetector",
     "HeaderDetector",
+    "NeededLibsDetector",
+    "ProvidedLibsDetector",
     "PythonModuleDetector",
     "StaticLibraryDetector",
-    "CudaArchitecturesDetector",
-    "ProvidedLibsDetector",
-    "NeededLibsDetector",
 ]
