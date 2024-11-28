@@ -3,10 +3,12 @@
   lib,
   # nativeBuildInputs
   flit-core,
+  makeWrapper,
   # propagatedBuildInputs
   annotated-types,
   click,
   cudaPackages,
+  nix,
   patchelf,
   pydantic,
   rich,
@@ -34,10 +36,12 @@
     ];
     nativeBuildInputs = [
       flit-core
+      makeWrapper
     ];
     propagatedBuildInputs =
       [
         cudaPackages.cuda_cuobjdump
+        nix
         patchelf
       ]
       ++ pythonPropagatedBuildInputs;
@@ -46,6 +50,16 @@
       (drv: toModuleName drv.pname)
       # Check all python propagated build inputs and the package itself
       (pythonPropagatedBuildInputs ++ [finalAttrs]);
+    postInstall = ''
+      wrapProgram "$out/bin/${finalAttrs.meta.mainProgram}" \
+        --prefix PATH : "${
+          lib.strings.makeBinPath [
+            cudaPackages.cuda_cuobjdump
+            nix
+            patchelf
+          ]
+        }"
+    '';
     passthru.optional-dependencies.dev = [
       pyright
       ruff
@@ -54,6 +68,7 @@
       description = "Find features provided by a CUDA redistributable";
       homepage = "https://github.com/ConnorBaker/${finalAttrs.pname}";
       maintainers = with maintainers; [connorbaker];
+      mainProgram = "cuda-redist-find-features";
     };
   };
 in
