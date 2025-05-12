@@ -8,6 +8,7 @@ from ._pydantic import PydanticFrozenField, PydanticTypeAdapter
 
 _Platform = Literal[
     "linux-aarch64",
+    "linux-all",
     "linux-ppc64le",
     "linux-sbsa",
     "linux-x86_64",
